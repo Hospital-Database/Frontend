@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { availableLocalesMap, defaultLocale } from '@/next.locales.mjs';
+import { availableLocalesMap, defaultLocale } from "@/next.locales.mjs";
 import "./globals.css";
 import { LocaleProvider } from "@/provider/locale-provider";
 
@@ -14,19 +14,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
 	children,
-	params: {locale}
+	params: { locale },
 }: Readonly<{
 	children: React.ReactNode;
-	params: {locale: string};
+	params: { locale: string };
 }>) {
 	const { langDir, hrefLang } = availableLocalesMap[locale] || defaultLocale;
 	return (
 		<html lang={hrefLang} dir={langDir}>
 			<body className={inter.className}>
-				<LocaleProvider>
-					{children} 
-				</LocaleProvider>
-				</body>
+				<LocaleProvider>{children}</LocaleProvider>
+			</body>
 		</html>
 	);
 }

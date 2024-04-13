@@ -2,7 +2,10 @@
 export default function Home() {
   return (
     <main>
-       How are your
+        <h1>
+          
+          
+          How are your</h1>
     </main>
 
   );

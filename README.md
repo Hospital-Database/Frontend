@@ -2,7 +2,7 @@
 ## Getting Started
 
 ```bash
-pnpm dev
+    pnpm dev
 ```
 ## General Links
 - [Figma](https://www.figma.com/file/uxb11MLYQ1fNDeGFOt7w6F/ZU-Hospital?type=design&mode=design&t=5kIZTGtOXSifi3yg-0)

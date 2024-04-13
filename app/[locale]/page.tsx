@@ -12,7 +12,7 @@ export default function Home() {
 				<p>   
 					
 					
-					
+
 					{t("hello-world")}</p>
 			</EuiText>
 		</EuiProvider>

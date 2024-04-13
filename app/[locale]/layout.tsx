@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { availableLocalesMap, defaultLocale } from "@/next.locales.mjs";
-import "./globals.css";
 import { LocaleProvider } from "@/provider/locale-provider";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

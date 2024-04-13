@@ -9,12 +9,7 @@ export default function Home() {
 	return (
 		<EuiProvider colorMode="dark">
 			<EuiText>
-				<p>   
-					
-					
-					
-
-					{t("hello-world")}</p>
+				<p>{t("hello-world")}</p>
 			</EuiText>
 		</EuiProvider>
 	);

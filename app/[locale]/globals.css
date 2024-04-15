@@ -4,7 +4,7 @@
 
   @layer base {
     :root {
-      --background: 0 0% 100%;
+      --background: 0 0%  89.8%;
       --foreground: 0 0% 3.9%;
 
       --card: 0 0% 100%;
@@ -70,15 +70,15 @@
     body {
       @apply bg-background text-foreground;
     }
-    @base {
-        .page-container {
-            @apply px-4 sm:px-6 lg:px-8;
-        }
-        .nav-height {
-            @apply h-[64px];
-        }
-        .page-height {
-            @apply min-h-[calc(100vh-64px)];
-        }
-    }
+   
+      .page-container {
+          @apply px-4 sm:px-6 lg:px-8;
+      }
+      .nav-height {
+          @apply h-[64px];
+      }
+      .page-height {
+          @apply min-h-[calc(100vh-64px)];
+      }
   }
+  

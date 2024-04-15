@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 
 import { availableLocalesMap, defaultLocale } from "@/next.locales.mjs";
 import { LocaleProvider } from "@/provider/locale-provider";
+import { ThemeProvider } from "@/provider/theme-provider";
+import Navbar from "./_components/navbar";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,9 +23,14 @@ export default function RootLayout({
 }>) {
 	const { langDir, hrefLang } = availableLocalesMap[locale] || defaultLocale;
 	return (
-		<html lang={hrefLang} dir={langDir}>
+		<html lang={hrefLang} dir={langDir} suppressHydrationWarning>
 			<body className={inter.className}>
-				<LocaleProvider>{children}</LocaleProvider>
+				<ThemeProvider attribute="class" defaultTheme="system">
+					<LocaleProvider>
+						<Navbar />
+						{children}
+					</LocaleProvider>
+				</ThemeProvider>
 			</body>
 		</html>
 	);

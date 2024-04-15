@@ -18,7 +18,6 @@ export default function Login() {
 					className="mx-auto"
 				/>
 			</section>
-			<section></section>
 		</main>
 	);
 }

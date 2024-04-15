@@ -13,7 +13,7 @@ export default function LoginForm() {
 	const form = useForm({
 		resolver: zodResolver(loginSchema),
 	});
-	const handleLoginSubmt = (data) => {
+	const handleLoginSubmt: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
 	};
 	return (

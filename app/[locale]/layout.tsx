@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 
 import { availableLocalesMap, defaultLocale } from "@/next.locales.mjs";
 import { LocaleProvider } from "@/provider/locale-provider";
+import ThemeProvider from "@/provider/theme-provider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,7 +24,9 @@ export default function RootLayout({
 	return (
 		<html lang={hrefLang} dir={langDir}>
 			<body className={inter.className}>
-				<LocaleProvider>{children}</LocaleProvider>
+				<LocaleProvider>
+					<ThemeProvider>{children}</ThemeProvider>
+				</LocaleProvider>
 			</body>
 		</html>
 	);

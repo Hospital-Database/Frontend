@@ -1,16 +1,19 @@
 "use client";
-import { EuiProvider, EuiText } from "@elastic/eui";
-import "@elastic/eui/dist/eui_theme_dark.css";
+import { EuiText, useEuiTheme } from "@elastic/eui";
 import { useTranslations } from "next-intl";
-import React from "react";
 
 export default function Home() {
 	const t = useTranslations("Home");
+	const { euiTheme } = useEuiTheme();
+	console.log(euiTheme.colors.lightShade);
 	return (
-		<EuiProvider colorMode="dark">
-			<EuiText>
-				<p>{t("hello-world")}</p>
-			</EuiText>
-		</EuiProvider>
+		<EuiText
+			css={{
+				background: euiTheme.colors.lightShade,
+				padding: euiTheme.size.xl,
+			}}
+		>
+			<p>{t("hello-world")}</p>
+		</EuiText>
 	);
 }

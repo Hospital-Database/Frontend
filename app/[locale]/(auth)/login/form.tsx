@@ -23,8 +23,8 @@ export default function LoginForm() {
 				onSubmit={form.handleSubmit(handleLoginSubmt)}
 			>
 				<div className="space-y-3">
-					<FormInput name="username" className="rounded-full" />
-					<FormInput name="password" className="rounded-full" />
+					<FormInput name="username" />
+					<FormInput name="password" />
 				</div>
 				<Button rounded type="submit" className="w-full">
 					Login

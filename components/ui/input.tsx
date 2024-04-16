@@ -138,7 +138,79 @@ const Textarea = ({
 			render={(field) => (
 				<textarea
 					className={cn(
-						"flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+						"flex min-h-[80px] rounded-xl w-full border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+						className,
+					)}
+					{...props}
+					{...field}
+				/>
+			)}
+		/>
+	);
+};
+const RadioCheckWrapper = <
+	TFieldValues extends FieldValues = FieldValues,
+	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({
+	name,
+	label,
+	disabled,
+	hidden,
+	description,
+	render,
+}: FieldWrapperProps<TFieldValues, TName> & {
+	hidden?: boolean;
+	render: (
+		field: ControllerRenderProps<TFieldValues, TName>,
+	) => React.ReactElement;
+}) => {
+	const form = useFormContext<TFieldValues>();
+	return (
+		<Form.FormField<TFieldValues, TName>
+			name={name}
+			control={form.control}
+			disabled={disabled}
+			render={({ field }) =>
+				hidden ? (
+					render(field)
+				) : (
+					<Form.FormItem className="flex items-center gap-x-2 space-y-0">
+						<Form.FormControl>{render(field)}</Form.FormControl>
+						{label && <Form.FormLabel>{label}</Form.FormLabel>}
+						{description && (
+							<Form.FormDescription>{description}</Form.FormDescription>
+						)}
+						<Form.FormMessage />
+					</Form.FormItem>
+				)
+			}
+		/>
+	);
+};
+const RadioOrCheck = <
+	TFieldValues extends FieldValues = FieldValues,
+	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({
+	type,
+	label,
+	description,
+	name,
+	disabled,
+	defaultValue,
+	className,
+	...props
+}: FormInputProps<TFieldValues, TName>) => {
+	return (
+		<RadioCheckWrapper
+			name={name}
+			label={label}
+			disabled={disabled}
+			description={description}
+			render={(field) => (
+				<input
+					type={type}
+					className={cn(
+						" w-full rounded-md border border-input bg-background  text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
 						className,
 					)}
 					{...props}
@@ -149,4 +221,4 @@ const Textarea = ({
 	);
 };
 
-export { type FormInputProps, FormInput, Textarea };
+export { type FormInputProps, FormInput, Textarea, RadioOrCheck };

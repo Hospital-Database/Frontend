@@ -5,9 +5,9 @@ export default function MainContent() {
 	return (
 		<section className="space-y-3 grid grid-cols-3 gap-x-8">
 			<div className="col-span-2 space-y-5">
-				<FormInput name="username" label="National ID *" />
+				<FormInput name="nationalId" label="National ID *" />
 				<FormInput
-					name="password"
+					name="fullName"
 					label="Full Name *"
 					description="Enter the full name of 4 parts as in the national ID"
 				/>
@@ -32,7 +32,7 @@ export default function MainContent() {
 					<strong className="text-sm font-medium">Select an image</strong>
 					<input
 						className="block w-0 h-0"
-						name="file"
+						name="patientImage"
 						type="file"
 						onChange={() => console.log("upload image")}
 					/>

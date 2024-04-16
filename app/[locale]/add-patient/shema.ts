@@ -18,11 +18,12 @@ export const patientSchema = z.object({
 		.refine(
 			(files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
 			"Only .jpg, .jpeg, .png and .webp formats are supported.",
-		),
-	phoneNumber: z.string().min(1),
-	gender: z.literal("male").or(z.literal("female")),
-	martialStatus: z.string(),
-	address: z.string(),
-	dateOfBirth: z.date(),
-	Notes: z.string(),
+		)
+		.optional(),
+	phoneNumber: z.string().min(1).optional(),
+	gender: z.literal("male").or(z.literal("female")).optional(),
+	martialStatus: z.string().optional(),
+	address: z.string().optional(),
+	dateOfBirth: z.date().optional(),
+	Notes: z.string().optional(),
 });

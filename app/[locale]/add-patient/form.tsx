@@ -21,6 +21,7 @@ export default function AddPatientForm() {
 	const handleAddPatientSubmt: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
 	};
+	// console.log(form, "error")
 	return (
 		<FormProvider {...form}>
 			<form

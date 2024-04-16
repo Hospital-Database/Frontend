@@ -17,6 +17,7 @@ interface FieldWrapperProps<
 	description?: string;
 	defaultValue?: PathValue<TFieldValues, TName>;
 	disabled?: boolean;
+	value?: string;
 }
 
 const FieldWrapper = <
@@ -198,6 +199,7 @@ const RadioOrCheck = <
 	disabled,
 	defaultValue,
 	className,
+	value,
 	...props
 }: FormInputProps<TFieldValues, TName>) => {
 	return (
@@ -215,6 +217,7 @@ const RadioOrCheck = <
 					)}
 					{...props}
 					{...field}
+					value={value}
 				/>
 			)}
 		/>

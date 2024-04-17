@@ -21,14 +21,13 @@ export default function AddPatientForm() {
 	const handleAddPatientSubmt: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
 	};
-	// console.log(form, "error")
 	return (
 		<FormProvider {...form}>
 			<form
 				onSubmit={form.handleSubmit(handleAddPatientSubmt)}
 				className="space-y-8"
 			>
-				<h1 className="text-3xl font-bold">Add new patient</h1>
+				<h1 className="font-bold text-3xl">Add new patient</h1>
 				<section className="space-y-6">
 					<AccordionTitle
 						Icon={<CircleUser />}

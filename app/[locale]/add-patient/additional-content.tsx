@@ -1,6 +1,7 @@
-import { FormInput, RadioOrCheck } from "@/components/ui/input";
+import { FormInput, RadioOrCheck, Textarea } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
+import Address from "./address";
 
 export default function AdditionalContent() {
 	return (
@@ -23,6 +24,8 @@ export default function AdditionalContent() {
 							value="female"
 						/>
 					</div>
+					<Address />
+					<Textarea name="Note" label="Add note here" />
 				</div>
 			</div>
 		</section>

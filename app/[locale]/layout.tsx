@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Handlee } from "next/font/google";
 
 import { availableLocalesMap, defaultLocale } from "@/next.locales.mjs";
-import { LocaleProvider } from "@/provider/locale-provider";
-import { ThemeProvider } from "@/provider/theme-provider";
+import { ColorSchemeScript } from "@mantine/core";
+import "@mantine/core/styles.css";
+import App from "./_app";
 import Navbar from "./_components/navbar";
 import "./globals.css";
 
@@ -24,13 +25,14 @@ export default function RootLayout({
 	const { langDir, hrefLang } = availableLocalesMap[locale] || defaultLocale;
 	return (
 		<html lang={hrefLang} dir={langDir} suppressHydrationWarning>
+			<head>
+				<ColorSchemeScript />
+			</head>
 			<body className={handlee.className}>
-				<ThemeProvider attribute="class" defaultTheme="system">
-					<LocaleProvider>
-						<Navbar />
-						{children}
-					</LocaleProvider>
-				</ThemeProvider>
+				<App>
+					<Navbar />
+					{children}
+				</App>
 			</body>
 		</html>
 	);

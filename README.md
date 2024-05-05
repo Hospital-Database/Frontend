@@ -12,13 +12,13 @@ pnpm dev
 
 **Install i18n-ally extension.**
 
-We uses i18n-ally extension which is available in many code editor including VSCode. It provides inline preview of translations in you r code directly. It is also helpful for automatically translating your messages using Google Translator for example. You can use it to extract text from the code and put them in the default locale file.
+We use i18n-ally extension which is available in many code editors including VSCode. It provides an inline preview of translations in your code directly. It is also helpful for automatically translating your messages using Google Translator for example. You can use it to extract text from the code and put them in the default locale file.
 
 ### Mantine components library
 
 Mantine docs recommended adding this to `.vscode/settings.json` file:
 
-```json
+```jsonc
 {
   // for i18n-ally
   "i18n-ally.localesPaths": ["i18n", "messages"],
@@ -29,8 +29,8 @@ Mantine docs recommended adding this to `.vscode/settings.json` file:
     "**/*.scss",
     "**/*.sass",
     "**/*.less",
-    "node_modules/@mantine/core/styles.css"
-  ]
+    "node_modules/@mantine/core/styles.css",
+  ],
 }
 ```
 

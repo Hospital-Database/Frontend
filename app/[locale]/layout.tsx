@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
-import { Handlee } from "next/font/google";
+import { Inter, Noto_Kufi_Arabic } from "next/font/google";
 
-import { availableLocalesMap, defaultLocale } from "@/next.locales.mjs";
+import { availableLocalesMap, defaultLocale } from "@/next.locales";
 import { ColorSchemeScript } from "@mantine/core";
 import "@mantine/core/styles.css";
 import App from "./_app";
 import Navbar from "./_components/navbar";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
-const handlee = Handlee({ subsets: ["latin"], weight: "400" });
+const inter = Inter({ subsets: ["latin"] });
+const noto = Noto_Kufi_Arabic({ subsets: ["arabic"] });
 
 export const metadata: Metadata = {
 	title: "Hospital for medical care",
@@ -28,7 +30,7 @@ export default function RootLayout({
 			<head>
 				<ColorSchemeScript />
 			</head>
-			<body className={handlee.className}>
+			<body className={cn(inter.className, noto.className)}>
 				<App>
 					<Navbar />
 					{children}

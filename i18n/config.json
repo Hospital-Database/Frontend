@@ -16,7 +16,7 @@
 		"langDir": "ltr",
 		"dateFormat": "MM.DD.YYYY",
 		"hrefLang": "en-GB",
-		"enabled": false,
+		"enabled": true,
 		"default": false
 	}
 ]

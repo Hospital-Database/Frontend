@@ -18,7 +18,10 @@ const availableLocalesMap = Object.fromEntries(
 	localeConfig.map((locale) => [locale.code, locale]),
 );
 
+type Locale = (typeof availableLocaleCodes)[number];
+
 export {
+	type Locale,
 	availableLocales,
 	availableLocaleCodes,
 	availableLocalesMap,

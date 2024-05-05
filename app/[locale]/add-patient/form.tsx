@@ -1,8 +1,6 @@
 "use client";
-import { Button } from "@/components/ui/button";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CircleUser, ShieldPlus } from "lucide-react";
 import {
 	type FieldValues,
 	FormProvider,
@@ -13,6 +11,8 @@ import AccordionTitle from "./accordion-title";
 import AdditionalContent from "./additional-content";
 import MainContent from "./main-content";
 import { patientSchema } from "./shema";
+import { IconMessageCircleUser, IconShieldPlus } from "@tabler/icons-react";
+import { Button } from "@mantine/core";
 
 export default function AddPatientForm() {
 	const form = useForm({
@@ -30,7 +30,7 @@ export default function AddPatientForm() {
 				<h1 className="font-bold text-3xl">Add new patient</h1>
 				<section className="space-y-6">
 					<AccordionTitle
-						Icon={<CircleUser />}
+						Icon={<IconMessageCircleUser />}
 						mainText="Main details"
 						additionalText="Complete the main details of the patient"
 					/>
@@ -38,19 +38,15 @@ export default function AddPatientForm() {
 				</section>
 				<section className="space-y-6">
 					<AccordionTitle
-						Icon={<ShieldPlus />}
+						Icon={<IconShieldPlus />}
 						mainText="Other details"
 						additionalText="Additional details, you can complete later"
 					/>
 					<AdditionalContent />
 				</section>
 				<section>
-					<Button type="submit" rounded>
-						Save
-					</Button>
-					<Button type="submit" rounded>
-						Save and start visit
-					</Button>
+					<Button type="submit">Save</Button>
+					<Button type="submit">Save and start visit</Button>
 				</section>
 			</form>
 		</FormProvider>

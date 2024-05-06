@@ -12,11 +12,11 @@ import {
 import { DatePickerInput } from "@mantine/dates";
 import "@mantine/dates/styles.css";
 import type { UseFormReturnType } from "@mantine/form";
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export default function AdditionalContent({
 	form,
 }: {
 	form: UseFormReturnType<
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 		Record<string, any>,
 		(values: Record<string, any>) => Record<string, any>
 	>;
@@ -66,7 +66,6 @@ export default function AdditionalContent({
 					{...form.getInputProps("martialStatus")}
 					key={form.key("martialStatus")}
 				/>
-				<Grid.Col></Grid.Col>
 			</Grid>
 
 			<DatePickerInput label="Date input" placeholder="Date input" />

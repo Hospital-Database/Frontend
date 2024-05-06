@@ -12,7 +12,6 @@
 		"checkall": "pnpm format && pnpm lint && pnpm checkts"
 	},
 	"dependencies": {
-		"@hookform/resolvers": "^3.3.4",
 		"@mantine/charts": "^7.9.0",
 		"@mantine/core": "^7.9.0",
 		"@mantine/dates": "^7.9.0",
@@ -30,12 +29,13 @@
 		"clsx": "^2.1.1",
 		"dayjs": "^1.11.11",
 		"lefthook": "^1.6.10",
+		"mantine-form-zod-resolver": "^1.1.0",
 		"mantine-react-table": "2.0.0-beta.1",
 		"next": "14.2.1",
 		"next-intl": "^3.12.2",
+		"next-nprogress-bar": "^2.3.11",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
-		"react-hook-form": "^7.51.4",
 		"recharts": "^2.12.6",
 		"sharp": "^0.33.3",
 		"tailwind-merge": "^2.3.0",

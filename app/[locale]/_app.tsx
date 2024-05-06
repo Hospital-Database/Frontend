@@ -1,5 +1,7 @@
+"use client";
+
 import { MantineProvider, createTheme } from "@mantine/core";
-import { LocaleProvider } from "./_components/locale-provider";
+import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 
 const theme = createTheme({
 	/** Put your mantine theme override here */
@@ -7,8 +9,14 @@ const theme = createTheme({
 
 export default function App({ children }: { children: React.ReactNode }) {
 	return (
-		<LocaleProvider>
-			<MantineProvider theme={theme}>{children}</MantineProvider>
-		</LocaleProvider>
+		<MantineProvider theme={theme}>
+			<ProgressBar
+				height="4px"
+				color="#fffd00"
+				options={{ showSpinner: false }}
+				shallowRouting
+			/>
+			{children}
+		</MantineProvider>
 	);
 }

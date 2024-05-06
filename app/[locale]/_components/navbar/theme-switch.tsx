@@ -1,8 +1,7 @@
 "use client";
 
-import { Menu, Button, Text, rem, useMantineColorScheme } from "@mantine/core";
+import { Button, Menu, useMantineColorScheme } from "@mantine/core";
 import { IconMoon, IconSun } from "@tabler/icons-react";
-import * as React from "react";
 
 export function ThemeSwitch() {
 	const { setColorScheme } = useMantineColorScheme();

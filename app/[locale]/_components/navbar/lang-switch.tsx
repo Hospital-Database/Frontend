@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "@/navigation";
-import { availableLocales, type Locale } from "@/next.locales";
+import { type Locale, availableLocales } from "@/next.locales";
 import { Button, Menu } from "@mantine/core";
 import { useLocale } from "next-intl";
 

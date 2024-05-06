@@ -1,14 +1,14 @@
-import { FormInput } from "@/components/ui/input";
-// import Image from "next/image"
+import { TextInput } from "@mantine/core";
 
 export default function MainContent() {
 	return (
 		<section className="space-y-3 grid grid-cols-3 gap-x-8">
 			<div className="col-span-2 space-y-5">
-				<FormInput name="nationalId" label="National ID *" />
-				<FormInput
+				<TextInput name="nationalId" label="National ID" required />
+				<TextInput
+					required
 					name="fullName"
-					label="Full Name *"
+					label="Full Name"
 					description="Enter the full name of 4 parts as in the national ID"
 				/>
 			</div>

@@ -1,35 +1,48 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { FormInput } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-	type FieldValues,
-	FormProvider,
-	type SubmitHandler,
-	useForm,
-} from "react-hook-form";
-import { loginSchema } from "./shema";
+
+import { useRouter } from "@/navigation";
+import { Button, TextInput } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { zodResolver } from "mantine-form-zod-resolver";
+import * as z from "zod";
+
+export const loginSchema = z.object({
+	username: z.string().regex(/^(?![-_])[A-Za-z0-9_-]*[A-Za-z0-9]$/, {
+		message:
+			"Invalid username, it must only contains letters, numbers, _, or - but not at the beggining or at the end",
+	}),
+	password: z.string(),
+});
+
 export default function LoginForm() {
+	const router = useRouter();
 	const form = useForm({
-		resolver: zodResolver(loginSchema),
+		validate: zodResolver(loginSchema),
 	});
-	const handleLoginSubmt: SubmitHandler<FieldValues> = (data) => {
-		console.log(data);
-	};
 	return (
-		<FormProvider {...form}>
-			<form
-				className="space-y-7"
-				onSubmit={form.handleSubmit(handleLoginSubmt)}
-			>
-				<div className="space-y-3">
-					<FormInput name="username" />
-					<FormInput name="password" />
-				</div>
-				<Button rounded type="submit" className="w-full">
-					Login
-				</Button>
-			</form>
-		</FormProvider>
+		<form
+			className="space-y-7"
+			onSubmit={form.onSubmit((data) => {
+				alert(JSON.stringify(data));
+				router.push("/");
+			})}
+		>
+			<div className="space-y-3">
+				<TextInput
+					label="Username"
+					placeholder="user-xyz"
+					{...form.getInputProps("username")}
+				/>
+				<TextInput
+					label="Password"
+					type="password"
+					placeholder="**********"
+					{...form.getInputProps("password")}
+				/>
+			</div>
+			<Button type="submit" className="w-full">
+				Login
+			</Button>
+		</form>
 	);
 }

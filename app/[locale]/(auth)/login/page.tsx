@@ -13,7 +13,7 @@ export default function Login() {
 			<section className="w-[min(90%,600px)] bg-neutral-300 dark:bg-neutral-900 px-4 py-8 lg:px-8 rounded-md">
 				<section className="space-y-10">
 					<Image
-						src="/logo.jfif"
+						src="/en/icon.png"
 						alt="logo"
 						width={50}
 						height={50}

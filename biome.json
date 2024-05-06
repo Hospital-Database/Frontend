@@ -13,25 +13,17 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
+			"correctness": {
+				"noUnusedVariables": "error",
+				"noUnusedImports": "error"
+			},
 			"suspicious": {
 				"noConsoleLog": "warn"
-			},
-			"correctness": {
-				"noUnusedVariables": "warn"
-			},
-			"style": {
-				"noVar": "error"
 			}
 		}
 	},
 	"formatter": {
 		"enabled": true,
-		"formatWithErrors": false,
-		"ignore": [],
-		"attributePosition": "auto",
-		"indentStyle": "tab",
-		"indentWidth": 2,
-		"lineEnding": "lf",
-		"lineWidth": 80
+		"lineEnding": "crlf"
 	}
 }

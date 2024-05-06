@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config = {
-	darkMode: ['selector', '[data-mantine-color-scheme="dark"]'],
+	darkMode: ["selector", '[data-mantine-color-scheme="dark"]'],
 	content: [
 		"./pages/**/*.{ts,tsx}",
 		"./components/**/*.{ts,tsx}",

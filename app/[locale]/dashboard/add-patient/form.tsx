@@ -31,7 +31,7 @@ export default function AddPatientForm() {
 				/>
 				<AdditionalContent />
 			</section>
-			<section>
+			<section className="space-x-2">
 				<Button
 					type="button"
 					onClick={() => {

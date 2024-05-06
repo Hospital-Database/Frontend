@@ -9,7 +9,8 @@
 		"lint": "biome check --apply .",
 		"format": "prettier -w . && biome format --write .",
 		"checkts": "tsc --noEmit",
-		"checkall": "pnpm format && pnpm lint && pnpm checkts"
+		"checkall": "pnpm format && pnpm lint && pnpm checkts",
+		"analyze": "cross-env ANALYZE=true next build && echo ===== open '.next/analyze' in your browser"
 	},
 	"dependencies": {
 		"@mantine/charts": "^7.9.0",
@@ -44,9 +45,11 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.6.4",
+		"@next/bundle-analyzer": "^14.2.3",
 		"@types/node": "^20.12.8",
 		"@types/react": "^18.3.1",
 		"@types/react-dom": "^18.3.0",
+		"cross-env": "^7.0.3",
 		"postcss": "^8.4.38",
 		"postcss-preset-mantine": "^1.15.0",
 		"postcss-simple-vars": "^7.0.1",

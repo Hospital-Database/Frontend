@@ -12,7 +12,7 @@ export default function App({ children }: { children: React.ReactNode }) {
 		<MantineProvider theme={theme}>
 			<ProgressBar
 				height="4px"
-				color="#fffd00"
+				color="var(--mantine-primary-color-filled)"
 				options={{ showSpinner: false }}
 				shallowRouting
 			/>

@@ -1,12 +1,13 @@
 import { TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export default function MainContent({
 	form,
 }: {
 	form: UseFormReturnType<
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 		Record<string, any>,
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 		(values: Record<string, any>) => Record<string, any>
 	>;
 }) {

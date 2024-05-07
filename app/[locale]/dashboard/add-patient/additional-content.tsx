@@ -18,6 +18,7 @@ export default function AdditionalContent({
 	form: UseFormReturnType<
 		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 		Record<string, any>,
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 		(values: Record<string, any>) => Record<string, any>
 	>;
 }) {
@@ -58,7 +59,7 @@ export default function AdditionalContent({
 				{...form.getInputProps("martialStatus")}
 				key={form.key("martialStatus")}
 			/>
-			<Grid>
+			{/* <Grid>
 				<Select
 					label="Material status"
 					placeholder="Choose your material Status"
@@ -66,7 +67,7 @@ export default function AdditionalContent({
 					{...form.getInputProps("martialStatus")}
 					key={form.key("martialStatus")}
 				/>
-			</Grid>
+			</Grid> */}
 
 			<DatePickerInput label="Date input" placeholder="Date input" />
 

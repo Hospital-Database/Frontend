@@ -1,24 +1,29 @@
 "use server";
 import type { Patient } from "@/app/[locale]/types/patient";
 import { http } from "@/lib/axios";
-import { getErrorMessage } from "@/lib/err-msg";
+import { isAxiosError } from "axios";
 export async function addPatient(data: Patient) {
 	try {
-		console.log(data);
 		const newData = {
-			national_id: "12345689122",
-			full_name: "MohamedYousef",
-			governorate: "Alsharkia",
-			street: "alKady",
-			city: "fakous",
-			phone: {
-				mobile: "01091321356",
+			national_id: data.nationalId,
+			full_name: data.fullName,
+			address: {
+				governorate: data.government,
+				street: data.street,
+				city: data.status,
 			},
-			gender: "male",
+			phone: {
+				mobile: data.phoneNumber,
+			},
+			gender: data.gender,
+			marital_status: data.martialStatus,
+			date_of_birth: data.dateOfBirth,
+			notes: data.notes,
 		};
-		await http.post("/patients", newData);
+		await http.post("/accounts/patient/", newData);
+		return "Patient added successfully";
 	} catch (e) {
-		const error = await getErrorMessage(e);
-		return { error: error };
+		if (isAxiosError(e)) return { error: e?.response?.data };
+		return { error: "Something went wrong" };
 	}
 }

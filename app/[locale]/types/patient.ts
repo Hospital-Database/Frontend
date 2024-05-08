@@ -5,6 +5,7 @@ export interface Patient {
 	phoneNumber: string;
 	gender: string;
 	martialStatus: string;
+
 	government: string;
 	status: string;
 	street: string;

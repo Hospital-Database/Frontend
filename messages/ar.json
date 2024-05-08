@@ -1,5 +1,10 @@
 {
 	"Home": {
 		"hello-world": "مرحبا بالعالم!"
+	},
+	"Common": {
+		"errors": {
+			"something-went-wrong": "هناك خطأ ما"
+		}
 	}
 }

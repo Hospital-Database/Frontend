@@ -1,5 +1,10 @@
 {
 	"Home": {
 		"hello-world": "Hello World!"
+	},
+	"Common": {
+		"errors": {
+			"something-went-wrong": "Something Went wrong"
+		}
 	}
 }

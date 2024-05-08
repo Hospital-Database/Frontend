@@ -6,7 +6,8 @@ export const http = axios.create({
 });
 
 http.interceptors.request.use(async (config) => {
-	const accessToken = localStorage.getItem("accessToken");
+	const accessToken =
+		"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2OTEwNTQzLCJpYXQiOjE3MTUxODI1NDMsImp0aSI6ImNlMDFhZTQ0MTM1YzQ4OTNiNGEyZGZlODQ4MjcxNzJlIiwidXNlcl9pZCI6MTl9.N9VLh0gnlSavHl-REGr7pWFvl3UEKkT-c24pj8QG_F8";
 	if (accessToken) config.headers.set("Authorization", `Bearer ${accessToken}`);
 	return config;
 });

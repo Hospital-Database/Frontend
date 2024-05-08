@@ -16,6 +16,7 @@ export default function App({ children }: { children: React.ReactNode }) {
 				options={{ showSpinner: true }}
 				shallowRouting
 			/>
+
 			{children}
 		</MantineProvider>
 	);

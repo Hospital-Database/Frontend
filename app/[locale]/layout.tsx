@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
-import { Inter, Noto_Kufi_Arabic } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { availableLocalesMap, defaultLocale } from "@/next.locales";
 import { ColorSchemeScript } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
+import type { Metadata } from "next";
+import { Inter, Noto_Kufi_Arabic } from "next/font/google";
 import App from "./_app";
 import { LocaleProvider } from "./_components/locale-provider";
 
-import "./globals.css";
 import "@mantine/core/styles.css";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 const noto = Noto_Kufi_Arabic({ subsets: ["arabic"] });
@@ -32,7 +33,11 @@ export default function RootLayout({
 			</head>
 			<body className={cn(inter.className, noto.className)}>
 				<LocaleProvider>
-					<App>{children}</App>
+					<App>
+						<Notifications />
+
+						{children}
+					</App>
 				</LocaleProvider>
 			</body>
 		</html>

@@ -1,17 +1,11 @@
 "use client";
 
-import {
-	AppShell,
-	Burger,
-	Button,
-	Divider,
-	Group,
-	Skeleton,
-} from "@mantine/core";
+import { Link } from "@/navigation";
+import { AppShell, Burger, Button, Divider, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Image from "next/image";
-import { ThemeSwitch } from "../_components/theme-switch";
 import LangSwitch from "../_components/lang-switch";
+import { ThemeSwitch } from "../_components/theme-switch";
 
 export default function CollapseDesktop({
 	children,
@@ -57,13 +51,8 @@ export default function CollapseDesktop({
 				</Group>
 			</AppShell.Header>
 			<AppShell.Navbar p="md">
-				Navbar
-				{Array(15)
-					.fill(0)
-					.map((_, index) => index)
-					.map((val) => (
-						<Skeleton key={val} h={28} mt="sm" animate={false} />
-					))}
+				<Link href="/"> Home</Link>
+				<Link href="/dashboard/add-patient">Add-Patient</Link>
 			</AppShell.Navbar>
 			<AppShell.Main>{children}</AppShell.Main>
 		</AppShell>

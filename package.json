@@ -15,7 +15,7 @@
 	"dependencies": {
 		"@mantine/charts": "^7.9.0",
 		"@mantine/core": "^7.9.0",
-		"@mantine/dates": "^7.9.0",
+		"@mantine/Ismailias": "^7.9.0",
 		"@mantine/dropzone": "^7.9.0",
 		"@mantine/form": "^7.9.0",
 		"@mantine/hooks": "^7.9.0",

@@ -26,7 +26,9 @@ export const patientSchema = z.object({
 	),
 	gender: z.literal("male").or(z.literal("female")).optional(),
 	martialStatus: z.string().optional(),
-	address: z.string().optional(),
+	government: z.string().optional(),
+	status: z.string().optional(),
+	street: z.string().optional(),
 	dateOfBirth: z.date().optional(),
 	notes: z.preprocess((val) => val || undefined, z.string().min(1).optional()),
 });

@@ -14,17 +14,13 @@ import "@mantine/dates/styles.css";
 import type { UseFormReturnType } from "@mantine/form";
 import { useLocale } from "next-intl";
 import { useState } from "react";
+import type { Patient } from "../../types/patient";
 import { EgyptCities, type EgyptCitiesKey, EgyptGovernment } from "./form-data";
 
 export default function AdditionalContent({
 	form,
 }: {
-	form: UseFormReturnType<
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		Record<string, any>,
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		(values: Record<string, any>) => Record<string, any>
-	>;
+	form: UseFormReturnType<Patient, (values: Patient) => Patient>;
 }) {
 	return (
 		<main className="space-y-5">
@@ -85,12 +81,7 @@ export default function AdditionalContent({
 function Address({
 	form,
 }: {
-	form: UseFormReturnType<
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		Record<string, any>,
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		(values: Record<string, any>) => Record<string, any>
-	>;
+	form: UseFormReturnType<Patient>;
 }) {
 	const locale = useLocale() as "ar" | "en";
 	const [government, setGovernment] = useState<string | null>(null);

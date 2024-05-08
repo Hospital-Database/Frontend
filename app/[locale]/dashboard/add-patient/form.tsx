@@ -4,22 +4,26 @@ import { Button } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconMessageCircleUser, IconShieldPlus } from "@tabler/icons-react";
 import { zodResolver } from "mantine-form-zod-resolver";
+import { addPatient } from "../../actions/patient";
+import type { Patient } from "../../types/patient";
 import AccordionTitle from "./accordion-title";
 import AdditionalContent from "./additional-content";
 import MainContent from "./main-content";
 import { patientSchema } from "./shema";
-// import { addPatient } from "../../actions/patient";
-// import type{ Patient } from "../../types/patient";
 
+// ! TODO: Try to remove ts-ignore....
 export default function AddPatientForm() {
-	const form = useForm({
-		mode: "uncontrolled",
+	const form = useForm<Patient>({
+		// @ts-ignore
 		validate: zodResolver(patientSchema),
 	});
 	return (
 		<form
 			className="space-y-8"
-			onSubmit={form.onSubmit((values) => console.log(values))}
+			onSubmit={form.onSubmit((data) =>
+				// @ts-ignore
+				addPatient(data),
+			)}
 		>
 			<section className="space-y-6">
 				<AccordionTitle
@@ -27,6 +31,8 @@ export default function AddPatientForm() {
 					mainText="Main details"
 					additionalText="Complete the main details of the patient"
 				/>
+
+				{/* @ts-ignore */}
 				<MainContent form={form} />
 			</section>
 			<section className="space-y-6">
@@ -35,6 +41,7 @@ export default function AddPatientForm() {
 					mainText="Other details"
 					additionalText="Additional details, you can complete later"
 				/>
+				{/* @ts-ignore */}
 				<AdditionalContent form={form} />
 			</section>
 			<section className="space-x-2">

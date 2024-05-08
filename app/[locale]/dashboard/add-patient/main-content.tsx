@@ -1,15 +1,11 @@
 import { TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
+import type { Patient } from "../../types/patient";
 
 export default function MainContent({
 	form,
 }: {
-	form: UseFormReturnType<
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		Record<string, any>,
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		(values: Record<string, any>) => Record<string, any>
-	>;
+	form: UseFormReturnType<Patient, (values: Patient) => Patient>;
 }) {
 	return (
 		<section className="space-y-3 grid grid-cols-3 gap-x-8">

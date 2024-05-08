@@ -8,6 +8,8 @@ import AccordionTitle from "./accordion-title";
 import AdditionalContent from "./additional-content";
 import MainContent from "./main-content";
 import { patientSchema } from "./shema";
+// import { addPatient } from "../../actions/patient";
+// import type{ Patient } from "../../types/patient";
 
 export default function AddPatientForm() {
 	const form = useForm({

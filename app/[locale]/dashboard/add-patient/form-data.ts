@@ -1,38 +1,68 @@
 export const EgyptGovernment = {
-	Cairo: "	القاهرة",
-	Giza: "	الجيزة",
-	Alexandria: "	الاسكندرية",
-	Al_Beheira: "البحيرة",
-	Al_Daqahliya: "	الدقهلية",
-	Al_Fayoum: "	الفيوم",
-	Al_Gharbia: "	الغربية",
-	Al_Meniya: "	المنيا",
-	Al_Monufia: "	المنوفية",
-	Al_Sharqia: "	الشرقية",
-	Aswan: "	أسوان",
-	Asyut: "	أسيوط",
-	Bani_Souaif: "	بني سويف",
-	Damietta: "	دمياط",
-	Ismailia: "	الاسماعيلية",
-	Kafr_El_Sheikh: "	كفر الشيخ",
-	Luxor: "	الأقصر",
-	Matrooh: "	مطروح",
-	New_Valley: "	الوادي الجديد",
-	Port_Said: "	بورسعيد",
-	Qalyubia: "	القليوبية",
-	Qena: "	قنا",
-	Red_Sea: "	البحر الاحمر",
-	Sohag: "	سوهاج",
-	Suez: "	السويس",
-	North_Sinai: "	شمال سيناء",
-	South_Sinai: "	جنوب سيناء",
-};
+	en: [
+		"Cairo",
+		"Giza",
+		"Alexandria",
+		"Al Beheira",
+		"Al Daqahliya",
+		"Al Fayoum",
+		"Al Gharbia",
+		"Al Meniya",
+		"Al Monufia",
+		"Al Sharqia",
+		"Aswan",
+		"Asyut",
+		"Bani Souaif",
+		"Damietta",
+		"Ismailia",
+		"Kafr El Sheikh",
+		"Luxor",
+		"Matrooh",
+		"New Valley",
+		"Port Said",
+		"Qalyubia",
+		"Qena",
+		"Red Sea",
+		"Sohag",
+		"Suez",
+		"North Sinai",
+		"South Sinai",
+	],
+	ar: [
+		"القاهرة",
+		"الجيزة",
+		"الاسكندرية",
+		"البحيرة",
+		"الدقهلية",
+		"الفيوم",
+		"الغربية",
+		"المنيا",
+		"المنوفية",
+		"الشرقية",
+		"أسوان",
+		"أسيوط",
+		"بني سويف",
+		"دمياط",
+		"الاسماعيلية",
+		"كفر الشيخ",
+		"الأقصر",
+		"مطروح",
+		"الوادي الجديد",
+		"بورسعيد",
+		"القليوبية",
+		"قنا",
+		"البحر الاحمر",
+		"سوهاج",
+		"السويس",
+		"شمال سيناء",
+		"جنوب سيناء",
+	],
+} satisfies Record<"en" | "ar", string[]>;
 export const EgyptCities = {
 	Cairo: {
 		ar: [
 			"حدائق الزيتون",
 			"الشروق",
-			"المرج",
 			"المعادي دجلة",
 			"العباسية",
 			"النزهة الجديدة",
@@ -48,7 +78,6 @@ export const EgyptCities = {
 			"عزبة النخل",
 			"قطامية",
 			"الحرفيين",
-			"مدينة 15 مايو",
 			"وسط البلد",
 			"المرج",
 			"المعادى الجديدة",
@@ -231,7 +260,6 @@ export const EgyptCities = {
 			"	فيصل",
 			"	الواحات",
 			"	حدائق الاهرام",
-			"	السادس من اكتوبر",
 			"	أوسيم",
 			"	النوبارية",
 			"	بدراشين",
@@ -314,7 +342,7 @@ export const EgyptCities = {
 			"	المنتزه",
 		],
 	},
-	Al_Beheira: {
+	"Al Beheira": {
 		en: [
 			"Hosh Issa	",
 			"Rashid	",
@@ -354,7 +382,7 @@ export const EgyptCities = {
 			"	الرحمانية",
 		],
 	},
-	Al_Daqahliya: {
+	"Al Daqahliya": {
 		en: [
 			"Meet Ghamr	",
 			"Belqas	",
@@ -384,7 +412,7 @@ export const EgyptCities = {
 			"	المنصورة",
 		],
 	},
-	Al_Fayoum: {
+	"Al Fayoum": {
 		en: [
 			"Sonores",
 			"Ebshoy",
@@ -416,7 +444,7 @@ export const EgyptCities = {
 			"	منشأة الجمال",
 		],
 	},
-	Al_Gharbia: {
+	"Al Gharbia": {
 		en: [
 			"Alsanta	",
 			"Al Mahala Al Kobra	",
@@ -441,7 +469,7 @@ export const EgyptCities = {
 		],
 	},
 
-	Al_Meniya: {
+	"Al Meniya": {
 		ar: [
 			"	المنيا",
 			"	سمالوط",
@@ -466,7 +494,7 @@ export const EgyptCities = {
 		],
 	},
 
-	Al_Monufia: {
+	"Al Monufia": {
 		en: [
 			"Shohada	",
 			"Menoof	",
@@ -491,18 +519,18 @@ export const EgyptCities = {
 		],
 	},
 
-	Al_Sharqia: {
+	"Al Sharqia": {
 		en: [
+			"Faqous	",
+			"Zakazik	",
 			"Al Salhiya Al Gedida	",
 			"Abu Hammad	",
 			"Abu Kbeer	",
 			"Hehya	",
 			"Awlad Saqr	",
 			"Al Hasiniya	",
-			"Faqous	",
 			"Darb Negm	",
 			"Al Ibrahimiya	",
-			"Zakazik	",
 			"Kafr Saqr	",
 			"Mashtool Al Sooq	",
 			"Belbes	",
@@ -511,16 +539,16 @@ export const EgyptCities = {
 			"10th of Ramdan City	",
 		],
 		ar: [
+			"	الزقازيق",
+			"	فاقوس",
 			"	الصالحية الجديدة",
 			"	ابو حماد",
 			"	ابو كبير",
 			"	ههيا",
 			"	اولاد صقر",
 			"	الحسينية",
-			"	فاقوس",
 			"	درب نجم",
 			"	الابراهيمية",
-			"	الزقازيق",
 			"	كفر صقر",
 			"	مشتول السوق",
 			"	بيلبيس",
@@ -584,7 +612,7 @@ export const EgyptCities = {
 			"منفلوط",
 		],
 	},
-	Bani_Souaif: {
+	"Bani Souaif": {
 		en: [
 			"Bani Souaif	",
 			"El Wastaa	",
@@ -650,7 +678,7 @@ export const EgyptCities = {
 		],
 	},
 
-	Kafr_El_Sheikh: {
+	"Kafr El Sheikh": {
 		en: [
 			"Hamool	",
 			"Kafr El Sheikh	",
@@ -702,12 +730,12 @@ export const EgyptCities = {
 		ar: ["مطروح", "العلمين", "سيدي عبد الرحمن", "الضبعة", "مرسى مطروح"],
 	},
 
-	New_Valley: {
+	"New Valley": {
 		en: ["El Kharga	", "New Valley	"],
 		ar: ["	الخارجة", "	الوادي الجديد"],
 	},
 
-	Port_Said: {
+	"Port Said": {
 		en: ["Port Fouad	", "Port Said	", "Zohoor District	"],
 		ar: ["	بور فؤاد", "	بورسعيد", "	حي الزهور"],
 	},
@@ -777,7 +805,7 @@ export const EgyptCities = {
 			"	نجع حمادي",
 		],
 	},
-	Red_Sea: {
+	"Red Sea": {
 		en: [
 			"Red Sea",
 			"Safaga	",
@@ -837,7 +865,6 @@ export const EgyptCities = {
 		],
 		ar: [
 			"حي عتاقة",
-			"السويس",
 			"حي الجناين",
 			"السويس",
 			"الأدبية",
@@ -845,11 +872,11 @@ export const EgyptCities = {
 			"حى الاربعين",
 		],
 	},
-	North_Sinai: {
+	"North Sinai": {
 		en: ["North Sinai", "Al Arish"],
 		ar: ["شمال سيناء", "العريش"],
 	},
-	South_Sinai: {
+	"South Sinai": {
 		en: [
 			"Neweibaa",
 			"Dahab",
@@ -860,4 +887,5 @@ export const EgyptCities = {
 		],
 		ar: ["نويبع", "دهب", "سانت كاترين", "شرم الشيخ", "طور سيناء", "طابا"],
 	},
-};
+} satisfies Record<string, Record<"ar" | "en", string[]>>;
+export type EgyptCitiesKey = keyof typeof EgyptCities;

@@ -19,7 +19,6 @@ export default function AddPatientForm() {
 			className="space-y-8"
 			onSubmit={form.onSubmit((values) => console.log(values))}
 		>
-			<h1 className="font-bold text-3xl">Add new patient</h1>
 			<section className="space-y-6">
 				<AccordionTitle
 					Icon={<IconMessageCircleUser />}

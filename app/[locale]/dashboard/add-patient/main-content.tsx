@@ -13,6 +13,10 @@ export default function MainContent({
 	const [isOnChange, setIsOnChange] = useState(true);
 	const checkNationalId = async () => {
 		const { nationalId } = form.getValues();
+		if (typeof nationalId !== "string" || nationalId.length !== 14) {
+			form.setFieldError("nationalId", "National ID must be 14 digits");
+			return;
+		}
 		const data = await isExist({ national_id: nationalId });
 		form.setFieldError(
 			"nationalId",

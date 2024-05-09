@@ -9,6 +9,7 @@ const config = {
 		"./src/**/*.{ts,tsx}",
 	],
 	prefix: "",
+	important: true,
 	theme: {
 		container: {
 			center: true,
@@ -23,34 +24,34 @@ const config = {
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
 				background: "hsl(var(--background))",
-				foreground: "hsl(var(--foreground))",
+				fg: "hsl(var(--fg))",
 				primary: {
 					DEFAULT: "hsl(var(--primary))",
-					foreground: "hsl(var(--primary-foreground))",
+					fg: "hsl(var(--primary-fg))",
 				},
 				secondary: {
 					DEFAULT: "hsl(var(--secondary))",
-					foreground: "hsl(var(--secondary-foreground))",
+					fg: "hsl(var(--secondary-fg))",
 				},
 				destructive: {
 					DEFAULT: "hsl(var(--destructive))",
-					foreground: "hsl(var(--destructive-foreground))",
+					fg: "hsl(var(--destructive-fg))",
 				},
 				muted: {
 					DEFAULT: "hsl(var(--muted))",
-					foreground: "hsl(var(--muted-foreground))",
+					fg: "hsl(var(--muted-fg))",
 				},
 				accent: {
 					DEFAULT: "hsl(var(--accent))",
-					foreground: "hsl(var(--accent-foreground))",
+					fg: "hsl(var(--accent-fg))",
 				},
 				popover: {
 					DEFAULT: "hsl(var(--popover))",
-					foreground: "hsl(var(--popover-foreground))",
+					fg: "hsl(var(--popover-fg))",
 				},
 				card: {
 					DEFAULT: "hsl(var(--card))",
-					foreground: "hsl(var(--card-foreground))",
+					fg: "hsl(var(--card-fg))",
 				},
 			},
 			borderRadius: {

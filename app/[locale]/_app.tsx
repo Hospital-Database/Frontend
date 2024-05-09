@@ -3,9 +3,7 @@
 import { MantineProvider, createTheme } from "@mantine/core";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 
-const theme = createTheme({
-	/** Put your mantine theme override here */
-});
+const theme = createTheme({});
 
 export default function App({ children }: { children: React.ReactNode }) {
 	return (

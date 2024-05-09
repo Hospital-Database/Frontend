@@ -8,6 +8,7 @@ import {
 	Divider,
 	Group,
 	Stack,
+	Text,
 	TextInput,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -62,7 +63,10 @@ export default function CollapseDesktop({
 				</Group>
 			</AppShell.Header>
 			<AppShell.Navbar p="md">
-				<SearchField className="w-full mkd:hidden" />
+				<Text fw="bold" size="xl">
+					ZU Hospital
+				</Text>
+				<SearchField className="w-full md:hidden mt-4" />
 				<Stack gap={"md"} mt="md">
 					<NavLink href="/"> Home</NavLink>
 					<NavLink href="/dashboard/add-patient">Add-Patient</NavLink>
@@ -90,7 +94,7 @@ function NavLink({
 	return (
 		<Link
 			href={href}
-			className="p-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-900 rounded"
+			className="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-900 rounded"
 		>
 			{children}
 		</Link>

@@ -53,6 +53,7 @@ export default function CollapseDesktop({
 			<AppShell.Navbar p="md">
 				<Link href="/"> Home</Link>
 				<Link href="/dashboard/add-patient">Add-Patient</Link>
+				<Link href="/dashboard/dashboard">test</Link>
 			</AppShell.Navbar>
 			<AppShell.Main>{children}</AppShell.Main>
 		</AppShell>

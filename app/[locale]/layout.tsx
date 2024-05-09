@@ -35,7 +35,6 @@ export default function RootLayout({
 				<LocaleProvider>
 					<App>
 						<Notifications />
-
 						{children}
 					</App>
 				</LocaleProvider>

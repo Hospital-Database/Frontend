@@ -27,3 +27,17 @@ export async function addPatient(data: Patient) {
 		return { error: "Something went wrong" };
 	}
 }
+
+export async function isExist(nationalId: { national_id: string }) {
+	try {
+		const { data } = await http.post(
+			"/accounts/check-national-id/",
+			nationalId,
+		);
+
+		return data as { exists: boolean };
+	} catch (e) {
+		if (isAxiosError(e)) return { error: e?.response?.data, exists: false };
+		return { error: "Something went wrong", exists: false };
+	}
+}

@@ -1,5 +1,8 @@
-import { TextInput } from "@mantine/core";
+"use client";
+import { Button, TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
+import { useState } from "react";
+import { isExist } from "../../actions/patient";
 import type { Patient } from "../../types/patient";
 
 export default function MainContent({
@@ -7,16 +10,47 @@ export default function MainContent({
 }: {
 	form: UseFormReturnType<Patient, (values: Patient) => Patient>;
 }) {
+	const [isOnChange, setIsOnChange] = useState(true);
+	const checkNationalId = async () => {
+		const { nationalId } = form.getValues();
+		const data = await isExist({ national_id: nationalId });
+		form.setFieldError(
+			"nationalId",
+			data?.exists ? "User is already exist" : "",
+		);
+		setIsOnChange(false);
+	};
+	const handleOnChange = (value: string) => {
+		setIsOnChange(true);
+		form.getInputProps("nationalId").onChange(value);
+	};
+
 	return (
 		<section className="space-y-3 grid grid-cols-3 gap-x-8">
 			<div className="col-span-2 space-y-5">
-				<TextInput
-					name="nationalId"
-					label="National ID"
-					{...form.getInputProps("nationalId")}
-					key={form.key("nationalId")}
-					withAsterisk
-				/>
+				<div className="space-y-2">
+					<TextInput
+						name="nationalId"
+						label="National ID"
+						{...form.getInputProps("nationalId")}
+						key={form.key("nationalId")}
+						withAsterisk
+						className={
+							!form.errors.nationalId && !isOnChange
+								? "[&>div]:border [&>div]:border-green-500"
+								: ""
+						}
+						onChange={(e) => handleOnChange(e.target.value)}
+					/>
+					<p className="text-green-500 text-xs">
+						{!form.errors.nationalId && !isOnChange ? "User is not exist" : ""}
+					</p>
+
+					<Button variant="light" onClick={checkNationalId} type="button">
+						See details
+					</Button>
+				</div>
+
 				<TextInput
 					withAsterisk
 					name="fullName"

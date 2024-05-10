@@ -44,6 +44,9 @@ importers:
       '@tabler/icons-react':
         specifier: ^3.3.0
         version: 3.3.0(react@18.3.1)
+      '@tanstack/react-query':
+        specifier: ^5.35.1
+        version: 5.35.1(react@18.3.1)
       '@tiptap/extension-link':
         specifier: ^2.3.1
         version: 2.3.1(@tiptap/core@2.3.1(@tiptap/pm@2.3.1))(@tiptap/pm@2.3.1)
@@ -65,6 +68,9 @@ importers:
       lefthook:
         specifier: ^1.6.10
         version: 1.6.10
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       mantine-form-zod-resolver:
         specifier: ^1.1.0
         version: 1.1.0(@mantine/form@7.9.0(react@18.3.1))(zod@3.23.6)
@@ -108,6 +114,9 @@ importers:
       '@next/bundle-analyzer':
         specifier: ^14.2.3
         version: 14.2.3
+      '@types/lodash':
+        specifier: ^4.17.1
+        version: 4.17.1
       '@types/node':
         specifier: ^20.12.8
         version: 20.12.8
@@ -753,6 +762,14 @@ packages:
     resolution: {integrity: sha512-3VPh0SYMGCa5dWQEqNab87UpCMk+ANWHDP4ALs5PeEW9EpfTAbrezzaOk/OiM52IESViefkoAOYuxdoa04p6aA==}
     engines: {node: '>=12'}
 
+  '@tanstack/query-core@5.35.1':
+    resolution: {integrity: sha512-0Dnpybqb8+ps6WgqBnqFEC+1F/xLvUosRAq+wiGisTgolOZzqZfkE2995dEXmhuzINiTM7/a6xSGznU0NIvBkw==}
+
+  '@tanstack/react-query@5.35.1':
+    resolution: {integrity: sha512-i2T7m2ffQdNqlX3pO+uMsnQ0H4a59Ens2GxtlMsRiOvdSB4SfYmHb27MnvFV8rGmtWRaa4gPli0/rpDoSS5LbQ==}
+    peerDependencies:
+      react: ^18.0.0
+
   '@tanstack/react-table@8.15.0':
     resolution: {integrity: sha512-8K4RSROUtXUtfiezV6Ehl8z99axFrkQnxXi0vjWBJv3Tsm5x4EyrgXI7d2tOOMoANykKZLB6S1sGZGemoMRt7Q==}
     engines: {node: '>=12'}
@@ -934,6 +951,9 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
+
+  '@types/lodash@4.17.1':
+    resolution: {integrity: sha512-X+2qazGS3jxLAIz5JDXDzglAF3KpijdhFxlf/V1+hEsOUc+HnWi81L/uv/EvGuV90WY+7mPGFCUDGfQC3Gj95Q==}
 
   '@types/node@20.12.8':
     resolution: {integrity: sha512-NU0rJLJnshZWdE/097cdCBbyW1h4hEg0xpovcoAQYHl8dnEyp/NAOiE45pvc+Bd1Dt+2r94v2eGFpQJ4R7g+2w==}
@@ -2501,6 +2521,13 @@ snapshots:
     dependencies:
       remove-accents: 0.4.2
 
+  '@tanstack/query-core@5.35.1': {}
+
+  '@tanstack/react-query@5.35.1(react@18.3.1)':
+    dependencies:
+      '@tanstack/query-core': 5.35.1
+      react: 18.3.1
+
   '@tanstack/react-table@8.15.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@tanstack/table-core': 8.14.0
@@ -2695,6 +2722,8 @@ snapshots:
   '@types/d3-timer@3.0.2': {}
 
   '@types/json-schema@7.0.15': {}
+
+  '@types/lodash@4.17.1': {}
 
   '@types/node@20.12.8':
     dependencies:

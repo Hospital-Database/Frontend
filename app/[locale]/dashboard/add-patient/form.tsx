@@ -6,6 +6,7 @@ import { notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 import { IconMessageCircleUser, IconShieldPlus } from "@tabler/icons-react";
 import { zodResolver } from "mantine-form-zod-resolver";
+import { useTranslations } from "next-intl";
 import { addPatient } from "../../actions/patient";
 import type { Patient } from "../../types/patient";
 import AccordionTitle from "./accordion-title";
@@ -15,6 +16,7 @@ import { patientSchema } from "./shema";
 
 // ! TODO: Try to remove ts-ignore....
 export default function AddPatientForm() {
+	const t = useTranslations("AddPatient");
 	const form = useForm<Patient>({
 		// @ts-ignore
 		validate: zodResolver(patientSchema),
@@ -23,6 +25,7 @@ export default function AddPatientForm() {
 		<form
 			className="space-y-8"
 			onSubmit={form.onSubmit(async (data) => {
+				console.log(data);
 				// @ts-ignore
 				const response = await addPatient(data);
 				if (response === "Patient added successfully") {
@@ -48,8 +51,8 @@ export default function AddPatientForm() {
 			<section className="space-y-6">
 				<AccordionTitle
 					Icon={<IconMessageCircleUser />}
-					mainText="Main details"
-					additionalText="Complete the main details of the patient"
+					mainText={t("main-details")}
+					additionalText={t("complete-the-main-details-of-the-patient")}
 				/>
 
 				{/* @ts-ignore */}
@@ -58,15 +61,17 @@ export default function AddPatientForm() {
 			<section className="space-y-6">
 				<AccordionTitle
 					Icon={<IconShieldPlus />}
-					mainText="Other details"
-					additionalText="Additional details, you can complete later"
+					mainText={t("other-details")}
+					additionalText={t("additional-details-you-can-complete-later")}
 				/>
 				{/* @ts-ignore */}
 				<AdditionalContent form={form} />
 			</section>
-			<section className="space-x-2">
-				<Button type="submit">Save</Button>
-				<Button type="button">Save and start visit</Button>
+			<section>
+				<Button type="submit" className="me-2">
+					{t("save")}
+				</Button>
+				<Button type="button">{t("save-and-start-visit")}</Button>
 			</section>
 		</form>
 	);

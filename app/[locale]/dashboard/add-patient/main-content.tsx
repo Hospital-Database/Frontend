@@ -1,6 +1,7 @@
 "use client";
 import { Button, TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { isExist } from "../../actions/patient";
 import type { Patient } from "../../types/patient";
@@ -10,17 +11,18 @@ export default function MainContent({
 }: {
 	form: UseFormReturnType<Patient, (values: Patient) => Patient>;
 }) {
+	const t = useTranslations("AddPatient");
 	const [isOnChange, setIsOnChange] = useState(true);
 	const checkNationalId = async () => {
 		const { nationalId } = form.getValues();
 		if (typeof nationalId !== "string" || nationalId.length !== 14) {
-			form.setFieldError("nationalId", "National ID must be 14 digits");
+			form.setFieldError("nationalId", t("national-id-must-be-14-digits"));
 			return;
 		}
 		const data = await isExist({ national_id: nationalId });
 		form.setFieldError(
 			"nationalId",
-			data?.exists ? "User is already exist" : "",
+			!data?.exists ? t("user-is-already-exist") : "",
 		);
 		setIsOnChange(false);
 	};
@@ -35,7 +37,7 @@ export default function MainContent({
 				<div className="space-y-2">
 					<TextInput
 						name="nationalId"
-						label="National ID"
+						label={t("national-id")}
 						{...form.getInputProps("nationalId")}
 						key={form.key("nationalId")}
 						withAsterisk
@@ -47,11 +49,13 @@ export default function MainContent({
 						onChange={(e) => handleOnChange(e.target.value)}
 					/>
 					<p className="text-green-500 text-xs">
-						{!form.errors.nationalId && !isOnChange ? "User is not exist" : ""}
+						{!form.errors.nationalId && !isOnChange
+							? t("user-is-not-exist")
+							: ""}
 					</p>
 
 					<Button variant="light" onClick={checkNationalId} type="button">
-						See details
+						{t("see-details")}
 					</Button>
 				</div>
 
@@ -59,8 +63,10 @@ export default function MainContent({
 					withAsterisk
 					name="fullName"
 					{...form.getInputProps("fullName")}
-					label="Full Name"
-					description="Enter the full name of 4 parts as in the national ID"
+					label={t("full-name")}
+					description={t(
+						"AddPatiententer-the-full-name-of-4-parts-as-in-the-national-id",
+					)}
 				/>
 			</div>
 			<div className="border-neutral-300 border hover:border-neutral-600 rounded-lg">

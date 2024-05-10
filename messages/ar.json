@@ -39,5 +39,12 @@
 		"additional-details-you-can-complete-later": "تفاصيل إضافية، يمكنك إكمالها لاحقًا",
 		"national-id": "الهوية الوطنية",
 		"user-is-not-exist": "المستخدم غير موجود"
+	},
+	"Login": {
+		"login": "تسجيل الدخول",
+		"password": "كلمة المرور",
+		"usernam-error-message": "اسم المستخدم غير صالح، يجب أن يحتوي فقط على أحرف أو أرقام أو _ أو - ولكن ليس في البداية أو في النهاية",
+		"username-placeholder": "اسم المستخدم",
+		"username": "اسم المستخدم"
 	}
 }

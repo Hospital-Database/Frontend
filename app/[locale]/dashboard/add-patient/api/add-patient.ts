@@ -38,7 +38,7 @@ export function useAddPatient() {
 			let error = "something went wrong";
 			if (isAxiosError(e)) error = e?.response?.data;
 			notifications.show({
-				title: error,
+				title: typeof error === "string" ? error : "Something went wrong",
 				message: "",
 				color: "white",
 				style: { backgroundColor: "#ef4444" },

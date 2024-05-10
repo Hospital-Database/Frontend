@@ -1,10 +1,10 @@
+import type { Visit } from "@/lib/types";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css"; //if using mantine date picker features
+import { useQuery } from "@tanstack/react-query";
+import type { MRT_ColumnDef } from "mantine-react-table";
 import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
 import { useMemo } from "react";
-import type { MRT_ColumnDef } from "mantine-react-table";
-import type { Visit } from "@/lib/types";
-import { useQuery } from "@tanstack/react-query";
 import type { FetchOptions } from "./use-datagrid";
 import useDatagrid from "./use-datagrid";
 

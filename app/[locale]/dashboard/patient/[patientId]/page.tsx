@@ -1,5 +1,6 @@
 "use client";
 
+import useAvatar from "@/hooks/use-avatar";
 import {
 	Anchor,
 	Box,
@@ -9,8 +10,6 @@ import {
 	Tabs,
 	Title,
 } from "@mantine/core";
-import Image from "next/image";
-import useAvatar from "@/hooks/use-avatar";
 import {
 	IconDots,
 	IconFileDescription,
@@ -18,10 +17,11 @@ import {
 	IconHeartbeat,
 	IconStethoscope,
 } from "@tabler/icons-react";
-import PatientDetails from "./_components/patient-details";
-import PatientVitals from "./_components/patient-vitals";
+import Image from "next/image";
 import PatientBiometrics from "./_components/patient-biometrics";
+import PatientDetails from "./_components/patient-details";
 import PatientDocuments from "./_components/patient-documents";
+import PatientVitals from "./_components/patient-vitals";
 import VisitDetails from "./_components/visit-details";
 
 export default function PatientPage({

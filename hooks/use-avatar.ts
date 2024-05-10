@@ -1,5 +1,5 @@
-import { createAvatar, type StyleOptions } from "@dicebear/core";
 import { identicon } from "@dicebear/collection";
+import { type StyleOptions, createAvatar } from "@dicebear/core";
 import { useMemo } from "react";
 
 export default function useAvatar(

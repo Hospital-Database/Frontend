@@ -1,20 +1,20 @@
+import { ActionIcon, Tooltip } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css"; //if using mantine date picker features
-import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
+import { IconRefresh } from "@tabler/icons-react";
+import type { UseQueryResult, WithRequired } from "@tanstack/react-query";
 import { merge } from "lodash";
-import { useState } from "react";
 import {
-	useMantineReactTable,
 	type MRT_ColumnFilterFnsState,
 	type MRT_ColumnFiltersState,
 	type MRT_PaginationState,
 	type MRT_RowData,
 	type MRT_SortingState,
 	type MRT_TableOptions,
+	useMantineReactTable,
 } from "mantine-react-table";
-import { ActionIcon, Tooltip } from "@mantine/core";
-import { IconRefresh } from "@tabler/icons-react";
-import type { UseQueryResult, WithRequired } from "@tanstack/react-query";
+import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
+import { useState } from "react";
 
 export interface FetchOptions {
 	columnFilterFns: MRT_ColumnFilterFnsState;

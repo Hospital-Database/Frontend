@@ -6,9 +6,8 @@ import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 
 const theme = createTheme({});
 
-const queryClient = new QueryClient();
-
 export default function App({ children }: { children: React.ReactNode }) {
+	const queryClient = new QueryClient();
 	return (
 		<QueryClientProvider client={queryClient}>
 			<MantineProvider theme={theme}>

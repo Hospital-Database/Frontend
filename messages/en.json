@@ -1,5 +1,43 @@
 {
 	"Home": {
 		"hello-world": "Hello World!"
+	},
+	"Common": {
+		"errors": {
+			"something-went-wrong": "Something Went wrong"
+		}
+	},
+	"AddPatient": {
+		"add-new-patient": "Add new patient",
+		"main-details": "Main details",
+		"complete-the-main-details-of-the-patient": "Complete the main details of the patient",
+		"save": "Save",
+		"save-and-start-visit": "Save and start visit",
+		"national-id-must-be-14-digits": "National ID must be 14 digits",
+		"user-is-already-exist": "User is already exist",
+		"user-is-not-exist": "User is not exist",
+		"see-details": "See details",
+		"full-name": "Full Name",
+		"AddPatiententer-the-full-name-of-4-parts-as-in-the-national-id": "Enter the full name of 4 parts as in the national ID",
+		"address": "Address",
+		"nothing-found": "Nothing found...",
+		"phone-number": "Phone Number",
+		"gender": "Gender",
+		"male": "Male",
+		"female": "Female",
+		"material-status": "Material status",
+		"choose-your-material-status": "Choose your material status",
+		"date-of-birth": "Date of birth",
+		"date-input": "Date input",
+		"finished": "Finished",
+		"single": "Single",
+		"notes": "Notes",
+		"enter-some-notes-here": "Enter some notes here",
+		"status": "Status",
+		"street": "Street",
+		"government": "Government",
+		"other-details": "Other details",
+		"additional-details-you-can-complete-later": "Additional details, you can complete later",
+		"national-id": "National ID"
 	}
 }

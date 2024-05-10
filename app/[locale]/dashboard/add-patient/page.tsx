@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import AddPatientForm from "./form";
+import { useTranslations } from "next-intl";
+import AddPatientForm from "./_components/form";
 
 export const metadata: Metadata = {
 	title: "Add patient",
@@ -7,8 +8,12 @@ export const metadata: Metadata = {
 };
 
 export default function AddPatient() {
+	const t = useTranslations("AddPatient");
 	return (
 		<main className="space-y-6 p-3 md:p-6 lg:p-8">
+			<h1 className="font-bold text-3xl text text-teal-500">
+				{t("add-new-patient")}
+			</h1>
 			<AddPatientForm />
 		</main>
 	);

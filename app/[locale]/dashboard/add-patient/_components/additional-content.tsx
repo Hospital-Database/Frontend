@@ -1,4 +1,5 @@
 "use client";
+import type { Patient } from "@/lib/types";
 import {
 	type ComboboxItem,
 	Grid,
@@ -12,24 +13,20 @@ import {
 import { DatePickerInput } from "@mantine/dates";
 import "@mantine/dates/styles.css";
 import type { UseFormReturnType } from "@mantine/form";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { EgyptCities, type EgyptCitiesKey, EgyptGovernment } from "./form-data";
 
 export default function AdditionalContent({
 	form,
 }: {
-	form: UseFormReturnType<
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		Record<string, any>,
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		(values: Record<string, any>) => Record<string, any>
-	>;
+	form: UseFormReturnType<Patient, (values: Patient) => Patient>;
 }) {
+	const t = useTranslations("AddPatient");
 	return (
 		<main className="space-y-5">
 			<div>
-				<Text>Phone Number</Text>
+				<Text>{t("phone-number")}</Text>
 				<Grid>
 					<Grid.Col span={2}>
 						<Select defaultValue="+2" data={["+2"]} />
@@ -46,36 +43,36 @@ export default function AdditionalContent({
 
 			<Radio.Group
 				name="gender"
-				label="Gender"
+				label={t("gender")}
 				{...form.getInputProps("gender")}
 				key={form.key("gender")}
 			>
 				<Group>
-					<Radio value="male" label="Male" />
-					<Radio value="female" label="Female" />
+					<Radio value="male" label={t("male")} />
+					<Radio value="female" label={t("female")} />
 				</Group>
 			</Radio.Group>
 
 			<Select
-				label="Material status"
-				placeholder="Choose your material Status"
-				data={["Finished", "Single"]}
+				label={t("material-status")}
+				placeholder={t("choose-your-material-status")}
+				data={[t("finished"), t("single")]}
 				{...form.getInputProps("martialStatus")}
 				key={form.key("martialStatus")}
 			/>
 			<Address form={form} />
 
 			<DatePickerInput
-				label="Date of Birth"
-				placeholder="Date input"
+				label={t("date-of-birth")}
+				placeholder={t("date-input")}
 				{...form.getInputProps("dateOfBirth")}
 				key={form.key("dateOfBirth")}
 			/>
 
 			<Textarea
-				label="Notes"
+				label={t("notes")}
 				resize="vertical"
-				placeholder="Enter some notes here"
+				placeholder={t("enter-some-notes-here")}
 				{...form.getInputProps("notes")}
 				key={form.key("notes")}
 			/>
@@ -85,13 +82,9 @@ export default function AdditionalContent({
 function Address({
 	form,
 }: {
-	form: UseFormReturnType<
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		Record<string, any>,
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		(values: Record<string, any>) => Record<string, any>
-	>;
+	form: UseFormReturnType<Patient>;
 }) {
+	const t = useTranslations("AddPatient");
 	const locale = useLocale() as "ar" | "en";
 	const [government, setGovernment] = useState<string | null>(null);
 	const [status, setStatus] = useState<EgyptCitiesKey | null>(null);
@@ -107,38 +100,38 @@ function Address({
 	};
 	return (
 		<section>
-			<label>Address</label>
+			<label>{t("address")}</label>
 			<div className="grid grid-cols-3 gap-x-2">
 				<div className="flex items-center gap-x-2">
 					<Select
-						placeholder="Government"
+						placeholder={t("government")}
 						data={EgyptGovernment[locale]}
 						{...form.getInputProps("government")}
 						key={form.key("government")}
 						value={government}
 						onChange={handleGovernmentChange}
 						searchable
-						nothingFoundMessage="Nothing found..."
+						nothingFoundMessage={t("nothing-found")}
 						className="grow"
 					/>
 					<span className="text-2xl">/ </span>
 				</div>
 				<div className="flex items-center gap-x-2">
 					<Select
-						placeholder="Status"
+						placeholder={t("status")}
 						//@ts-ignore
 						data={status ? EgyptCities[status][locale] : ""}
 						{...form.getInputProps("status")}
 						key={form.key("status")}
 						searchable
-						nothingFoundMessage="Nothing found..."
+						nothingFoundMessage={t("nothing-found")}
 						className="grow"
 					/>
 					<span className="text-2xl">/ </span>
 				</div>
 				<div className="flex gap-x-2">
 					<TextInput
-						placeholder="street"
+						placeholder={t("street")}
 						{...form.getInputProps("street")}
 						key={form.key("street")}
 						className="grow"

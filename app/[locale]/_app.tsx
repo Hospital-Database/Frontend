@@ -1,31 +1,24 @@
 "use client";
 
 import { MantineProvider, createTheme } from "@mantine/core";
-import {
-	HydrationBoundary,
-	QueryClient,
-	QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 
-const theme = createTheme({
-	/** Put your mantine theme override here */
-});
+const theme = createTheme({});
 
 export default function App({ children }: { children: React.ReactNode }) {
 	const queryClient = new QueryClient();
 	return (
-		<MantineProvider theme={theme}>
-			{/* <QueryClientProvider> */}
-			<ProgressBar
-				height="4px"
-				color="var(--mantine-primary-color-filled)"
-				options={{ showSpinner: true }}
-				shallowRouting
-			/>
-			<QueryClientProvider client={queryClient}>
-				<HydrationBoundary>{children}</HydrationBoundary>
-			</QueryClientProvider>
-		</MantineProvider>
+		<QueryClientProvider client={queryClient}>
+			<MantineProvider theme={theme}>
+				<ProgressBar
+					height="4px"
+					color="var(--mantine-primary-color-filled)"
+					options={{ showSpinner: true }}
+					shallowRouting
+				/>
+				{children}
+			</MantineProvider>
+		</QueryClientProvider>
 	);
 }

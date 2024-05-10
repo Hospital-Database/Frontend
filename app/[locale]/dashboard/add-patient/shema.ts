@@ -20,10 +20,13 @@ export const patientSchema = z.object({
 			"Only .jpg, .jpeg, .png and .webp formats are supported.",
 		)
 		.optional(),
-	phoneNumber: z.string().min(1).optional(),
+	phoneNumber: z.preprocess(
+		(val) => val || undefined,
+		z.string().min(1).optional(),
+	),
 	gender: z.literal("male").or(z.literal("female")).optional(),
 	martialStatus: z.string().optional(),
 	address: z.string().optional(),
 	dateOfBirth: z.date().optional(),
-	Notes: z.string().optional(),
+	notes: z.preprocess((val) => val || undefined, z.string().min(1).optional()),
 });

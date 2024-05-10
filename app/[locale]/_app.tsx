@@ -15,7 +15,7 @@ export default function App({ children }: { children: React.ReactNode }) {
 				<ProgressBar
 					height="4px"
 					color="var(--mantine-primary-color-filled)"
-					options={{ showSpinner: false }}
+					options={{ showSpinner: true }}
 					shallowRouting
 				/>
 				{children}

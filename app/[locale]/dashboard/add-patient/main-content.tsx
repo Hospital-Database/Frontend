@@ -1,13 +1,30 @@
 import { TextInput } from "@mantine/core";
+import type { UseFormReturnType } from "@mantine/form";
 
-export default function MainContent() {
+export default function MainContent({
+	form,
+}: {
+	form: UseFormReturnType<
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+		Record<string, any>,
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+		(values: Record<string, any>) => Record<string, any>
+	>;
+}) {
 	return (
 		<section className="space-y-3 grid grid-cols-3 gap-x-8">
 			<div className="col-span-2 space-y-5">
-				<TextInput name="nationalId" label="National ID" required />
 				<TextInput
-					required
+					name="nationalId"
+					label="National ID"
+					{...form.getInputProps("nationalId")}
+					key={form.key("nationalId")}
+					withAsterisk
+				/>
+				<TextInput
+					withAsterisk
 					name="fullName"
+					{...form.getInputProps("fullName")}
 					label="Full Name"
 					description="Enter the full name of 4 parts as in the national ID"
 				/>

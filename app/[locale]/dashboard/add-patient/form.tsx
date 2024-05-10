@@ -1,8 +1,9 @@
 "use client";
 
 import { Button } from "@mantine/core";
-import { useForm, zodResolver } from "@mantine/form";
+import { useForm } from "@mantine/form";
 import { IconMessageCircleUser, IconShieldPlus } from "@tabler/icons-react";
+import { zodResolver } from "mantine-form-zod-resolver";
 import AccordionTitle from "./accordion-title";
 import AdditionalContent from "./additional-content";
 import MainContent from "./main-content";
@@ -10,10 +11,14 @@ import { patientSchema } from "./shema";
 
 export default function AddPatientForm() {
 	const form = useForm({
+		mode: "uncontrolled",
 		validate: zodResolver(patientSchema),
 	});
 	return (
-		<form className="space-y-8">
+		<form
+			className="space-y-8"
+			onSubmit={form.onSubmit((values) => console.log(values))}
+		>
 			<h1 className="font-bold text-3xl">Add new patient</h1>
 			<section className="space-y-6">
 				<AccordionTitle
@@ -21,7 +26,7 @@ export default function AddPatientForm() {
 					mainText="Main details"
 					additionalText="Complete the main details of the patient"
 				/>
-				<MainContent />
+				<MainContent form={form} />
 			</section>
 			<section className="space-y-6">
 				<AccordionTitle
@@ -29,25 +34,11 @@ export default function AddPatientForm() {
 					mainText="Other details"
 					additionalText="Additional details, you can complete later"
 				/>
-				<AdditionalContent />
+				<AdditionalContent form={form} />
 			</section>
 			<section className="space-x-2">
-				<Button
-					type="button"
-					onClick={() => {
-						console.log("save", form.getValues());
-					}}
-				>
-					Save
-				</Button>
-				<Button
-					type="button"
-					onClick={() => {
-						console.log("save", form.getValues());
-					}}
-				>
-					Save and start visit
-				</Button>
+				<Button type="submit">Save</Button>
+				<Button type="button">Save and start visit</Button>
 			</section>
 		</form>
 	);

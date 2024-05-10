@@ -13,8 +13,8 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Image from "next/image";
-import { ThemeSwitch } from "../_components/theme-switch";
 import LangSwitch from "../_components/lang-switch";
+import { ThemeSwitch } from "../_components/theme-switch";
 
 export default function CollapseDesktop({
 	children,

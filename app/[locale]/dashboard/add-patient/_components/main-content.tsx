@@ -1,10 +1,10 @@
 "use client";
+import type { Patient } from "@/lib/types";
 import { Button, TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { isExist } from "../../actions/patient";
-import type { Patient } from "../../types/patient";
+import { useIsExist } from "../api/add-patient";
 
 export default function MainContent({
 	form,
@@ -13,16 +13,18 @@ export default function MainContent({
 }) {
 	const t = useTranslations("AddPatient");
 	const [isOnChange, setIsOnChange] = useState(true);
-	const checkNationalId = async () => {
+
+	const { mutate, data } = useIsExist();
+	const checkNationalId = () => {
 		const { nationalId } = form.getValues();
 		if (typeof nationalId !== "string" || nationalId.length !== 14) {
 			form.setFieldError("nationalId", t("national-id-must-be-14-digits"));
 			return;
 		}
-		const data = await isExist({ national_id: nationalId });
+		mutate({ national_id: nationalId });
 		form.setFieldError(
 			"nationalId",
-			!data?.exists ? t("user-is-already-exist") : "",
+			data?.data?.exists ? t("user-is-already-exist") : "",
 		);
 		setIsOnChange(false);
 	};

@@ -1,4 +1,5 @@
 "use client";
+import type { Patient } from "@/lib/types";
 import {
 	type ComboboxItem,
 	Grid,
@@ -14,7 +15,6 @@ import "@mantine/dates/styles.css";
 import type { UseFormReturnType } from "@mantine/form";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
-import type { Patient } from "../../types/patient";
 import { EgyptCities, type EgyptCitiesKey, EgyptGovernment } from "./form-data";
 
 export default function AdditionalContent({

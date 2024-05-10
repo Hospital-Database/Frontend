@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
-import AddPatientForm from "./form";
+import AddPatientForm from "./_components/form";
 
 export const metadata: Metadata = {
 	title: "Add patient",

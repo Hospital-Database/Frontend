@@ -39,17 +39,5 @@
 		"additional-details-you-can-complete-later": "تفاصيل إضافية، يمكنك إكمالها لاحقًا",
 		"national-id": "الهوية الوطنية",
 		"user-is-not-exist": "المستخدم غير موجود"
-	},
-	"AddPatientdate-of-birth": "تاريخ الميلاد",
-	"AddPatiententer-the-full-name-of-4-parts-as-in-the-national-id": "إدخال الاسم كاملاً من 4 أجزاء كما في بطاقة الهوية الوطنية",
-	"AddPatientsingle": "أعزب",
-	"choose-your-material-status": "اختر الحالة المادية الخاصة بك",
-	"date-input": "إدخال التاريخ",
-	"enter-some-notes-here": "أدخل بعض الملاحظات هنا",
-	"female": "أنثى",
-	"government": "حكومة",
-	"main-details": "التفاصيل الرئيسية",
-	"notes": "ملحوظات",
-	"save": "يحفظ",
-	"street": "شارع"
+	}
 }

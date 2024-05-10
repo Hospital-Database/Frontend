@@ -13,7 +13,6 @@ import AccordionTitle from "./accordion-title";
 import AdditionalContent from "./additional-content";
 import MainContent from "./main-content";
 import { patientSchema } from "./shema";
-
 // ! TODO: Try to remove ts-ignore....
 export default function AddPatientForm() {
 	const t = useTranslations("AddPatient");
@@ -25,25 +24,21 @@ export default function AddPatientForm() {
 		<form
 			className="space-y-8"
 			onSubmit={form.onSubmit(async (data) => {
-				console.log(data);
 				// @ts-ignore
 				const response = await addPatient(data);
 				if (response === "Patient added successfully") {
 					notifications.show({
 						title: "Patient was added successfully",
-						message: "Congrats, patient is added",
+						message: "",
 						color: "white",
-						style: { backgroundColor: "#84cc16" },
+						style: { backgroundColor: "#22c55e" },
 					});
 				} else {
 					notifications.show({
 						title: response.error || "Something went wrong",
-						message: "Please try again",
+						message: "",
 						color: "white",
-						style: {
-							backgroundColor: "#ef4444",
-							fontSize: "20px",
-						},
+						style: { backgroundColor: "#ef4444" },
 					});
 				}
 			})}

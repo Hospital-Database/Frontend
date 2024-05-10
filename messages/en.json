@@ -39,17 +39,5 @@
 		"other-details": "Other details",
 		"additional-details-you-can-complete-later": "Additional details, you can complete later",
 		"national-id": "National ID"
-	},
-	"main-details": "Main details",
-	"save": "Save",
-	"AddPatiententer-the-full-name-of-4-parts-as-in-the-national-id": "Enter the full name of 4 parts as in the national ID",
-	"female": "Female",
-	"choose-your-material-status": "Choose your material Status",
-	"AddPatientdate-of-birth": "Date of Birth",
-	"date-input": "Date input",
-	"notes": "Notes",
-	"enter-some-notes-here": "Enter some notes here",
-	"AddPatientsingle": "Single",
-	"street": "street",
-	"government": "Government"
+	}
 }

@@ -1,13 +1,12 @@
 import { cn } from "@/lib/utils";
 import { availableLocalesMap, defaultLocale } from "@/next.locales";
 import { ColorSchemeScript } from "@mantine/core";
+import "@mantine/core/styles.css";
 import { Notifications } from "@mantine/notifications";
 import type { Metadata } from "next";
 import { Inter, Noto_Kufi_Arabic } from "next/font/google";
 import App from "./_app";
 import { LocaleProvider } from "./_components/locale-provider";
-
-import "@mantine/core/styles.css";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

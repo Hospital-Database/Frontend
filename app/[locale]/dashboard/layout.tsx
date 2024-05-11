@@ -69,6 +69,7 @@ export default function CollapseDesktop({
 				<Stack gap={"md"} mt="md">
 					<NavLink href="/"> Home</NavLink>
 					<NavLink href="/dashboard/add-patient">Add-Patient</NavLink>
+					<NavLink href="/dashboard/dashboard">Dashboard</NavLink>
 				</Stack>
 				<div className="md:hidden mt-4">
 					<Divider mb="md" />

@@ -39,5 +39,12 @@
 		"other-details": "Other details",
 		"additional-details-you-can-complete-later": "Additional details, you can complete later",
 		"national-id": "National ID"
+	},
+	"Login": {
+		"usernam-error-message": "Invalid username, it must only contains letters, numbers, _, or - but not at the beggining or at the end",
+		"password": "Password",
+		"login": "Login",
+		"username": "Username",
+		"username-placeholder": "user-xyz"
 	}
 }

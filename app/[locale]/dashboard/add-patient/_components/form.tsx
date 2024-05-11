@@ -23,7 +23,7 @@ export default function AddPatientForm() {
 	return (
 		<form
 			className="space-y-8"
-			onSubmit={form.onSubmit(async (data) => {
+			onSubmit={form.onSubmit((data) => {
 				const newData = {
 					...data,
 					dateOfBirth: data?.dateOfBirth?.toISOString().slice(0, 10),

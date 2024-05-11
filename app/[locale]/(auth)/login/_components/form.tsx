@@ -1,47 +1,57 @@
 "use client";
 
-import { useRouter } from "@/navigation";
 import { Button, TextInput } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { zodResolver } from "mantine-form-zod-resolver";
+import { useTranslations } from "next-intl";
 import * as z from "zod";
+import { useSignIn } from "../../api/login";
 
-export const loginSchema = z.object({
-	username: z.string().regex(/^(?![-_])[A-Za-z0-9_-]*[A-Za-z0-9]$/, {
-		message:
-			"Invalid username, it must only contains letters, numbers, _, or - but not at the beggining or at the end",
-	}),
-	password: z.string(),
-});
+export interface TLogin {
+	username: string;
+	password: string;
+}
 
 export default function LoginForm() {
-	const router = useRouter();
+	const t = useTranslations("Login");
+	const loginSchema = z.object({
+		username: z.string().regex(/^(?![-_])[A-Za-z0-9_-]*[A-Za-z0-9]$/, {
+			message: t("usernam-error-message"),
+		}),
+		password: z.string(),
+	});
 	const form = useForm({
 		validate: zodResolver(loginSchema),
 	});
+	const { mutate, error, isPending } = useSignIn();
 	return (
 		<form
 			className="space-y-7"
-			onSubmit={form.onSubmit((data) => {
-				alert(JSON.stringify(data));
-				router.push("/");
+			onSubmit={form.onSubmit((loginInfo) => {
+				// @ts-ignore
+				mutate(loginInfo);
 			})}
 		>
+			<p className="text-red-600 text-center text-sm">
+				{/*@ts-ignore */}
+				{error?.response?.data?.detail}
+			</p>
 			<div className="space-y-3">
 				<TextInput
-					label="Username"
-					placeholder="user-xyz"
+					label={t("username")}
+					placeholder={t("username-placeholder")}
 					{...form.getInputProps("username")}
 				/>
 				<TextInput
-					label="Password"
+					label={t("password")}
 					type="password"
 					placeholder="**********"
 					{...form.getInputProps("password")}
 				/>
 			</div>
-			<Button type="submit" className="w-full">
-				Login
+			<Button type="submit" className="w-full" disabled={isPending}>
+				{isPending ? <Loader color="blue" size={20} /> : t("login")}
 			</Button>
 		</form>
 	);

@@ -1,10 +1,10 @@
 "use client";
 
+import Logout from "@/app/[locale]/_components/logout";
 import { Link } from "@/navigation";
 import {
 	AppShell,
 	Burger,
-	Button,
 	Divider,
 	Group,
 	Stack,
@@ -21,7 +21,6 @@ export default function CollapseDesktop({
 }: { children: React.ReactNode }) {
 	const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
 	const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
-
 	return (
 		<AppShell
 			header={{ height: 60 }}
@@ -58,7 +57,7 @@ export default function CollapseDesktop({
 						<LangSwitch />
 						<ThemeSwitch />
 						<Divider orientation="vertical" />
-						<Button variant="transparent">Logout</Button>
+						<Logout />
 					</div>
 				</Group>
 			</AppShell.Header>
@@ -70,6 +69,7 @@ export default function CollapseDesktop({
 				<Stack gap={"md"} mt="md">
 					<NavLink href="/"> Home</NavLink>
 					<NavLink href="/dashboard/add-patient">Add-Patient</NavLink>
+					<NavLink href="/dashboard/dashboard">Dashboard</NavLink>
 				</Stack>
 				<div className="md:hidden mt-4">
 					<Divider mb="md" />
@@ -77,9 +77,7 @@ export default function CollapseDesktop({
 						<LangSwitch />
 						<ThemeSwitch />
 					</div>
-					<Button w={"100%"} mt="md" variant="transparent">
-						Logout
-					</Button>
+					<Logout width="100%" mt="md" />
 				</div>
 			</AppShell.Navbar>
 			<AppShell.Main>{children}</AppShell.Main>

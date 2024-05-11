@@ -3,7 +3,6 @@ import { useGetStatistics } from "../api/statistics";
 
 export default function DashboardHeader() {
 	const { data } = useGetStatistics();
-	console.log(data);
 	return (
 		<section className="grid grid-cols-3 gap-x-3">
 			<HeaderCard

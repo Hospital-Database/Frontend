@@ -6,7 +6,7 @@ export default function DetailsCard({
 	details,
 }: { title?: string; details: { title: string; value: React.ReactNode }[] }) {
 	return (
-		<div className="border border-slate-200 dark:border-slate-500 p-2 md:p-4 bg-gray-500/20 rounded">
+		<div className="border border-slate-200 dark:border-slate-700 p-2 md:p-4 bg-gray-500/10 rounded">
 			{title && (
 				<Text size="lg" mb="lg">
 					{title}

@@ -23,11 +23,14 @@ import PatientDetails from "./_components/patient-details";
 import PatientDocuments from "./_components/patient-documents";
 import PatientVitals from "./_components/patient-vitals";
 import VisitDetails from "./_components/visit-details";
+import useURL from "@/hooks/use-url";
 
 export default function PatientPage({
 	params: { patientId },
 }: { params: { patientId: string } }) {
+	const { setSearchParam, searchParams } = useURL();
 	const avatar = useAvatar(undefined, { seed: patientId, size: 100 });
+
 	return (
 		<>
 			<Breadcrumbs>
@@ -59,7 +62,10 @@ export default function PatientPage({
 				</Box>
 			)}
 			<Box mt="xl">
-				<Tabs defaultValue="details" variant="outline">
+				<Tabs
+					value={searchParams.get("tab")}
+					onChange={(tab) => setSearchParam("tab", tab)}
+				>
 					<Tabs.List>
 						<Tabs.Tab
 							value="details"

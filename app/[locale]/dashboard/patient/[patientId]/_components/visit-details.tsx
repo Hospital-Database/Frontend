@@ -1,6 +1,6 @@
 "use client";
 
-import DetailsCard from "@/components/site/details-card";
+import DetailsCard from "@/components/details-card";
 import { formatElapsedTime } from "@/lib/datetime";
 import { useFormatter, useNow } from "next-intl";
 

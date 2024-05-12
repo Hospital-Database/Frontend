@@ -1,6 +1,6 @@
 "use client";
 import { Card, Text } from "@mantine/core";
-import { useGetStatistics } from "../_api/statistics";
+import { useGetStatistics } from "../../../../api/statistics";
 
 export default function DashboardHeader() {
 	const { data } = useGetStatistics();

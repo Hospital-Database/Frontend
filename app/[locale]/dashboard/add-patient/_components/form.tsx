@@ -1,32 +1,41 @@
 "use client";
 
-import type { Patient } from "@/lib/types";
 import { Button } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import "@mantine/notifications/styles.css";
 import { IconMessageCircleUser, IconShieldPlus } from "@tabler/icons-react";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useTranslations } from "next-intl";
-import { useAddPatient } from "../api/add-patient";
+import { useCreatePatient, createPatientSchema } from "@/api/patients";
 import AccordionTitle from "./accordion-title";
 import AdditionalContent from "./additional-content";
 import MainContent from "./main-content";
-import { patientSchema } from "./shema";
+import type { z } from "zod";
+import { useRouter } from "@/navigation";
 
 export default function AddPatientForm() {
 	const t = useTranslations("AddPatient");
-	const form = useForm<Patient>({
-		// @ts-ignore
-		validate: zodResolver(patientSchema),
+	const router = useRouter();
+	const form = useForm<z.infer<typeof createPatientSchema>>({
+		validate: zodResolver(createPatientSchema),
+		initialValues: {
+			national_id: "",
+			full_name: "",
+			address: {},
+			phone: {},
+		},
 	});
-	const { mutate } = useAddPatient();
+	const { mutate } = useCreatePatient({
+		onSuccess(res) {
+			router.push(`/dashboard/patient/${res.data.id}`);
+		},
+	});
 	return (
 		<form
 			className="space-y-8"
 			onSubmit={form.onSubmit((data) => {
 				const newData = {
 					...data,
-					dateOfBirth: data?.dateOfBirth?.toISOString().slice(0, 10),
+					date_of_birth: data?.date_of_birth?.toISOString().slice(0, 10),
 				};
 				//@ts-ignore
 				mutate(newData);

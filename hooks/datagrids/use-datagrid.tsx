@@ -17,11 +17,11 @@ import "mantine-react-table/styles.css"; //make sure MRT styles were imported in
 import { useState } from "react";
 
 export interface FetchOptions {
-	columnFilterFns: MRT_ColumnFilterFnsState;
-	columnFilters: MRT_ColumnFiltersState;
-	globalFilter: string;
-	pagination: MRT_PaginationState;
-	sorting: MRT_SortingState;
+	columnFilterFns?: MRT_ColumnFilterFnsState;
+	columnFilters?: MRT_ColumnFiltersState;
+	globalFilter?: string;
+	pagination?: MRT_PaginationState;
+	sorting?: MRT_SortingState;
 }
 
 export default function useDatagrid<TData extends MRT_RowData>(
@@ -89,10 +89,11 @@ export default function useDatagrid<TData extends MRT_RowData>(
 				),
 
 				data: fetchedData,
-				enableBottomToolbar: false,
+				enableBottomToolbar: true,
+				enableFullScreenToggle: true,
 				enableColumnResizing: true,
 				enableGlobalFilterModes: true,
-				enablePagination: false,
+				enablePagination: true,
 				enableColumnPinning: true,
 				enableRowNumbers: true,
 				manualFiltering: true,

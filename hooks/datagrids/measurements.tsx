@@ -3,12 +3,22 @@ import { useQuery } from "@tanstack/react-query";
 import type { MRT_ColumnDef } from "mantine-react-table";
 import { useMemo } from "react";
 import useDatagrid, { type FetchOptions } from "./use-datagrid";
+import getTableSearchParams from "@/lib/get-search-params";
+import { http } from "@/lib/axios";
 
-function useFetchMeasurements(_options: FetchOptions) {
-	const searchKeys = new URLSearchParams();
+function useFetchMeasurements(options: FetchOptions) {
+	const params = getTableSearchParams(options);
 	return useQuery({
-		queryKey: ["measurements", searchKeys.toString()],
-		queryFn: () => ({ count: 0, results: [] as Measurement[] }),
+		queryKey: ["measurements", params.toString()],
+		queryFn: () =>
+			http
+				.get<{ count: number; results: Measurement[] }>(
+					"/accounts/measurement/",
+					{
+						params,
+					},
+				)
+				.then((res) => res.data),
 	});
 }
 

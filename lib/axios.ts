@@ -1,4 +1,4 @@
-import axios, { type AxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 import { BACKEND_URL } from "./constants";
 import { accessTokenCookie } from "./cookies.client";
 
@@ -21,12 +21,16 @@ http.interceptors.response.use(
 	},
 );
 
-function handleOtherFailures(error: AxiosError) {
-	if (error.code?.endsWith("_NETWORK")) {
-		const message =
-			"Can't connect to the backend server, contact the maintainers of the website!";
-		throw { ...error, message };
+function handleOtherFailures(error: unknown) {
+	if (isAxiosError(error)) {
+		if (!error.response) {
+			const detail =
+				"Can't connect to the backend server, contact the maintainers of the website!";
+			throw { ...error, detail };
+		}
+
+		throw error.response.data;
 	}
 
-	throw error;
+	throw { detail: "Something went wrong" };
 }

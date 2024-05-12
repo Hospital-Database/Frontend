@@ -7,15 +7,21 @@ import "mantine-react-table/styles.css"; //make sure MRT styles were imported in
 import { useMemo } from "react";
 import type { FetchOptions } from "./use-datagrid";
 import useDatagrid from "./use-datagrid";
+import { http } from "@/lib/axios";
+import getTableSearchParams from "@/lib/get-search-params";
 
-function useFetchVisits(_options: FetchOptions) {
-	const searchKeys = new URLSearchParams();
+function useFetchVisits(options: FetchOptions) {
+	const params = getTableSearchParams(options);
 	return useQuery({
-		queryKey: ["visits", searchKeys.toString()],
-		queryFn: () => ({ count: 0, results: [] as Visit[] }),
+		queryKey: ["visits", params.toString()],
+		queryFn: () =>
+			http
+				.get<{ count: number; results: Visit[] }>("/visit/visit/", {
+					params,
+				})
+				.then((res) => res.data),
 	});
 }
-
 export default function useVisitsTable() {
 	const columns = useMemo<MRT_ColumnDef<Visit>[]>(
 		() => [

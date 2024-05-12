@@ -1,4 +1,4 @@
-export const EgyptGovernment = {
+export const EgyptGovernorate = {
 	en: [
 		"Cairo",
 		"Giza",
@@ -57,7 +57,8 @@ export const EgyptGovernment = {
 		"شمال سيناء",
 		"جنوب سيناء",
 	],
-} satisfies Record<"en" | "ar", string[]>;
+} as const;
+
 export const EgyptCities = {
 	Cairo: {
 		ar: [
@@ -887,5 +888,6 @@ export const EgyptCities = {
 		],
 		ar: ["نويبع", "دهب", "سانت كاترين", "شرم الشيخ", "طور سيناء", "طابا"],
 	},
-} satisfies Record<string, Record<"ar" | "en", string[]>>;
-export type EgyptCitiesKey = keyof typeof EgyptCities;
+} satisfies Record<EgyptGovernorateKey, Record<"ar" | "en", string[]>>;
+
+export type EgyptGovernorateKey = (typeof EgyptGovernorate)["en"][number];

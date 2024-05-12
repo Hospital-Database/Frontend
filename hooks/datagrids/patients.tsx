@@ -7,12 +7,19 @@ import "mantine-react-table/styles.css"; //make sure MRT styles were imported in
 import { useMemo } from "react";
 import type { FetchOptions } from "./use-datagrid";
 import useDatagrid from "./use-datagrid";
+import { http } from "@/lib/axios";
+import getTableSearchParams from "@/lib/get-search-params";
 
-function useFetchPatients(_options: FetchOptions) {
-	const searchKeys = new URLSearchParams();
+function useFetchPatients(options: FetchOptions) {
+	const params = getTableSearchParams(options);
 	return useQuery({
-		queryKey: ["patients", searchKeys.toString()],
-		queryFn: () => ({ count: 0, results: [] as Patient[] }),
+		queryKey: ["patients", params.toString()],
+		queryFn: () =>
+			http
+				.get<{ count: number; results: Patient[] }>("/accounts/patient/", {
+					params,
+				})
+				.then((res) => res.data),
 	});
 }
 
@@ -32,7 +39,11 @@ export default function usePatientsTable() {
 				header: "Phone",
 			},
 			{
-				accessorKey: "martial_status",
+				accessorKey: "gender",
+				header: "Gender",
+			},
+			{
+				accessorKey: "marital_status",
 				header: "Martial status",
 			},
 		],

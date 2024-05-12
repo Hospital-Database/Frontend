@@ -1,8 +1,8 @@
 import createMiddleware from "next-intl/middleware";
 import { type NextRequest, NextResponse } from "next/server";
-import { defaultLocale } from "./next.locales";
-import { homeRegex, isAuthPath } from "./lib/routes";
 import { accessTokenCookie } from "./lib/cookies.server";
+import { homeRegex, isAuthPath } from "./lib/routes";
+import { defaultLocale } from "./next.locales";
 
 const intlMiddleware = createMiddleware({
 	locales: ["en", "ar"],

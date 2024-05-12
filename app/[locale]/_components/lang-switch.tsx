@@ -17,7 +17,7 @@ export default function LangSwitch() {
 	return (
 		<Menu shadow="md" width={200}>
 			<Menu.Target>
-				<Button variant="light" size="icon">
+				<Button variant="light" size="icon" className="min-w-fit">
 					{availableLocales.find(({ code }) => code === locale)?.localName}
 				</Button>
 			</Menu.Target>

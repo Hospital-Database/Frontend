@@ -7,12 +7,19 @@ import "mantine-react-table/styles.css"; //make sure MRT styles were imported in
 import { useMemo } from "react";
 import type { FetchOptions } from "./use-datagrid";
 import useDatagrid from "./use-datagrid";
+import { http } from "@/lib/axios";
+import getTableSearchParams from "@/lib/get-search-params";
 
-function useFetchDoctors(_options: FetchOptions) {
-	const searchKeys = new URLSearchParams();
+function useFetchDoctors(options: FetchOptions) {
+	const params = getTableSearchParams(options);
 	return useQuery({
-		queryKey: ["doctors", searchKeys.toString()],
-		queryFn: () => ({ count: 0, results: [] as Doctor[] }),
+		queryKey: ["doctors", params.toString()],
+		queryFn: () =>
+			http
+				.get<{ count: number; results: Doctor[] }>("/accounts/doctor/", {
+					params,
+				})
+				.then((res) => res.data),
 	});
 }
 

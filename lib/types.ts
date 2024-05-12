@@ -1,12 +1,17 @@
-export interface Visit {
+export interface Entity {
 	id: number;
+	/** datetime in ISO format */
+	created_at: string;
+	/** datetime in ISO format */
+	updated_at: string;
+}
+
+export interface Visit extends Entity {
 	measurement: Measurement;
 	attachment: Attachment[];
 	visit_number: number;
 	ticket: string;
 	datatime: string;
-	created_at: string;
-	updated_at: string;
 	notes: string;
 	patient: number;
 	doctors: number[];
@@ -31,32 +36,25 @@ export interface ExtractedMeasurement {
 	oxygen_level?: number;
 }
 
-export interface Attachment {
-	id: number;
+export interface Attachment extends Entity {
 	url: string;
-	created_at: string;
-	updated_at: string;
-	file: string; // uri
+	/** URI of the file */
+	file: string;
 	kind: string;
 	notes: string;
 	visit: number;
 }
 
-export interface Patient {
+export interface Patient extends Entity {
 	nationality: string;
-	/** datetime in ISO format */
-	created_at: string;
-	/** datetime in ISO format */
-	updated_at: string;
 	national_id: string;
 	full_name: string;
 	image: string;
-	phone_number: string;
+	address: Address;
+	phone: PhoneNumber;
 	gender: string;
 	martial_status: string;
-	government: string;
 	status: string;
-	street: string;
 	/** date in ISO format */
 	date_of_birth: string;
 	notes: string;
@@ -65,10 +63,11 @@ export interface Patient {
 	email: string;
 }
 
-export interface User {
-	id: number;
+export interface User extends Entity {
 	/** datetime */
 	last_login: string;
+	/** datetime */
+	date_joined: string;
 	is_superuser: boolean;
 	username: string;
 	first_name: string;
@@ -76,11 +75,9 @@ export interface User {
 	email: string;
 	is_staff: boolean;
 	is_active: boolean;
-	/** datetime */
-	date_joined: string;
 }
 
-export interface Doctor {
+export interface Doctor extends Entity {
 	full_name: string;
 	gender: string;
 	national_id: string;
@@ -88,26 +85,31 @@ export interface Doctor {
 	license_number: string;
 	experience_years: number;
 	work_days: string;
-	id: number;
 	email: string;
 	marital_status: string;
 	nationality: string;
 	user: number;
+	notes: string;
+	address: Address;
+	phone: PhoneNumber;
 	/** date in ISO format */
 	date_of_birth: string;
-	notes: string;
-	address: {
-		street: string;
-		city: string;
-		governorate: string;
-	};
-	phone: {
-		mobile: string;
-	};
-	/** datetime in ISO format */
-	created_at: string;
-	/** datetime in ISO format */
-	updated_at: string;
+}
+
+export interface Address {
+	street: string;
+	city: string;
+	governorate: string;
+}
+
+export interface PhoneNumber {
+	mobile: string;
+}
+
+export interface ImageType extends Entity {
+	/** URI of the image */
+	image: string;
+	user: number;
 }
 
 export interface BackendError {

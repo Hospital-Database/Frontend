@@ -5,6 +5,7 @@ import { Link } from "@/navigation";
 import {
 	AppShell,
 	Burger,
+	Button,
 	Divider,
 	Group,
 	Stack,
@@ -12,7 +13,12 @@ import {
 	TextInput,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconDashboard, IconStethoscope, IconUser } from "@tabler/icons-react";
+import {
+	IconDashboard,
+	IconPlus,
+	IconStethoscope,
+	IconUser,
+} from "@tabler/icons-react";
 import Image from "next/image";
 import LangSwitch from "../_components/lang-switch";
 import { ThemeSwitch } from "../_components/theme-switch";
@@ -53,8 +59,9 @@ export default function CollapseDesktop({
 						alt="ZU hospital logo"
 					/>
 					<div className="hidden md:flex items-center gap-2 h-full grow">
-						<SearchField className="md:w-[400px] lg:w-[600px]" />
+						<SearchField className="min-w-0 md:basis-[300px] lg:basis-[600px] shrink" />
 						<div className="grow" />
+						<AddPatientButton />
 						<LangSwitch />
 						<ThemeSwitch />
 						<Divider orientation="vertical" />
@@ -113,5 +120,15 @@ function SearchField({ className }: { className?: string }) {
 			placeholder="Search for patients or other things"
 			leftSection="🔎"
 		/>
+	);
+}
+
+function AddPatientButton() {
+	return (
+		<Link href="/dashboard/add-patient">
+			<Button leftSection={<IconPlus />} className="min-w-fit">
+				Add patient
+			</Button>
+		</Link>
 	);
 }

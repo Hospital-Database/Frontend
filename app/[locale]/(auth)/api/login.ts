@@ -1,9 +1,9 @@
 import { http } from "@/lib/axios";
+import type { BackendError, User } from "@/lib/types";
 import { useRouter } from "@/navigation";
 import { useMutation } from "@tanstack/react-query";
-import type { LoginData } from "../login/_components/form";
-import type { BackendError, User } from "@/lib/types";
 import type { AxiosResponse } from "axios";
+import type { LoginData } from "../login/_components/form";
 
 interface SignInOutput {
 	access: string;

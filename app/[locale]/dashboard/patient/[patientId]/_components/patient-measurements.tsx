@@ -3,10 +3,10 @@
 import "@mantine/charts/styles.css";
 
 import useMeasurementsTable from "@/hooks/datagrids/measurements";
+import type { ExtractedMeasurement, Visit } from "@/lib/types";
+import { AreaChart } from "@mantine/charts";
 import { Box, Title } from "@mantine/core";
 import { MantineReactTable } from "mantine-react-table";
-import { AreaChart } from "@mantine/charts";
-import type { ExtractedMeasurement, Visit } from "@/lib/types";
 import { useMemo } from "react";
 
 const colors = [

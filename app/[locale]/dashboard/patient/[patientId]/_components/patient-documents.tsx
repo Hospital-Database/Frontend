@@ -1,9 +1,9 @@
 import "@mantine/dropzone/styles.css";
 
 import { Box, Group, Stack, TextInput, Title } from "@mantine/core";
-import { FilesDropzone } from "./files-dropzone";
-import FileCard from "./file-card";
 import { IconSearch } from "@tabler/icons-react";
+import FileCard from "./file-card";
+import { FilesDropzone } from "./files-dropzone";
 
 export default function PatientDocuments({
 	patientId: _,

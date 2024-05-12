@@ -1,4 +1,5 @@
 "use client";
+import { Card, Text } from "@mantine/core";
 import { useGetStatistics } from "../_api/statistics";
 
 export default function DashboardHeader() {
@@ -22,9 +23,11 @@ function HeaderCard({
 	statistics,
 }: { text: string; statistics: number }) {
 	return (
-		<div className="border border-blue-400 px-3 py-2 rounded-lg space-y-3">
-			<p className="text-blue-600 text-xl font-medium">{text}</p>
-			<p className="text-3xl">{statistics}</p>
-		</div>
+		<Card>
+			<Text size="xl" fw="bold" c="blue.6">
+				{text}
+			</Text>
+			<Text className="text-3xl">{statistics}</Text>
+		</Card>
 	);
 }

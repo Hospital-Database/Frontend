@@ -6,19 +6,19 @@ import { isAxiosError } from "axios";
 
 export async function addPatientApi(data: Patient) {
 	const newData = {
-		national_id: data.nationalId,
-		full_name: data.fullName,
+		national_id: data.national_id,
+		full_name: data.full_name,
 		address: {
 			governorate: data.government,
 			street: data.street,
 			city: data.status,
 		},
 		phone: {
-			mobile: data.phoneNumber,
+			mobile: data.phone_number,
 		},
 		gender: data.gender,
-		marital_status: data.martialStatus,
-		date_of_birth: data.dateOfBirth,
+		marital_status: data.martial_status,
+		date_of_birth: data.date_of_birth,
 		notes: data.notes,
 	};
 	return await http.post("/accounts/patient/", newData);

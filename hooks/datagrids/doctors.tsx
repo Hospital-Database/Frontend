@@ -1,4 +1,4 @@
-import type { Visit } from "@/lib/types";
+import type { Doctor } from "@/lib/types";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css"; //if using mantine date picker features
 import { useQuery } from "@tanstack/react-query";
@@ -8,30 +8,34 @@ import { useMemo } from "react";
 import type { FetchOptions } from "./use-datagrid";
 import useDatagrid from "./use-datagrid";
 
-function useFetchVisits(_options: FetchOptions) {
+function useFetchDoctors(_options: FetchOptions) {
 	const searchKeys = new URLSearchParams();
 	return useQuery({
-		queryKey: ["visits", searchKeys.toString()],
-		queryFn: () => ({ count: 0, results: [] as Visit[] }),
+		queryKey: ["doctors", searchKeys.toString()],
+		queryFn: () => ({ count: 0, results: [] as Doctor[] }),
 	});
 }
 
-export default function useVisitsTable() {
-	const columns = useMemo<MRT_ColumnDef<Visit>[]>(
+export default function useDoctorsTable() {
+	const columns = useMemo<MRT_ColumnDef<Doctor>[]>(
 		() => [
 			{
-				accessorKey: "visit_number",
-				header: "Visit number",
+				accessorKey: "full_name",
+				header: "Full name",
 			},
 			{
-				accessorKey: "ticket",
-				header: "Ticket",
+				accessorKey: "speciality",
+				header: "Speciality",
+			},
+			{
+				accessorKey: "phone.mobile",
+				header: "Phone",
 			},
 		],
 		[],
 	);
 
-	return useDatagrid(useFetchVisits, {
+	return useDatagrid(useFetchDoctors, {
 		columns,
 	});
 }

@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Group, Card, Menu, Text } from "@mantine/core";
+import { ActionIcon, Button, Card, Group, Menu, Text } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import Image from "next/image";
 

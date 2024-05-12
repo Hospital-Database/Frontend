@@ -1,6 +1,6 @@
 import { Group, Text, rem } from "@mantine/core";
-import { IconUpload, IconX, IconFileText } from "@tabler/icons-react";
 import { Dropzone, type DropzoneProps } from "@mantine/dropzone";
+import { IconFileText, IconUpload, IconX } from "@tabler/icons-react";
 
 export function FilesDropzone(props: Omit<DropzoneProps, "maxSize">) {
 	return (

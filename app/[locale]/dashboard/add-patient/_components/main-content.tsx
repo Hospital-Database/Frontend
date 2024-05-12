@@ -16,7 +16,7 @@ export default function MainContent({
 
 	const { mutate, data } = useIsExist();
 	const checkNationalId = () => {
-		const { nationalId } = form.getValues();
+		const { national_id: nationalId } = form.getValues();
 		if (typeof nationalId !== "string" || nationalId.length !== 14) {
 			form.setFieldError("nationalId", t("national-id-must-be-14-digits"));
 			return;

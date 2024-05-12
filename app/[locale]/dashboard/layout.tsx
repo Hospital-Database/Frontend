@@ -12,10 +12,10 @@ import {
 	TextInput,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { IconDashboard, IconStethoscope, IconUser } from "@tabler/icons-react";
 import Image from "next/image";
 import LangSwitch from "../_components/lang-switch";
 import { ThemeSwitch } from "../_components/theme-switch";
-import { IconDashboard, IconStethoscope, IconUser } from "@tabler/icons-react";
 
 export default function CollapseDesktop({
 	children,

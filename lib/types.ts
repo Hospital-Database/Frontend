@@ -43,18 +43,26 @@ export interface Attachment {
 }
 
 export interface Patient {
-	nationalId: string;
-	fullName: string;
-	patientImage: string;
-	phoneNumber: string;
+	nationality: string;
+	/** datetime in ISO format */
+	created_at: string;
+	/** datetime in ISO format */
+	updated_at: string;
+	national_id: string;
+	full_name: string;
+	image: string;
+	phone_number: string;
 	gender: string;
-	martialStatus: string;
-
+	martial_status: string;
 	government: string;
 	status: string;
 	street: string;
-	dateOfBirth: Date;
+	/** date in ISO format */
+	date_of_birth: string;
 	notes: string;
+	blood_type: string;
+	disease_type: string;
+	email: string;
 }
 
 export interface User {
@@ -70,6 +78,36 @@ export interface User {
 	is_active: boolean;
 	/** datetime */
 	date_joined: string;
+}
+
+export interface Doctor {
+	full_name: string;
+	gender: string;
+	national_id: string;
+	speciality: string;
+	license_number: string;
+	experience_years: number;
+	work_days: string;
+	id: number;
+	email: string;
+	marital_status: string;
+	nationality: string;
+	user: number;
+	/** date in ISO format */
+	date_of_birth: string;
+	notes: string;
+	address: {
+		street: string;
+		city: string;
+		governorate: string;
+	};
+	phone: {
+		mobile: string;
+	};
+	/** datetime in ISO format */
+	created_at: string;
+	/** datetime in ISO format */
+	updated_at: string;
 }
 
 export interface BackendError {

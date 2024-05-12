@@ -1,6 +1,7 @@
 "use client";
 
 import useAvatar from "@/hooks/use-avatar";
+import useURL from "@/hooks/use-url";
 import {
 	Anchor,
 	Box,
@@ -21,7 +22,6 @@ import PatientDetails from "./_components/patient-details";
 import PatientDocuments from "./_components/patient-documents";
 import PatientMeasurements from "./_components/patient-measurements";
 import VisitDetails from "./_components/visit-details";
-import useURL from "@/hooks/use-url";
 
 export default function PatientPage({
 	params: { patientId },

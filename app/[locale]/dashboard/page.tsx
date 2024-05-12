@@ -1,9 +1,9 @@
 "use client";
 
-import { Box, Title } from "@mantine/core";
-import DashboardHeader from "./_components/header";
-import { MantineReactTable } from "mantine-react-table";
 import useVisitsTable from "@/hooks/datagrids/visits";
+import { Box, Title } from "@mantine/core";
+import { MantineReactTable } from "mantine-react-table";
+import DashboardHeader from "./_components/header";
 
 export default function Dashboard() {
 	const visitsTable = useVisitsTable();

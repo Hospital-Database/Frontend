@@ -1,7 +1,6 @@
 "use client";
 
 import { Button, TextInput } from "@mantine/core";
-import { Loader } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useTranslations } from "next-intl";
@@ -22,6 +21,7 @@ export default function LoginForm() {
 		password: z.string(),
 	});
 	const form = useForm({
+		mode: "uncontrolled",
 		validate: zodResolver(loginSchema),
 	});
 	const { mutate, error, isPending } = useSignIn();
@@ -33,8 +33,10 @@ export default function LoginForm() {
 				mutate(loginInfo);
 			})}
 		>
-			{error?.detail && (
-				<p className="text-red-600 text-center text-sm">{error?.detail}</p>
+			{error?.response?.data.detail && (
+				<p className="text-red-600 text-center text-sm">
+					{error?.response?.data.detail}
+				</p>
 			)}
 			<div className="space-y-3">
 				<TextInput
@@ -49,8 +51,8 @@ export default function LoginForm() {
 					{...form.getInputProps("password")}
 				/>
 			</div>
-			<Button type="submit" className="w-full" disabled={isPending}>
-				{isPending ? <Loader color="blue" size={20} /> : t("login")}
+			<Button type="submit" className="w-full" loading={isPending}>
+				{t("login")}
 			</Button>
 		</form>
 	);

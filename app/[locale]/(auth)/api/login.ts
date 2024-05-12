@@ -2,8 +2,9 @@ import { http } from "@/lib/axios";
 import type { BackendError, User } from "@/lib/types";
 import { useRouter } from "@/navigation";
 import { useMutation } from "@tanstack/react-query";
-import type { AxiosResponse } from "axios";
+import type { AxiosError, AxiosResponse } from "axios";
 import type { LoginData } from "../login/_components/form";
+import { accessTokenCookie, refreshTokenCookie } from "@/lib/cookies.client";
 
 interface SignInOutput {
 	access: string;
@@ -19,11 +20,17 @@ export async function signIn(data: LoginData) {
 
 export function useSignIn() {
 	const router = useRouter();
-	return useMutation<AxiosResponse<SignInOutput>, SignInError, LoginData>({
+	return useMutation<
+		AxiosResponse<SignInOutput>,
+		AxiosError<SignInError>,
+		LoginData
+	>({
 		mutationFn: signIn,
 		onSuccess: ({ data }) => {
 			router.push("/");
-			localStorage.setItem("user", JSON.stringify(data));
+			refreshTokenCookie.set(data.refresh);
+			accessTokenCookie.set(data.access);
+			localStorage.setItem("user", JSON.stringify(data.user));
 		},
 	});
 }

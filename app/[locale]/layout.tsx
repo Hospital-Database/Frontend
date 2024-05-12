@@ -1,5 +1,5 @@
-import "./globals.css";
 import "@mantine/core/styles.css";
+import "./globals.css";
 
 import { cn } from "@/lib/utils";
 import { availableLocalesMap, defaultLocale } from "@/next.locales";

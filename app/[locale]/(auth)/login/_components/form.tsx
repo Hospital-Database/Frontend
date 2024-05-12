@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import * as z from "zod";
 import { useSignIn } from "../../api/login";
 
-export interface TLogin {
+export interface LoginData {
 	username: string;
 	password: string;
 }
@@ -33,10 +33,9 @@ export default function LoginForm() {
 				mutate(loginInfo);
 			})}
 		>
-			<p className="text-red-600 text-center text-sm">
-				{/*@ts-ignore */}
-				{error?.response?.data?.detail}
-			</p>
+			{error?.detail && (
+				<p className="text-red-600 text-center text-sm">{error?.detail}</p>
+			)}
 			<div className="space-y-3">
 				<TextInput
 					label={t("username")}

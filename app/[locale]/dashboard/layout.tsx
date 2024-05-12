@@ -15,6 +15,7 @@ import { useDisclosure } from "@mantine/hooks";
 import Image from "next/image";
 import LangSwitch from "../_components/lang-switch";
 import { ThemeSwitch } from "../_components/theme-switch";
+import { IconDashboard, IconStethoscope, IconUser } from "@tabler/icons-react";
 
 export default function CollapseDesktop({
 	children,
@@ -67,9 +68,15 @@ export default function CollapseDesktop({
 				</Text>
 				<SearchField className="w-full md:hidden mt-4" />
 				<Stack gap={"md"} mt="md">
-					<NavLink href="/"> Home</NavLink>
-					<NavLink href="/dashboard/add-patient">Add-Patient</NavLink>
-					<NavLink href="/dashboard/dashboard">Dashboard</NavLink>
+					<NavLink href="/dashboard">
+						<IconDashboard /> Dashboard
+					</NavLink>
+					<NavLink href="/dashboard/patients">
+						<IconUser /> Patients
+					</NavLink>
+					<NavLink href="/dashboard/doctors">
+						<IconStethoscope /> Doctors
+					</NavLink>
 				</Stack>
 				<div className="md:hidden mt-4">
 					<Divider mb="md" />
@@ -92,9 +99,9 @@ function NavLink({
 	return (
 		<Link
 			href={href}
-			className="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-900 rounded"
+			className="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900/70 dark:hover:bg-zinc-900 rounded"
 		>
-			{children}
+			<Group>{children}</Group>
 		</Link>
 	);
 }

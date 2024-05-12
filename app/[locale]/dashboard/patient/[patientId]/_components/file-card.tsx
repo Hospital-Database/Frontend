@@ -1,10 +1,10 @@
-import { ActionIcon, Box, Button, Group, Menu, Text } from "@mantine/core";
+import { ActionIcon, Button, Group, Card, Menu, Text } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import Image from "next/image";
 
 export default function FileCard() {
 	return (
-		<Box className="py-4 px-6 dark:bg-stone-900 bg-stone-200 rounded shadow">
+		<Card shadow="sm" radius="md">
 			<Group justify="space-between" align={"start"}>
 				<Group gap="md" align="start">
 					<Image
@@ -27,12 +27,12 @@ export default function FileCard() {
 						</Menu.Target>
 						<Menu.Dropdown>
 							<Menu.Item>Edit</Menu.Item>
-							<Menu.Item>Delete</Menu.Item>
+							<Menu.Item color="red">Delete</Menu.Item>
 						</Menu.Dropdown>
 					</Menu>
 				</Group>
 			</Group>
-		</Box>
+		</Card>
 	);
 }
 

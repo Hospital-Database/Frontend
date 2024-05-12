@@ -1,5 +1,5 @@
 "use client";
-import { useGetStatistics } from "../api/statistics";
+import { useGetStatistics } from "../_api/statistics";
 
 export default function DashboardHeader() {
 	const { data } = useGetStatistics();

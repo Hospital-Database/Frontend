@@ -14,14 +14,12 @@ import {
 	IconDots,
 	IconFileDescription,
 	IconFiles,
-	IconHeartbeat,
 	IconStethoscope,
 } from "@tabler/icons-react";
 import Image from "next/image";
-import PatientBiometrics from "./_components/patient-biometrics";
 import PatientDetails from "./_components/patient-details";
 import PatientDocuments from "./_components/patient-documents";
-import PatientVitals from "./_components/patient-vitals";
+import PatientMeasurements from "./_components/patient-measurements";
 import VisitDetails from "./_components/visit-details";
 import useURL from "@/hooks/use-url";
 
@@ -63,7 +61,7 @@ export default function PatientPage({
 			)}
 			<Box mt="xl">
 				<Tabs
-					value={searchParams.get("tab")}
+					value={searchParams.get("tab") || "details"}
 					onChange={(tab) => setSearchParam("tab", tab)}
 				>
 					<Tabs.List>
@@ -74,16 +72,10 @@ export default function PatientPage({
 							Details
 						</Tabs.Tab>
 						<Tabs.Tab
-							value="vitals"
+							value="measurements"
 							leftSection={<IconStethoscope className="w-5 h-5" />}
 						>
-							Vitals
-						</Tabs.Tab>
-						<Tabs.Tab
-							value="biometrics"
-							leftSection={<IconHeartbeat className="w-5 h-5" />}
-						>
-							Biometrics
+							Measurements
 						</Tabs.Tab>
 						<Tabs.Tab
 							value="documents"
@@ -95,11 +87,8 @@ export default function PatientPage({
 					<Tabs.Panel value="details">
 						<PatientDetails patientId={patientId} />
 					</Tabs.Panel>
-					<Tabs.Panel value="vitals">
-						<PatientVitals patientId={patientId} />
-					</Tabs.Panel>
-					<Tabs.Panel value="biometrics">
-						<PatientBiometrics patientId={patientId} />
+					<Tabs.Panel value="measurements">
+						<PatientMeasurements patientId={patientId} />
 					</Tabs.Panel>
 					<Tabs.Panel value="documents">
 						<PatientDocuments patientId={patientId} />

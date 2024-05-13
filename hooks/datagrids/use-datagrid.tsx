@@ -1,8 +1,11 @@
-import { ActionIcon, Tooltip } from "@mantine/core";
+import { getErrorMessageSync } from "@/lib/err-msg";
+import { notifyError } from "@/lib/notifications";
+import { ActionIcon, Button, Group, Menu, Tooltip } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css"; //if using mantine date picker features
-import { IconRefresh } from "@tabler/icons-react";
-import type { UseQueryResult, WithRequired } from "@tanstack/react-query";
+import { IconDownload, IconRefresh } from "@tabler/icons-react";
+import { type WithRequired, useQuery } from "@tanstack/react-query";
+import { download, generateCsv, mkConfig } from "export-to-csv";
 import { merge } from "lodash";
 import {
 	type MRT_ColumnFilterFnsState,
@@ -14,7 +17,8 @@ import {
 	useMantineReactTable,
 } from "mantine-react-table";
 import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
-import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { useId, useState } from "react";
 
 export interface FetchOptions {
 	columnFilterFns?: MRT_ColumnFilterFnsState;
@@ -24,12 +28,27 @@ export interface FetchOptions {
 	sorting?: MRT_SortingState;
 }
 
+const csvConfig = mkConfig({
+	fieldSeparator: ",",
+	decimalSeparator: ".",
+	useKeysAsHeaders: true,
+});
+
+const handleExportRows = <TData extends MRT_RowData>(data: TData[]) => {
+	const csv = generateCsv(csvConfig)(data);
+	download(csvConfig)(csv);
+};
+
 export default function useDatagrid<TData extends MRT_RowData>(
-	useFetchData: (
-		fetchOptions: FetchOptions,
-	) => UseQueryResult<{ count: number; results: TData[] }>,
+	fetchData: (fetchOptions: FetchOptions) => Promise<{
+		count: number;
+		results: TData[];
+	}>,
 	tableOptions: WithRequired<Partial<MRT_TableOptions<TData>>, "columns">,
 ) {
+	const t = useTranslations();
+	const id = useId();
+	const [isExporting, setIsExporting] = useState(false);
 	//Manage MRT state that we want to pass to our API
 	const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
 		[],
@@ -59,14 +78,16 @@ export default function useDatagrid<TData extends MRT_RowData>(
 	};
 
 	//call our custom react-query hook
-	const { data, isError, isFetching, isLoading, refetch, error } =
-		useFetchData(fetchOptions);
+	const { data, isError, isFetching, isLoading, refetch, error } = useQuery({
+		queryKey: [id, fetchOptions],
+		queryFn: () => fetchData(fetchOptions),
+	});
 
 	//this will depend on your API response shape
 	const fetchedData = data?.results ?? [];
 	const totalRowCount = data?.count ?? 0;
 
-	return useMantineReactTable(
+	const table = useMantineReactTable(
 		merge(
 			{
 				mantineToolbarAlertBannerProps: isError
@@ -81,14 +102,89 @@ export default function useDatagrid<TData extends MRT_RowData>(
 						}
 					: undefined,
 				renderTopToolbarCustomActions: () => (
-					<Tooltip label="Refresh Data">
-						<ActionIcon variant="subtle" c="white" onClick={() => refetch()}>
-							<IconRefresh />
-						</ActionIcon>
-					</Tooltip>
+					<Group>
+						<Tooltip label="Refresh Data">
+							<ActionIcon variant="subtle" c="white" onClick={() => refetch()}>
+								<IconRefresh />
+							</ActionIcon>
+						</Tooltip>
+						<Menu>
+							<Menu.Target>
+								<Button
+									leftSection={<IconDownload />}
+									variant="subtle"
+									c="white"
+								>
+									Export
+								</Button>
+							</Menu.Target>
+							<Menu.Dropdown>
+								<Menu.Item
+									disabled={
+										table.getPrePaginationRowModel().rows.length === 0 ||
+										isExporting
+									}
+									//export all rows, including from the next page, (still respects filtering and sorting)
+									onClick={async () => {
+										setIsExporting(true);
+										try {
+											const { results: allData } = await fetchData({
+												...fetchOptions,
+												pagination: {
+													pageIndex: 0,
+													pageSize: totalRowCount,
+												},
+											});
+											handleExportRows(allData);
+										} catch (e) {
+											const message = getErrorMessageSync(e, t);
+											notifyError({
+												title: "Couldn't export all the rows",
+												message,
+											});
+										}
+										setIsExporting(false);
+									}}
+									leftSection={<IconDownload />}
+								>
+									Export All Rows
+								</Menu.Item>
+								<Menu.Item
+									disabled={table.getRowModel().rows.length === 0}
+									//export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
+									onClick={() =>
+										handleExportRows(
+											table.getRowModel().rows.map((row) => row.original),
+										)
+									}
+									leftSection={<IconDownload />}
+								>
+									Export Page Rows
+								</Menu.Item>
+								<Menu.Item
+									disabled={
+										!table.getIsSomeRowsSelected() &&
+										!table.getIsAllRowsSelected()
+									}
+									//only export selected rows
+									onClick={() =>
+										handleExportRows(
+											table
+												.getSelectedRowModel()
+												.rows.map((row) => row.original),
+										)
+									}
+									leftSection={<IconDownload />}
+								>
+									Export Selected Rows
+								</Menu.Item>
+							</Menu.Dropdown>
+						</Menu>
+					</Group>
 				),
 
 				data: fetchedData,
+				enableRowSelection: true,
 				enableBottomToolbar: true,
 				enableFullScreenToggle: true,
 				enableColumnResizing: true,
@@ -119,4 +215,6 @@ export default function useDatagrid<TData extends MRT_RowData>(
 			tableOptions,
 		),
 	);
+
+	return table;
 }

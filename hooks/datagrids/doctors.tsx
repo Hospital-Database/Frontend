@@ -1,27 +1,12 @@
-import { http } from "@/lib/axios";
-import getTableSearchParams from "@/lib/get-search-params";
+import { getDoctors } from "@/api/doctors";
 import type { Doctor } from "@/lib/types";
+import { Menu } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css"; //if using mantine date picker features
-import { useQuery } from "@tanstack/react-query";
 import type { MRT_ColumnDef } from "mantine-react-table";
 import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
 import { useMemo } from "react";
-import type { FetchOptions } from "./use-datagrid";
 import useDatagrid from "./use-datagrid";
-
-function useFetchDoctors(options: FetchOptions) {
-	const params = getTableSearchParams(options);
-	return useQuery({
-		queryKey: ["doctors", params.toString()],
-		queryFn: () =>
-			http
-				.get<{ count: number; results: Doctor[] }>("/accounts/doctor/", {
-					params,
-				})
-				.then((res) => res.data),
-	});
-}
 
 export default function useDoctorsTable() {
 	const columns = useMemo<MRT_ColumnDef<Doctor>[]>(
@@ -42,7 +27,16 @@ export default function useDoctorsTable() {
 		[],
 	);
 
-	return useDatagrid(useFetchDoctors, {
+	return useDatagrid(getDoctors, {
 		columns,
+		enableRowActions: true,
+		renderRowActionMenuItems: ({ row: _ }) => (
+			<>
+				<Menu.Item onClick={() => console.info("Deactivate")}>
+					Deactivate
+				</Menu.Item>
+				<Menu.Item onClick={() => console.info("Delete")}>Delete</Menu.Item>
+			</>
+		),
 	});
 }

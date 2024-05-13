@@ -1,25 +1,17 @@
 import { http } from "@/lib/axios";
 import getTableSearchParams from "@/lib/get-search-params";
 import type { Measurement } from "@/lib/types";
-import { useQuery } from "@tanstack/react-query";
 import type { MRT_ColumnDef } from "mantine-react-table";
 import { useMemo } from "react";
 import useDatagrid, { type FetchOptions } from "./use-datagrid";
 
-function useFetchMeasurements(options: FetchOptions) {
+function getMeasurements(options: FetchOptions) {
 	const params = getTableSearchParams(options);
-	return useQuery({
-		queryKey: ["measurements", params.toString()],
-		queryFn: () =>
-			http
-				.get<{ count: number; results: Measurement[] }>(
-					"/accounts/measurement/",
-					{
-						params,
-					},
-				)
-				.then((res) => res.data),
-	});
+	return http
+		.get<{ count: number; results: Measurement[] }>("/accounts/measurement/", {
+			params,
+		})
+		.then((res) => res.data);
 }
 
 export default function useMeasurementsTable() {
@@ -53,7 +45,7 @@ export default function useMeasurementsTable() {
 		[],
 	);
 
-	return useDatagrid(useFetchMeasurements, {
+	return useDatagrid(getMeasurements, {
 		columns,
 	});
 }

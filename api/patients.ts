@@ -1,8 +1,8 @@
 import type { FetchOptions } from "@/hooks/datagrids/use-datagrid";
 import { http } from "@/lib/axios";
 import getTableSearchParams from "@/lib/get-search-params";
+import { notifyError, notifySuccess } from "@/lib/notifications";
 import type { Patient } from "@/lib/types";
-import { notifications } from "@mantine/notifications";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { type AxiosResponse, isAxiosError } from "axios";
 import * as z from "zod";
@@ -41,22 +41,18 @@ export function useCreatePatient({
 	return useMutation({
 		mutationFn: createPatient,
 		onSuccess: (response) => {
-			notifications.show({
+			notifySuccess({
 				title: "Patient was added successfully",
 				message: "",
-				color: "white",
-				style: { backgroundColor: "#22c55e" },
 			});
 			onSuccess?.(response);
 		},
 		onError: (e) => {
 			let error = "something went wrong";
 			if (isAxiosError(e)) error = e?.response?.data;
-			notifications.show({
+			notifyError({
 				title: typeof error === "string" ? error : "Something went wrong",
 				message: "",
-				color: "white",
-				style: { backgroundColor: "#ef4444" },
 			});
 		},
 	});

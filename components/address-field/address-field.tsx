@@ -1,13 +1,13 @@
-import { Select, TextInput, type ComboboxItem } from "@mantine/core";
-import {
-	EgyptCities,
-	type EgyptGovernorateKey,
-	EgyptGovernorate,
-} from "./form-data";
+import type { Patient } from "@/lib/types";
+import { type ComboboxItem, Select, TextInput } from "@mantine/core";
+import type { UseFormReturnType } from "@mantine/form";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
-import type { Patient } from "@/lib/types";
-import type { UseFormReturnType } from "@mantine/form";
+import {
+	EgyptCities,
+	EgyptGovernorate,
+	type EgyptGovernorateKey,
+} from "./form-data";
 
 export default function AddressField({
 	form,

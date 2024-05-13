@@ -1,16 +1,16 @@
 "use client";
 
+import { createPatientSchema, useCreatePatient } from "@/api/patients";
+import { useRouter } from "@/navigation";
 import { Button } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconMessageCircleUser, IconShieldPlus } from "@tabler/icons-react";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useTranslations } from "next-intl";
-import { useCreatePatient, createPatientSchema } from "@/api/patients";
+import type { z } from "zod";
 import AccordionTitle from "./accordion-title";
 import AdditionalContent from "./additional-content";
 import MainContent from "./main-content";
-import type { z } from "zod";
-import { useRouter } from "@/navigation";
 
 export default function AddPatientForm() {
 	const t = useTranslations("AddPatient");

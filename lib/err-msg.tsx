@@ -2,7 +2,7 @@ import { isAxiosError } from "axios";
 import { getTranslations } from "next-intl/server";
 
 export async function getErrorMessage(e: unknown): Promise<string> {
-	const t = await getTranslations();
+	const t = (await getTranslations()) as (key: string) => string;
 	return getErrorMessageSync(e, t);
 }
 

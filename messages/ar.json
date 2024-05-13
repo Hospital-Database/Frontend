@@ -32,13 +32,13 @@
 		"notes": "ملحوظات",
 		"status": "حالة",
 		"street": "شارع",
-		"government": "حكومة",
+		"governorate": "المحافظة",
 		"material-status": "حالة الجيش",
 		"choose-your-material-status": "اختر حالتك بالنسبة للجيش",
 		"other-details": "تفاصيل أخرى",
 		"additional-details-you-can-complete-later": "تفاصيل إضافية، يمكنك إكمالها لاحقًا",
 		"national-id": "الهوية الوطنية",
-		"user-is-not-exist": "المستخدم غير موجود"
+		"new-national-id": "هذا الرقم القومي جديد"
 	},
 	"Login": {
 		"login": "تسجيل الدخول",

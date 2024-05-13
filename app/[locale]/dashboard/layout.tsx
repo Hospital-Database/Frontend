@@ -5,6 +5,7 @@ import { Link } from "@/navigation";
 import {
 	AppShell,
 	Burger,
+	Button,
 	Divider,
 	Group,
 	Stack,
@@ -12,6 +13,12 @@ import {
 	TextInput,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import {
+	IconDashboard,
+	IconPlus,
+	IconStethoscope,
+	IconUser,
+} from "@tabler/icons-react";
 import Image from "next/image";
 import LangSwitch from "../_components/lang-switch";
 import { ThemeSwitch } from "../_components/theme-switch";
@@ -52,8 +59,9 @@ export default function CollapseDesktop({
 						alt="ZU hospital logo"
 					/>
 					<div className="hidden md:flex items-center gap-2 h-full grow">
-						<SearchField className="md:w-[400px] lg:w-[600px]" />
+						<SearchField className="min-w-0 md:basis-[300px] lg:basis-[600px] shrink" />
 						<div className="grow" />
+						<AddPatientButton />
 						<LangSwitch />
 						<ThemeSwitch />
 						<Divider orientation="vertical" />
@@ -67,9 +75,15 @@ export default function CollapseDesktop({
 				</Text>
 				<SearchField className="w-full md:hidden mt-4" />
 				<Stack gap={"md"} mt="md">
-					<NavLink href="/"> Home</NavLink>
-					<NavLink href="/dashboard/add-patient">Add-Patient</NavLink>
-					<NavLink href="/dashboard/dashboard">Dashboard</NavLink>
+					<NavLink href="/dashboard">
+						<IconDashboard /> Dashboard
+					</NavLink>
+					<NavLink href="/dashboard/patients">
+						<IconUser /> Patients
+					</NavLink>
+					<NavLink href="/dashboard/doctors">
+						<IconStethoscope /> Doctors
+					</NavLink>
 				</Stack>
 				<div className="md:hidden mt-4">
 					<Divider mb="md" />
@@ -92,9 +106,9 @@ function NavLink({
 	return (
 		<Link
 			href={href}
-			className="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-900 rounded"
+			className="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900/70 dark:hover:bg-zinc-900 rounded"
 		>
-			{children}
+			<Group>{children}</Group>
 		</Link>
 	);
 }
@@ -106,5 +120,15 @@ function SearchField({ className }: { className?: string }) {
 			placeholder="Search for patients or other things"
 			leftSection="🔎"
 		/>
+	);
+}
+
+function AddPatientButton() {
+	return (
+		<Link href="/dashboard/add-patient">
+			<Button leftSection={<IconPlus />} className="min-w-fit">
+				Add patient
+			</Button>
+		</Link>
 	);
 }

@@ -1,3 +1,5 @@
+import { http } from "@/lib/axios";
+import getTableSearchParams from "@/lib/get-search-params";
 import type { Visit } from "@/lib/types";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css"; //if using mantine date picker features
@@ -8,26 +10,28 @@ import { useMemo } from "react";
 import type { FetchOptions } from "./use-datagrid";
 import useDatagrid from "./use-datagrid";
 
-function useFetchVisits(_options: FetchOptions) {
-	const searchKeys = new URLSearchParams();
+function useFetchVisits(options: FetchOptions) {
+	const params = getTableSearchParams(options);
 	return useQuery({
-		queryKey: ["visits", searchKeys.toString()],
-		queryFn: () => ({ count: 0, results: [] as Visit[] }),
+		queryKey: ["visits", params.toString()],
+		queryFn: () =>
+			http
+				.get<{ count: number; results: Visit[] }>("/visit/visit/", {
+					params,
+				})
+				.then((res) => res.data),
 	});
 }
-
 export default function useVisitsTable() {
 	const columns = useMemo<MRT_ColumnDef<Visit>[]>(
 		() => [
 			{
 				accessorKey: "visit_number",
 				header: "Visit number",
-				size: 150,
 			},
 			{
 				accessorKey: "ticket",
 				header: "Ticket",
-				size: 150,
 			},
 		],
 		[],

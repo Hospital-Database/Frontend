@@ -4,13 +4,9 @@ export const LOGIN_REDIRECT = "/login";
 
 export const AFTER_LOGIN_REDIRECT = "/";
 
-const authRoutesRegex = routesToRegex([
-	"/login",
-	"/signup",
-	"/forget-password",
-	"/reset-password",
-	"/auth-error",
-]);
+const authRoutesRegex = routesToRegex(["/login", "/auth-error"]);
+
+export const homeRegex = routesToRegex(["/"]);
 
 export function isAuthPath(str: string) {
 	return authRoutesRegex.test(str);

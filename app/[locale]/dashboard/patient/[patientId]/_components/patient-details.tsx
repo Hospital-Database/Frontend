@@ -1,4 +1,4 @@
-import DetailsCard from "@/components/site/details-card";
+import DetailsCard from "@/components/details-card";
 import useVisitsTable from "@/hooks/datagrids/visits";
 import { Box, Button, Group, Title } from "@mantine/core";
 import { MantineReactTable } from "mantine-react-table";
@@ -11,6 +11,9 @@ export default function PatientDetails({ patientId }: { patientId: string }) {
 	return (
 		<>
 			<Box mt="md">
+				<Title component={"h2"} mb="md">
+					Details
+				</Title>
 				<DetailsCard
 					details={[
 						{ title: "Name", value: `Patient ${patientId}` },

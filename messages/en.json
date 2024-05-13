@@ -15,7 +15,7 @@
 		"save-and-start-visit": "Save and start visit",
 		"national-id-must-be-14-digits": "National ID must be 14 digits",
 		"user-is-already-exist": "User is already exist",
-		"user-is-not-exist": "User is not exist",
+		"new-national-id": "This national ID is new",
 		"see-details": "See details",
 		"full-name": "Full Name",
 		"AddPatiententer-the-full-name-of-4-parts-as-in-the-national-id": "Enter the full name of 4 parts as in the national ID",
@@ -35,7 +35,7 @@
 		"enter-some-notes-here": "Enter some notes here",
 		"status": "Status",
 		"street": "Street",
-		"government": "Government",
+		"governorate": "Governorate",
 		"other-details": "Other details",
 		"additional-details-you-can-complete-later": "Additional details, you can complete later",
 		"national-id": "National ID"

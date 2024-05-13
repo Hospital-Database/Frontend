@@ -1,70 +1,45 @@
 "use client";
-import type { Patient } from "@/lib/types";
-import { Button, TextInput } from "@mantine/core";
+
+import type { createPatientSchema } from "@/api/patients";
+import { TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { useIsExist } from "../api/add-patient";
+import type { z } from "zod";
+import useCheckNationalId from "../_hooks/use-check-national-id";
 
 export default function MainContent({
 	form,
 }: {
-	form: UseFormReturnType<Patient, (values: Patient) => Patient>;
+	form: UseFormReturnType<z.infer<typeof createPatientSchema>>;
 }) {
 	const t = useTranslations("AddPatient");
-	const [isOnChange, setIsOnChange] = useState(true);
+	const nationalIdDoesnotExist =
+		!form.errors.national_id && form.isDirty("national_id");
 
-	const { mutate, data } = useIsExist();
-	const checkNationalId = () => {
-		const { nationalId } = form.getValues();
-		if (typeof nationalId !== "string" || nationalId.length !== 14) {
-			form.setFieldError("nationalId", t("national-id-must-be-14-digits"));
-			return;
-		}
-		mutate({ national_id: nationalId });
-		form.setFieldError(
-			"nationalId",
-			data?.data?.exists ? t("user-is-already-exist") : "",
-		);
-		setIsOnChange(false);
-	};
-	const handleOnChange = (value: string) => {
-		setIsOnChange(true);
-		form.getInputProps("nationalId").onChange(value);
-	};
+	useCheckNationalId(form);
 
 	return (
 		<section className="space-y-3 grid grid-cols-3 gap-x-8">
 			<div className="col-span-2 space-y-5">
 				<div className="space-y-2">
 					<TextInput
-						name="nationalId"
+						{...form.getInputProps("national_id")}
 						label={t("national-id")}
-						{...form.getInputProps("nationalId")}
-						key={form.key("nationalId")}
 						withAsterisk
 						className={
-							!form.errors.nationalId && !isOnChange
+							nationalIdDoesnotExist
 								? "[&>div]:border [&>div]:border-green-500"
 								: ""
 						}
-						onChange={(e) => handleOnChange(e.target.value)}
 					/>
-					<p className="text-green-500 text-xs">
-						{!form.errors.nationalId && !isOnChange
-							? t("user-is-not-exist")
-							: ""}
-					</p>
-
-					<Button variant="light" onClick={checkNationalId} type="button">
-						{t("see-details")}
-					</Button>
+					{nationalIdDoesnotExist && (
+						<p className="text-green-500 text-xs">{t("new-national-id")}</p>
+					)}
 				</div>
 
 				<TextInput
+					{...form.getInputProps("full_name")}
 					withAsterisk
-					name="fullName"
-					{...form.getInputProps("fullName")}
 					label={t("full-name")}
 					description={t(
 						"AddPatiententer-the-full-name-of-4-parts-as-in-the-national-id",
@@ -91,7 +66,7 @@ export default function MainContent({
 					<strong className="text-sm font-medium">Select an image</strong>
 					<input
 						className="block w-0 h-0"
-						name="patientImage"
+						name="image"
 						type="file"
 						onChange={() => console.log("upload image")}
 					/>

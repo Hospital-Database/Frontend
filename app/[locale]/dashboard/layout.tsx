@@ -73,7 +73,7 @@ export default function CollapseDesktop({
 				<Text fw="bold" size="xl">
 					ZU Hospital
 				</Text>
-				<SearchField className="w-full md:hidden mt-4" />
+				{/* <SearchField className="w-full md:hidden mt-4" /> */}
 				<Stack gap={"md"} mt="md">
 					<NavLink href="/dashboard">
 						<IconDashboard /> Dashboard
@@ -85,14 +85,14 @@ export default function CollapseDesktop({
 						<IconStethoscope /> Doctors
 					</NavLink>
 				</Stack>
-				<div className="md:hidden mt-4">
+				{/* <div className="md:hidden mt-4">
 					<Divider mb="md" />
 					<div className="gap-2 grid grid-cols-2">
 						<LangSwitch />
 						<ThemeSwitch />
 					</div>
 					<Logout width="100%" mt="md" />
-				</div>
+				</div> */}
 			</AppShell.Navbar>
 			<AppShell.Main>{children}</AppShell.Main>
 		</AppShell>

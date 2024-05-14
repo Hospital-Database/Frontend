@@ -47,8 +47,6 @@ export default function AddPatientForm() {
 					mainText={t("main-details")}
 					additionalText={t("complete-the-main-details-of-the-patient")}
 				/>
-
-				{/* @ts-ignore */}
 				<MainContent form={form} />
 			</section>
 			<section className="space-y-6">
@@ -57,7 +55,6 @@ export default function AddPatientForm() {
 					mainText={t("other-details")}
 					additionalText={t("additional-details-you-can-complete-later")}
 				/>
-				{/* @ts-ignore */}
 				<AdditionalContent form={form} />
 			</section>
 			<section>

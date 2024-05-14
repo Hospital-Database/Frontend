@@ -10,7 +10,7 @@ export default function PatientsDatagrid() {
 		<Box>
 			<Breadcrumbs mb="xl">
 				<Anchor href={"/dashboard"}>Dashboard</Anchor>
-				<Anchor href={"/dashboard/patients"}>Patients</Anchor>
+				<span>Patients</span>
 			</Breadcrumbs>
 			<MantineReactTable table={patientsTable} />
 		</Box>

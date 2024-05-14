@@ -1,4 +1,3 @@
-import type { Patient } from "@/lib/types";
 import { type ComboboxItem, Select, TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import { useLocale, useTranslations } from "next-intl";
@@ -8,11 +7,13 @@ import {
 	EgyptGovernorate,
 	type EgyptGovernorateKey,
 } from "./form-data";
+import type { createPatientSchema } from "@/api/patients";
+import type { z } from "zod";
 
 export default function AddressField({
 	form,
 }: {
-	form: UseFormReturnType<Patient>;
+	form: UseFormReturnType<z.infer<typeof createPatientSchema>>;
 }) {
 	const t = useTranslations("AddPatient");
 	const locale = useLocale() as "ar" | "en";

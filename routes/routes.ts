@@ -1,20 +1,14 @@
 import { availableLocaleCodes } from "@/next.locales";
-import { z } from "zod";
-import { makeRoutes } from "./utils";
+import { makeRoutes, type RouteType } from "./utils";
 
 export const LOGIN_REDIRECT = "/login";
 export const AFTER_LOGIN_REDIRECT = "/";
-
-export function isAuthPath(str: string) {
-	return Routes.login.doesMatch(str);
-}
 
 export const Routes = makeRoutes(
 	(makeRoute) => {
 		return {
 			home: makeRoute("/"),
 			dashboard: makeRoute("/dashboard", {
-				params: z.object({ id: z.string() }),
 				type: "admin-only",
 			}),
 			login: makeRoute("/login", { type: "public" }),
@@ -24,3 +18,9 @@ export const Routes = makeRoutes(
 		locales: availableLocaleCodes,
 	},
 );
+
+export function checkRouteType(path: string, type: RouteType) {
+	for (const route of Object.values(Routes))
+		if (route.doesMatch(path) && route.type === type) return true;
+	return false;
+}

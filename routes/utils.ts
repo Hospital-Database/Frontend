@@ -8,6 +8,8 @@ import {
 import { compile, pathToRegexp } from "path-to-regexp";
 import { z } from "zod";
 
+export type RouteType = "public" | "private" | "admin-only" | "auth";
+
 export type RouteBuilder<
 	Params extends z.ZodSchema,
 	Search extends z.ZodSchema,
@@ -21,7 +23,7 @@ export type RouteBuilder<
 	useSearchParams: () => z.output<Search>;
 	params: z.output<Params>;
 	doesMatch: (path: string) => boolean;
-	type?: "public" | "private" | "admin-only" | "auth";
+	type?: RouteType;
 };
 
 export type RouteOptions<

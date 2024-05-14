@@ -11,10 +11,15 @@ export default function DoctorsDatagrid() {
 		<Box>
 			<Breadcrumbs mb="xl">
 				<Anchor href={"/dashboard"}>Dashboard</Anchor>
-				<Anchor href={"/dashboard/doctors"}>Doctors</Anchor>
+				<span>Doctors</span>
 			</Breadcrumbs>
 			<Flex justify="end" mb="md">
-				<Button leftSection={<IconPlus />}>Add doctor</Button>
+				<Button
+					leftSection={<IconPlus />}
+					onClick={() => doctorsTable.setCreatingRow(true)}
+				>
+					Add doctor
+				</Button>
 			</Flex>
 			<MantineReactTable table={doctorsTable} />
 		</Box>

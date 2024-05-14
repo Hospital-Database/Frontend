@@ -5,7 +5,7 @@ import "@mantine/dates/styles.css"; //if using mantine date picker features
 import type { MRT_ColumnDef } from "mantine-react-table";
 import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
 import { useMemo } from "react";
-import useDatagrid from "./use-datagrid";
+import useDatagrid from "../../../hooks/use-datagrid";
 
 export default function usePatientsTable() {
 	const columns = useMemo<MRT_ColumnDef<Patient>[]>(

@@ -1,5 +1,5 @@
 import type { MRT_FilterOption } from "mantine-react-table";
-import type { FetchOptions } from "../hooks/datagrids/use-datagrid";
+import type { FetchOptions } from "../hooks/use-datagrid";
 
 export default function getTableSearchParams({
 	columnFilterFns,

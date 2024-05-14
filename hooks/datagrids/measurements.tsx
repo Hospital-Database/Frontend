@@ -3,7 +3,7 @@ import getTableSearchParams from "@/lib/get-search-params";
 import type { Measurement } from "@/lib/types";
 import type { MRT_ColumnDef } from "mantine-react-table";
 import { useMemo } from "react";
-import useDatagrid, { type FetchOptions } from "./use-datagrid";
+import useDatagrid, { type FetchOptions } from "../use-datagrid";
 
 function getMeasurements(options: FetchOptions) {
 	const params = getTableSearchParams(options);

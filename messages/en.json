@@ -7,7 +7,7 @@
 			"something-went-wrong": "Something Went wrong"
 		}
 	},
-	"AddPatient": {
+	"Forms": {
 		"add-new-patient": "Add new patient",
 		"main-details": "Main details",
 		"complete-the-main-details-of-the-patient": "Complete the main details of the patient",

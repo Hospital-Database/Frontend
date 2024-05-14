@@ -1,27 +1,16 @@
 "use client";
 
-import useDoctorsTable from "@/hooks/datagrids/doctors";
-import { Anchor, Box, Breadcrumbs, Button, Flex } from "@mantine/core";
-import { IconPlus } from "@tabler/icons-react";
-import { MantineReactTable } from "mantine-react-table";
+import DoctorsDatagrid from "@/components/datagrids/doctors/doctors";
+import { Anchor, Box, Breadcrumbs } from "@mantine/core";
 
-export default function DoctorsDatagrid() {
-	const doctorsTable = useDoctorsTable();
+export default function DoctorsPage() {
 	return (
 		<Box>
 			<Breadcrumbs mb="xl">
 				<Anchor href={"/dashboard"}>Dashboard</Anchor>
 				<span>Doctors</span>
 			</Breadcrumbs>
-			<Flex justify="end" mb="md">
-				<Button
-					leftSection={<IconPlus />}
-					onClick={() => doctorsTable.setCreatingRow(true)}
-				>
-					Add doctor
-				</Button>
-			</Flex>
-			<MantineReactTable table={doctorsTable} />
+			<DoctorsDatagrid />
 		</Box>
 	);
 }

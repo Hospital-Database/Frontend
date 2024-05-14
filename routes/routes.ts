@@ -1,5 +1,5 @@
 import { availableLocaleCodes } from "@/next.locales";
-import { makeRoutes, type RouteType } from "./utils";
+import { type RouteType, makeRoutes } from "./utils";
 
 export const LOGIN_REDIRECT = "/login";
 export const AFTER_LOGIN_REDIRECT = "/";

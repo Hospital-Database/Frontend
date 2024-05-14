@@ -6,8 +6,8 @@ import "@mantine/dates/styles.css"; //if using mantine date picker features
 import type { MRT_ColumnDef } from "mantine-react-table";
 import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
 import { useMemo } from "react";
-import type { FetchOptions } from "./use-datagrid";
-import useDatagrid from "./use-datagrid";
+import type { FetchOptions } from "../use-datagrid";
+import useDatagrid from "../use-datagrid";
 
 function getVisits(options: FetchOptions) {
 	const params = getTableSearchParams(options);

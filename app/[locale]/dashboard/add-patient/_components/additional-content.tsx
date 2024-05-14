@@ -1,5 +1,5 @@
 "use client";
-import type { createPatientSchema } from "@/api/patients";
+import type { patientSchema } from "@/api/patients";
 import AddressField from "@/components/address-field/address-field";
 import { Group, Radio, Select, TextInput, Textarea } from "@mantine/core";
 import { DatePickerInput } from "@mantine/dates";
@@ -11,9 +11,9 @@ import type { z } from "zod";
 export default function AdditionalContent({
 	form,
 }: {
-	form: UseFormReturnType<z.infer<typeof createPatientSchema>>;
+	form: UseFormReturnType<z.infer<typeof patientSchema>>;
 }) {
-	const t = useTranslations("AddPatient");
+	const t = useTranslations("Forms");
 	return (
 		<main className="space-y-5">
 			<TextInput

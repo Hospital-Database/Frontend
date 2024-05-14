@@ -1,6 +1,6 @@
 "use client";
 
-import usePatientsTable from "@/hooks/datagrids/patients";
+import usePatientsTable from "@/components/datagrids/patients/use-patients-table";
 import { Anchor, Box, Breadcrumbs } from "@mantine/core";
 import { MantineReactTable } from "mantine-react-table";
 

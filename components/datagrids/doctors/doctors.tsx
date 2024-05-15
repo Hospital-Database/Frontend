@@ -1,8 +1,12 @@
 "use client";
 
-import { createDoctor, updateDoctor, type doctorSchema } from "@/api/doctors";
+import {
+	useCreateDoctor,
+	useUpdateDoctor,
+	type doctorSchema,
+} from "@/api/doctors";
 import DoctorForm from "@/components/forms/doctor";
-import { Box, Button, Flex } from "@mantine/core";
+import { Box, Button, Flex, SegmentedControl } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import { MantineReactTable } from "mantine-react-table";
 import { useState } from "react";
@@ -14,6 +18,7 @@ export default function DoctorsDatagrid() {
 	const [initialValues, setInitialValues] = useState<
 		z.infer<typeof doctorSchema> & { id?: number }
 	>();
+
 	const doctorsTable = useDoctorsTable({
 		onEdit(row) {
 			setInitialValues({
@@ -26,9 +31,24 @@ export default function DoctorsDatagrid() {
 		},
 	});
 
+	const { mutateAsync: createDoctor } = useCreateDoctor();
+	const { mutateAsync: updateDoctor } = useUpdateDoctor();
+
 	return (
 		<Box>
-			<Flex justify="end" mb="md">
+			<Flex mb="md" justify="space-between">
+				<SegmentedControl
+					radius="xl"
+					data={["Current", "Deleted"]}
+					onChange={(val) => {
+						doctorsTable.setColumnFilters((prev) => {
+							return [
+								...prev.filter(({ id }) => id !== "deleted"),
+								{ id: "deleted", value: (val === "Deleted").toString() },
+							];
+						});
+					}}
+				/>
 				<Button
 					leftSection={<IconPlus />}
 					onClick={() => {
@@ -42,7 +62,6 @@ export default function DoctorsDatagrid() {
 			<MantineReactTable table={doctorsTable} />
 			<DoctorForm
 				onSubmit={(data) => {
-					console.log(data);
 					if (formState === "create") return createDoctor(data);
 					if (!initialValues?.id)
 						throw new Error("Can't find the ID being updated");

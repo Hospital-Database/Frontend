@@ -7,8 +7,7 @@ export function notifySuccess({
 	notifications.show({
 		title,
 		message,
-		color: "white",
-		style: { backgroundColor: "#22c55e" },
+		color: "green",
 	});
 }
 
@@ -19,8 +18,6 @@ export function notifyError({
 	notifications.show({
 		title,
 		message,
-
-		color: "white",
-		style: { backgroundColor: "#ef4444" },
+		color: "red",
 	});
 }

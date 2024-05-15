@@ -6,6 +6,8 @@ import type { MRT_ColumnDef } from "mantine-react-table";
 import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
 import { useMemo } from "react";
 import useDatagrid from "../../../hooks/use-datagrid";
+import { Anchor } from "@mantine/core";
+import { Routes } from "@/routes/routes";
 
 export default function usePatientsTable() {
 	const columns = useMemo<MRT_ColumnDef<Patient>[]>(
@@ -13,6 +15,15 @@ export default function usePatientsTable() {
 			{
 				accessorKey: "full_name",
 				header: "Full name",
+				Cell: ({ cell }) => {
+					return (
+						<Anchor
+							href={Routes.patient({ id: cell.row.original.id as number })}
+						>
+							{cell.getValue() as string}
+						</Anchor>
+					);
+				},
 			},
 			{
 				accessorKey: "date_of_birth",

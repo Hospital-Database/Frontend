@@ -4,6 +4,7 @@ export interface Entity {
 	created_at: string;
 	/** datetime in ISO format */
 	updated_at: string;
+	deleted: boolean;
 }
 
 export interface Visit extends Entity {
@@ -11,7 +12,8 @@ export interface Visit extends Entity {
 	attachment: Attachment[];
 	visit_number: number;
 	ticket: string;
-	datatime: string;
+	start_at: string;
+	end_at: string;
 	notes: string;
 	patient: number;
 	doctors: number[];
@@ -49,7 +51,7 @@ export interface Patient extends Entity {
 	nationality: string;
 	national_id: string;
 	full_name: string;
-	image: string;
+	image: ImageType | null;
 	address: Address | null;
 	phone: PhoneNumber | null;
 	gender: Gender;

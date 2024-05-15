@@ -1,53 +1,48 @@
 "use client";
 
-import useAvatar from "@/hooks/use-avatar";
-import useURL from "@/hooks/use-url";
+import { usePatient } from "@/api/patients";
 import {
 	Anchor,
 	Box,
 	Breadcrumbs,
 	Button,
 	Group,
-	Tabs,
+	Loader,
+	Stack,
 	Title,
 } from "@mantine/core";
-import {
-	IconDots,
-	IconFileDescription,
-	IconFiles,
-	IconStethoscope,
-} from "@tabler/icons-react";
-import Image from "next/image";
-import PatientDetails from "./_components/patient-details";
-import PatientDocuments from "./_components/patient-documents";
-import PatientMeasurements from "./_components/patient-measurements";
+import { IconDots } from "@tabler/icons-react";
+import PatientImage from "./_components/patient-image";
+import PatientTabs from "./_components/patient-tabs";
 import VisitDetails from "./_components/visit-details";
 
 export default function PatientPage({
 	params: { patientId },
 }: { params: { patientId: string } }) {
-	const { setSearchParam, searchParams } = useURL();
-	const avatar = useAvatar(undefined, { seed: patientId, size: 100 });
-
+	const query = usePatient(patientId);
+	if (query.isLoading)
+		return (
+			<Group justify="center">
+				<Loader />
+			</Group>
+		);
+	const patient = query.data;
+	if (query.isError || !patient) return <div>Error fetching the patient</div>;
 	return (
 		<>
-			<Breadcrumbs>
-				<Anchor href={"/dashboard"}>Dashboard</Anchor>
-				<Anchor href={"/dashboard/patients"}>Patients</Anchor>
-				<span>Patients {patientId}</span>
-			</Breadcrumbs>
 			<Group mt="md" align="start" justify="space-between">
 				<Group align="start">
 					<div className="w-[100px] aspect-square bg-slate-200">
-						<Image
-							src={avatar}
-							alt={"patient avatar"}
-							width={100}
-							height={100}
-							className="w-full h-full"
-						/>
+						<PatientImage patient={patient} />
 					</div>
-					<Title component={"h1"}>Patient {patientId}</Title>
+					<Stack>
+						<Title component={"h1"}>Patient {patientId}</Title>
+						<Breadcrumbs>
+							<Anchor href={"/dashboard"}>Dashboard</Anchor>
+							<Anchor href={"/dashboard/patients"}>Patients</Anchor>
+							<span>Patients {patientId}</span>
+						</Breadcrumbs>
+					</Stack>
 				</Group>
 				<Group gap={"md"}>
 					<ManageVisitButton />
@@ -60,40 +55,7 @@ export default function PatientPage({
 				</Box>
 			)}
 			<Box mt="xl">
-				<Tabs
-					value={searchParams.get("tab") || "details"}
-					onChange={(tab) => setSearchParam("tab", tab)}
-				>
-					<Tabs.List>
-						<Tabs.Tab
-							value="details"
-							leftSection={<IconFileDescription className="w-5 h-5" />}
-						>
-							Details
-						</Tabs.Tab>
-						<Tabs.Tab
-							value="measurements"
-							leftSection={<IconStethoscope className="w-5 h-5" />}
-						>
-							Measurements
-						</Tabs.Tab>
-						<Tabs.Tab
-							value="documents"
-							leftSection={<IconFiles className="w-5 h-5" />}
-						>
-							Documents
-						</Tabs.Tab>
-					</Tabs.List>
-					<Tabs.Panel value="details">
-						<PatientDetails patientId={patientId} />
-					</Tabs.Panel>
-					<Tabs.Panel value="measurements">
-						<PatientMeasurements patientId={patientId} />
-					</Tabs.Panel>
-					<Tabs.Panel value="documents">
-						<PatientDocuments patientId={patientId} />
-					</Tabs.Panel>
-				</Tabs>
+				<PatientTabs patient={patient} />
 			</Box>
 		</>
 	);

@@ -1,4 +1,5 @@
 import { getErrorMessageSync } from "@/lib/err-msg";
+import getTableSearchParams from "@/lib/get-search-params";
 import { notifyError } from "@/lib/notifications";
 import { ActionIcon, Button, Group, Menu, Tooltip } from "@mantine/core";
 import "@mantine/core/styles.css";
@@ -18,7 +19,15 @@ import {
 } from "mantine-react-table";
 import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
 import { useTranslations } from "next-intl";
-import { useId, useState } from "react";
+import { useId, useMemo, useState } from "react";
+
+export type UseTableOptions<TData extends MRT_RowData> =
+	| {
+			data?: TData[];
+			initialFilters?: MRT_ColumnFiltersState;
+			tableOptions?: Partial<MRT_TableOptions<TData>>;
+	  }
+	| undefined;
 
 export interface FetchOptions {
 	columnFilterFns?: MRT_ColumnFilterFnsState;
@@ -39,19 +48,35 @@ const handleExportRows = <TData extends MRT_RowData>(data: TData[]) => {
 	download(csvConfig)(csv);
 };
 
-export default function useDatagrid<TData extends MRT_RowData>(
-	fetchData: (fetchOptions: FetchOptions) => Promise<{
-		count: number;
-		results: TData[];
-	}>,
+export default function useOurTable<TData extends MRT_RowData>(
+	{
+		id: idProp,
+		manual = true,
+		fetchData,
+		initialFilters,
+	}: {
+		id?: string;
+		manual?: boolean;
+		initialFilters?: MRT_ColumnFiltersState;
+		fetchData: (fetchOptions: FetchOptions) => Promise<{
+			count: number;
+			results: TData[];
+		}>;
+	},
 	tableOptions: WithRequired<Partial<MRT_TableOptions<TData>>, "columns">,
 ) {
 	const t = useTranslations();
-	const id = useId();
+	const tempId = useId();
+
+	const id = useMemo(() => {
+		if (idProp) return idProp;
+		return tempId;
+	}, [tempId, idProp]);
+
 	const [isExporting, setIsExporting] = useState(false);
 	//Manage MRT state that we want to pass to our API
 	const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
-		[],
+		initialFilters || [],
 	);
 	const [columnFilterFns, setColumnFilterFns] = //filter modes
 		useState<MRT_ColumnFilterFnsState>(
@@ -79,7 +104,7 @@ export default function useDatagrid<TData extends MRT_RowData>(
 
 	//call our custom react-query hook
 	const { data, isError, isFetching, isLoading, refetch, error } = useQuery({
-		queryKey: [id, fetchOptions],
+		queryKey: [id, getTableSearchParams(fetchOptions).toString()],
 		queryFn: () => fetchData(fetchOptions),
 	});
 
@@ -192,9 +217,9 @@ export default function useDatagrid<TData extends MRT_RowData>(
 				enablePagination: true,
 				enableColumnPinning: true,
 				enableRowNumbers: true,
-				manualFiltering: true,
-				manualPagination: true,
-				manualSorting: true,
+				manualFiltering: manual,
+				manualPagination: manual,
+				manualSorting: manual,
 				onColumnFilterFnsChange: setColumnFilterFns,
 				onColumnFiltersChange: setColumnFilters,
 				onGlobalFilterChange: setGlobalFilter,

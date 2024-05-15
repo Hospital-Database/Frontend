@@ -2,11 +2,16 @@
 
 import "@mantine/charts/styles.css";
 
-import useMeasurementsTable from "@/hooks/datagrids/measurements";
-import type { ExtractedMeasurement, Visit } from "@/lib/types";
+import { useVisits } from "@/api/visits";
+import { MeasurementsTable } from "@/components/datagrids/measurements/measurements";
+import type {
+	ExtractedMeasurement,
+	Measurement,
+	Patient,
+	Visit,
+} from "@/lib/types";
 import { AreaChart } from "@mantine/charts";
 import { Box, Title } from "@mantine/core";
-import { MantineReactTable } from "mantine-react-table";
 import { useMemo } from "react";
 
 const colors = [
@@ -25,17 +30,15 @@ const colors = [
 	"yellow",
 ];
 
-function extractMeasurement(v: Visit) {
-	const date = new Date(v.datatime).getTime() + Math.floor(Math.random() * 1e8);
-	return {
+function extractMeasurement(
+	v: Visit,
+): Partial<Record<keyof Measurement, number>> & { date: string } {
+	const date = new Date(v.start_at).getTime();
+	const meas = {
 		date: new Date(date).toLocaleDateString(),
-		height: Math.floor(180 + (Math.random() - 0.5) * 50),
-		weight: Math.floor(86 + (Math.random() - 0.5) * 20),
-		blood_pressure: Math.floor(120 / 80 + (Math.random() - 0.5) * 20),
-		temperature: Math.floor(37 + (Math.random() - 0.5) * 20),
-		pulse: Math.floor(80 + (Math.random() - 0.5) * 30),
-		oxygen_level: Math.floor(95 + (Math.random() - 0.5) * 20),
 	};
+
+	return meas;
 }
 
 /** fill gap with previous values */
@@ -49,39 +52,30 @@ function fixMeasurements(m: ExtractedMeasurement[]) {
 	return m;
 }
 
-export default function PatientMeasurements({
-	patientId: _,
-}: { patientId: string }) {
-	const measurementsTable = useMeasurementsTable();
+export default function PatientMeasurements({ patient }: { patient: Patient }) {
+	const visitsQuery = useVisits({
+		columnFilters: [{ id: "patient", value: patient.id }],
+	});
+
 	const data = useMemo(() => {
-		const v: Visit = {
-			attachment: [],
-			created_at: new Date().toISOString(),
-			datatime: new Date().toISOString(),
-			doctors: [],
-			id: 0,
-			measurement: {},
-			notes: "",
-			patient: 0,
-			updated_at: new Date().toISOString(),
-			visit_number: 0,
-			ticket: "",
-		};
-		return fixMeasurements([v, v, v, v, v, v, v].map(extractMeasurement));
-	}, []);
+		if (visitsQuery.data)
+			return fixMeasurements(visitsQuery.data.results.map(extractMeasurement));
+	}, [visitsQuery.data]);
 
 	return (
 		<Box>
 			<Title component={"h2"} mt="xl" mb="md">
 				Measurements
 			</Title>
-			<MantineReactTable table={measurementsTable} />
+			<MeasurementsTable
+				data={visitsQuery.data?.results.map((vis) => vis.measurement)}
+			/>
 			<Title component={"h2"} mt="xl" mb="md">
 				Charts
 			</Title>
 			<AreaChart
 				h={300}
-				data={data}
+				data={data || []}
 				dataKey="date"
 				series={[
 					"height",

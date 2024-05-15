@@ -1,14 +1,14 @@
 import {
+	type createDoctor,
 	doctorSchema,
 	type useCreateDoctor,
-	type createDoctor,
 } from "@/api/doctors";
 import {
 	Button,
 	Modal,
+	type ModalProps,
 	Stack,
 	TextInput,
-	type ModalProps,
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useMutation } from "@tanstack/react-query";

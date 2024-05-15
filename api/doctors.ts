@@ -1,4 +1,4 @@
-import type { FetchOptions } from "@/hooks/use-datagrid";
+import type { FetchOptions } from "@/hooks/use-our-table";
 import { http } from "@/lib/axios";
 import { getErrorMessageSync } from "@/lib/err-msg";
 import getTableSearchParams from "@/lib/get-search-params";

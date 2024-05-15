@@ -1,13 +1,12 @@
 import "@mantine/dropzone/styles.css";
 
+import type { Patient } from "@/lib/types";
 import { Box, Group, Stack, TextInput, Title } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import FileCard from "./file-card";
 import { FilesDropzone } from "./files-dropzone";
 
-export default function PatientDocuments({
-	patientId: _,
-}: { patientId: string }) {
+export default function PatientDocuments({ patient: _ }: { patient: Patient }) {
 	return (
 		<Box mt="xl">
 			<Title component={"h2"}>Attached Documents</Title>

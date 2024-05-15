@@ -9,6 +9,19 @@ const withBundleAnalyzer = createBundleAnalyzer({
 const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "placehold.co",
+			},
+			{
+				protocol: "http",
+				hostname: "zhospital.azurewebsites.net",
+			},
+		],
+	},
+};
 
 export default withBundleAnalyzer(withNextIntl(nextConfig));

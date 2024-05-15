@@ -16,7 +16,7 @@ export default function DetailsCard({
 				{details.map(({ title, value }) => {
 					return (
 						<Group key={title}>
-							<Text className="text-muted-fg min-w-[100px]">{title}</Text>
+							<Text className="text-muted-fg min-w-[150px]">{title}</Text>
 							<Text>{value}</Text>
 						</Group>
 					);

@@ -1,6 +1,6 @@
 "use client";
 
-import DoctorsDatagrid from "@/components/datagrids/doctors/doctors";
+import DoctorsCRUDTable from "@/components/datagrids/doctors/doctors-crud";
 import { Anchor, Box, Breadcrumbs, Title } from "@mantine/core";
 
 export default function DoctorsPage() {
@@ -13,7 +13,7 @@ export default function DoctorsPage() {
 				<Anchor href={"/dashboard"}>Dashboard</Anchor>
 				<span>Doctors</span>
 			</Breadcrumbs>
-			<DoctorsDatagrid />
+			<DoctorsCRUDTable />
 		</Box>
 	);
 }

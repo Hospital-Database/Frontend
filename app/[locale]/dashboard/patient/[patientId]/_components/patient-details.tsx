@@ -1,13 +1,16 @@
+import { DoctorsTable } from "@/components/datagrids/doctors/doctors";
+import { VisitsTable } from "@/components/datagrids/visits/visits";
 import DetailsCard from "@/components/details-card";
-import useVisitsTable from "@/hooks/datagrids/visits";
-import { Box, Button, Group, Title } from "@mantine/core";
-import { MantineReactTable } from "mantine-react-table";
+import type { Patient } from "@/lib/types";
+import { formatAddress } from "@/lib/utils";
+import { Box, Title } from "@mantine/core";
 import { useFormatter } from "next-intl";
 
-export default function PatientDetails({ patientId }: { patientId: string }) {
+export default function PatientDetails({ patient }: { patient: Patient }) {
 	const formatter = useFormatter();
-	const visitsTable = useVisitsTable();
-	const currentlyInAVisit = true;
+	const age = formatter.relativeTime(new Date(patient.date_of_birth), {
+		unit: "year",
+	});
 	return (
 		<>
 			<Box mt="md">
@@ -16,14 +19,16 @@ export default function PatientDetails({ patientId }: { patientId: string }) {
 				</Title>
 				<DetailsCard
 					details={[
-						{ title: "Name", value: `Patient ${patientId}` },
-						{ title: "Date of birth", value: formatter.dateTime(new Date()) },
-						{ title: "Age", value: 22 },
-						{ title: "Gender", value: "Male" },
-						{ title: "Address", value: "Lore ipsum, asdio weiorjk" },
-						{ title: "Phone number", value: "+20100000000000" },
-						{ title: "Patient code", value: "23R849WE2" },
-						{ title: "National ID", value: "2394872398273498273" },
+						{ title: "Name", value: patient.full_name },
+						{ title: "National ID", value: patient.national_id },
+						{
+							title: "Date of birth",
+							value: formatter.dateTime(new Date(patient.date_of_birth)),
+						},
+						{ title: "Age", value: age },
+						{ title: "Gender", value: patient.gender },
+						{ title: "Address", value: formatAddress(patient.address) },
+						{ title: "Phone number", value: patient.phone?.mobile },
 					]}
 				/>
 			</Box>
@@ -31,16 +36,14 @@ export default function PatientDetails({ patientId }: { patientId: string }) {
 				<Title component={"h2"} mb="md">
 					Visits
 				</Title>
-				<MantineReactTable table={visitsTable} />
+				<VisitsTable />
 			</Box>
 			<Box mt="xl">
-				<Group justify="space-between">
-					<Title component={"h2"} mb="md">
-						Doctors
-					</Title>
-					{currentlyInAVisit && <Button>Add doctor</Button>}
-				</Group>
-				<MantineReactTable table={visitsTable} />
+				<Title component={"h2"} mb="md">
+					Doctors
+				</Title>
+				{/* TODO: display data */}
+				<DoctorsTable data={[]} />
 			</Box>
 		</>
 	);

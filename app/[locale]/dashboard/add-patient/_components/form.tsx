@@ -1,6 +1,6 @@
 "use client";
 
-import { createPatientSchema, useCreatePatient } from "@/api/patients";
+import { patientSchema, useCreatePatient } from "@/api/patients";
 import { useRouter } from "@/navigation";
 import { Button } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -13,10 +13,10 @@ import AdditionalContent from "./additional-content";
 import MainContent from "./main-content";
 
 export default function AddPatientForm() {
-	const t = useTranslations("AddPatient");
+	const t = useTranslations("Forms");
 	const router = useRouter();
-	const form = useForm<z.infer<typeof createPatientSchema>>({
-		validate: zodResolver(createPatientSchema),
+	const form = useForm<z.infer<typeof patientSchema>>({
+		validate: zodResolver(patientSchema),
 		initialValues: {
 			national_id: "",
 			full_name: "",
@@ -24,7 +24,7 @@ export default function AddPatientForm() {
 			phone: {},
 		},
 	});
-	const { mutate } = useCreatePatient({
+	const createPatient = useCreatePatient({
 		onSuccess(res) {
 			router.push(`/dashboard/patient/${res.data.id}`);
 		},
@@ -37,8 +37,7 @@ export default function AddPatientForm() {
 					...data,
 					date_of_birth: data?.date_of_birth?.toISOString().slice(0, 10),
 				};
-				//@ts-ignore
-				mutate(newData);
+				createPatient.mutate(newData);
 			})}
 		>
 			<section className="space-y-6">
@@ -47,8 +46,6 @@ export default function AddPatientForm() {
 					mainText={t("main-details")}
 					additionalText={t("complete-the-main-details-of-the-patient")}
 				/>
-
-				{/* @ts-ignore */}
 				<MainContent form={form} />
 			</section>
 			<section className="space-y-6">
@@ -57,14 +54,18 @@ export default function AddPatientForm() {
 					mainText={t("other-details")}
 					additionalText={t("additional-details-you-can-complete-later")}
 				/>
-				{/* @ts-ignore */}
 				<AdditionalContent form={form} />
 			</section>
 			<section>
-				<Button type="submit" className="me-2">
+				<Button
+					loading={createPatient.isPending}
+					type="submit"
+					className="me-2"
+				>
 					{t("save")}
 				</Button>
-				<Button type="button">{t("save-and-start-visit")}</Button>
+				{/* TODO: other actions, save and create visit, save and add new, ...etc, maybe dropdown and save the last choosen as the default action */}
+				{/* <Button type="button">{t("save-and-start-visit")}</Button> */}
 			</section>
 		</form>
 	);

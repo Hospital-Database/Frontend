@@ -1,14 +1,16 @@
-import type { FetchOptions } from "@/hooks/datagrids/use-datagrid";
+import type { FetchOptions } from "@/hooks/use-datagrid";
 import { http } from "@/lib/axios";
+import { getErrorMessageSync } from "@/lib/err-msg";
 import getTableSearchParams from "@/lib/get-search-params";
+import { notifyError, notifySuccess } from "@/lib/notifications";
 import type { Patient } from "@/lib/types";
-import { notifications } from "@mantine/notifications";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { type AxiosResponse, isAxiosError } from "axios";
+import type { AxiosResponse } from "axios";
+import { useTranslations } from "next-intl";
 import * as z from "zod";
 import { imageSchema } from "./common";
 
-export const createPatientSchema = z.object({
+export const patientSchema = z.object({
 	national_id: z.string().min(14).max(14),
 	full_name: z.string().min(3),
 	image: imageSchema.optional(),
@@ -29,7 +31,13 @@ export const createPatientSchema = z.object({
 	notes: z.preprocess((val) => val || undefined, z.string().min(3).optional()),
 });
 
-export async function createPatient(data: z.infer<typeof createPatientSchema>) {
+// -------- CREATE
+
+export async function createPatient(
+	data: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
+		date_of_birth?: string;
+	},
+) {
 	return await http.post<Patient>("/accounts/patient/", data);
 }
 
@@ -38,29 +46,26 @@ export function useCreatePatient({
 }: {
 	onSuccess?: (response: AxiosResponse<Patient>) => void;
 } = {}) {
+	const t = useTranslations();
 	return useMutation({
 		mutationFn: createPatient,
 		onSuccess: (response) => {
-			notifications.show({
+			notifySuccess({
 				title: "Patient was added successfully",
-				message: "",
-				color: "white",
-				style: { backgroundColor: "#22c55e" },
 			});
 			onSuccess?.(response);
 		},
 		onError: (e) => {
-			let error = "something went wrong";
-			if (isAxiosError(e)) error = e?.response?.data;
-			notifications.show({
-				title: typeof error === "string" ? error : "Something went wrong",
-				message: "",
-				color: "white",
-				style: { backgroundColor: "#ef4444" },
+			const message = getErrorMessageSync(e, t);
+			notifyError({
+				title: "Couldn't create the patient",
+				message,
 			});
 		},
 	});
 }
+
+// -------- READ
 
 export async function getPatients(options: FetchOptions) {
 	const params = getTableSearchParams(options);
@@ -72,9 +77,8 @@ export async function getPatients(options: FetchOptions) {
 }
 
 export function usePatients(options: FetchOptions) {
-	const params = getTableSearchParams(options);
 	return useQuery({
-		queryKey: ["patients", params.toString()],
+		queryKey: ["patients", options],
 		queryFn: () => getPatients(options),
 	});
 }

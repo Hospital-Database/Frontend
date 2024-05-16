@@ -50,9 +50,9 @@ export interface Patient extends Entity {
 	national_id: string;
 	full_name: string;
 	image: string;
-	address: Address;
-	phone: PhoneNumber;
-	gender: string;
+	address: Address | null;
+	phone: PhoneNumber | null;
+	gender: Gender;
 	martial_status: string;
 	status: string;
 	/** date in ISO format */
@@ -79,7 +79,7 @@ export interface User extends Entity {
 
 export interface Doctor extends Entity {
 	full_name: string;
-	gender: string;
+	gender: Gender;
 	national_id: string;
 	speciality: string;
 	license_number: string;
@@ -90,8 +90,8 @@ export interface Doctor extends Entity {
 	nationality: string;
 	user: number;
 	notes: string;
-	address: Address;
-	phone: PhoneNumber;
+	address: Address | null;
+	phone: PhoneNumber | null;
 	/** date in ISO format */
 	date_of_birth: string;
 }
@@ -105,6 +105,8 @@ export interface Address {
 export interface PhoneNumber {
 	mobile: string;
 }
+
+export type Gender = "female" | "male";
 
 export interface ImageType extends Entity {
 	/** URI of the image */

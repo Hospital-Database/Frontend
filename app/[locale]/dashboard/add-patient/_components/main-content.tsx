@@ -1,6 +1,6 @@
 "use client";
 
-import type { createPatientSchema } from "@/api/patients";
+import type { patientSchema } from "@/api/patients";
 import { TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import { useTranslations } from "next-intl";
@@ -10,9 +10,9 @@ import useCheckNationalId from "../_hooks/use-check-national-id";
 export default function MainContent({
 	form,
 }: {
-	form: UseFormReturnType<z.infer<typeof createPatientSchema>>;
+	form: UseFormReturnType<z.infer<typeof patientSchema>>;
 }) {
-	const t = useTranslations("AddPatient");
+	const t = useTranslations("Forms");
 	const nationalIdDoesnotExist =
 		!form.errors.national_id && form.isDirty("national_id");
 

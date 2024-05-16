@@ -1,8 +1,9 @@
-import type { Patient } from "@/lib/types";
+import type { patientSchema } from "@/api/patients";
 import { type ComboboxItem, Select, TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
+import type { z } from "zod";
 import {
 	EgyptCities,
 	EgyptGovernorate,
@@ -12,9 +13,9 @@ import {
 export default function AddressField({
 	form,
 }: {
-	form: UseFormReturnType<Patient>;
+	form: UseFormReturnType<z.infer<typeof patientSchema>>;
 }) {
-	const t = useTranslations("AddPatient");
+	const t = useTranslations("Forms");
 	const locale = useLocale() as "ar" | "en";
 	const [governorate, setGovernorate] = useState<string | null>(null);
 	const [govKey, setGovKey] = useState<EgyptGovernorateKey | null>(null);

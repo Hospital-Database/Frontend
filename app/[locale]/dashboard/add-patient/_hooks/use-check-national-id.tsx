@@ -1,4 +1,4 @@
-import { type createPatientSchema, getPatients } from "@/api/patients";
+import { getPatients, type patientSchema } from "@/api/patients";
 import { Link } from "@/navigation";
 import { Button, Group, Text } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
@@ -8,9 +8,9 @@ import { useCallback, useEffect } from "react";
 import type { z } from "zod";
 
 export default function useCheckNationalId(
-	form: UseFormReturnType<z.infer<typeof createPatientSchema>>,
+	form: UseFormReturnType<z.infer<typeof patientSchema>>,
 ) {
-	const t = useTranslations("AddPatient");
+	const t = useTranslations("Forms");
 	const checkNationalId = useCallback(
 		debounce(async (national_id: string) => {
 			if (typeof national_id !== "string" || national_id.length !== 14) {

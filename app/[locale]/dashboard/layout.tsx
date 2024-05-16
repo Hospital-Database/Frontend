@@ -69,6 +69,7 @@ export default function CollapseDesktop({
 					</div>
 				</Group>
 			</AppShell.Header>
+			{/* TODO: fix for small screens */}
 			<AppShell.Navbar p="md">
 				<Text fw="bold" size="xl">
 					ZU Hospital

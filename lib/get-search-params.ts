@@ -1,5 +1,5 @@
 import type { MRT_FilterOption } from "mantine-react-table";
-import type { FetchOptions } from "../hooks/datagrids/use-datagrid";
+import type { FetchOptions } from "../hooks/use-datagrid";
 
 export default function getTableSearchParams({
 	columnFilterFns,
@@ -18,7 +18,9 @@ export default function getTableSearchParams({
 	if (sorting && sorting.length > 0)
 		params.append(
 			"ordering",
-			sorting.map(({ id, desc }) => (desc ? `-${id}` : id)).join(),
+			sorting
+				.map(({ id, desc }) => (desc ? `-${getId(id)}` : getId(id)))
+				.join(),
 		);
 
 	if (globalFilter) params.set("search", globalFilter);
@@ -26,7 +28,7 @@ export default function getTableSearchParams({
 	if (columnFilters)
 		for (const { id, value } of columnFilters) {
 			if (typeof value === "string")
-				params.set(`${id}${getOperator(columnFilterFns?.[id])}`, value);
+				params.set(`${getId(id)}${getOperator(columnFilterFns?.[id])}`, value);
 		}
 
 	return params;
@@ -35,4 +37,8 @@ export default function getTableSearchParams({
 function getOperator(op?: MRT_FilterOption) {
 	if (op === "contains") return "__icontains";
 	return "";
+}
+
+function getId(id: string) {
+	return id.replaceAll(".", "__");
 }

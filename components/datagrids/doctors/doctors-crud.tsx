@@ -16,7 +16,7 @@ import useDoctorsTable from "./use-doctors-table";
 export default function DoctorsCRUDTable() {
 	const [formState, setFormState] = useState<"update" | "create">();
 	const [initialValues, setInitialValues] = useState<
-		z.infer<typeof doctorSchema> & { id?: number }
+		z.infer<typeof doctorSchema> & { id?: string }
 	>();
 
 	const doctorsTable = useDoctorsTable({

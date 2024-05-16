@@ -1,6 +1,6 @@
 "use client";
 import useURL from "@/hooks/use-url";
-import type { Patient } from "@/lib/types";
+import type { PatientVerbose } from "@/lib/types";
 import { Tabs } from "@mantine/core";
 import {
 	IconFileDescription,
@@ -11,7 +11,7 @@ import PatientDetails from "./patient-details";
 import PatientDocuments from "./patient-documents";
 import PatientMeasurements from "./patient-measurements";
 
-export default function PatientTabs({ patient }: { patient: Patient }) {
+export default function PatientTabs({ patient }: { patient: PatientVerbose }) {
 	const { setSearchParam, searchParams } = useURL();
 
 	return (

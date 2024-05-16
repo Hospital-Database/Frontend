@@ -1,12 +1,14 @@
 import { DoctorsTable } from "@/components/datagrids/doctors/doctors";
 import { VisitsTable } from "@/components/datagrids/visits/visits";
 import DetailsCard from "@/components/details-card";
-import type { Patient } from "@/lib/types";
+import type { PatientVerbose } from "@/lib/types";
 import { formatAddress } from "@/lib/utils";
 import { Box, Title } from "@mantine/core";
 import { useFormatter } from "next-intl";
 
-export default function PatientDetails({ patient }: { patient: Patient }) {
+export default function PatientDetails({
+	patient,
+}: { patient: PatientVerbose }) {
 	const formatter = useFormatter();
 	const age = formatter.relativeTime(new Date(patient.date_of_birth), {
 		unit: "year",
@@ -43,7 +45,7 @@ export default function PatientDetails({ patient }: { patient: Patient }) {
 					Doctors
 				</Title>
 				{/* TODO: display data */}
-				<DoctorsTable data={[]} />
+				<DoctorsTable data={patient.doctors} />
 			</Box>
 		</>
 	);

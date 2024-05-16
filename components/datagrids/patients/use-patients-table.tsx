@@ -18,7 +18,7 @@ export default function usePatientsTable() {
 				Cell: ({ cell }) => {
 					return (
 						<Anchor
-							href={Routes.patient({ id: cell.row.original.id as number })}
+							href={Routes.patient({ id: cell.row.original.id as string })}
 						>
 							{cell.getValue() as string}
 						</Anchor>

@@ -34,3 +34,20 @@ export function useSignIn() {
 		},
 	});
 }
+
+export function usePatientSignIn() {
+	const router = useRouter();
+	return useMutation<
+		AxiosResponse<SignInOutput>,
+		AxiosError<SignInError>,
+		LoginData
+	>({
+		mutationFn: signIn,
+		onSuccess: ({ data }) => {
+			router.push("/");
+			refreshTokenCookie.set(data.refresh);
+			accessTokenCookie.set(data.access);
+			localStorage.setItem("user", JSON.stringify(data.user));
+		},
+	});
+}

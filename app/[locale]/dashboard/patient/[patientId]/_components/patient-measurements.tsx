@@ -30,13 +30,25 @@ const colors = [
 	"yellow",
 ];
 
-function extractMeasurement(
-	v: Visit,
-): Partial<Record<keyof Measurement, number>> & { date: string } {
+const readings = [
+	"height",
+	"weight",
+	"blood_pressure",
+	"temperature",
+	"pulse",
+	"oxygen_level",
+] as const;
+
+function extractMeasurement(v: Visit) {
 	const date = new Date(v.start_at).getTime();
-	const meas = {
+
+	const meas: Partial<Record<keyof Measurement, number>> & { date: string } = {
 		date: new Date(date).toLocaleDateString(),
 	};
+
+	for (const reading of readings) {
+		if (v.measurement[reading]) meas[reading] = Number(v.measurement[reading]);
+	}
 
 	return meas;
 }
@@ -68,7 +80,10 @@ export default function PatientMeasurements({ patient }: { patient: Patient }) {
 				Measurements
 			</Title>
 			<MeasurementsTable
-				data={visitsQuery.data?.results.map((vis) => vis.measurement)}
+				data={visitsQuery.data?.results.map((vis) => ({
+					...vis.measurement,
+					date: vis.start_at,
+				}))}
 			/>
 			<Title component={"h2"} mt="xl" mb="md">
 				Charts
@@ -77,14 +92,7 @@ export default function PatientMeasurements({ patient }: { patient: Patient }) {
 				h={300}
 				data={data || []}
 				dataKey="date"
-				series={[
-					"height",
-					"weight",
-					"blood_pressure",
-					"temperature",
-					"pulse",
-					"oxygen_level",
-				].map((name, i) => ({
+				series={readings.map((name, i) => ({
 					name,
 					color: `${colors[i]}.6`,
 				}))}

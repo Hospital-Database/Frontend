@@ -20,7 +20,7 @@ export default function LoginForm() {
 		}),
 		password: z.string(),
 	});
-	const form = useForm({
+	const form = useForm<z.infer<typeof loginSchema>>({
 		mode: "uncontrolled",
 		validate: zodResolver(loginSchema),
 	});
@@ -29,7 +29,6 @@ export default function LoginForm() {
 		<form
 			className="space-y-7"
 			onSubmit={form.onSubmit((loginInfo) => {
-				// @ts-ignore
 				mutate(loginInfo);
 			})}
 		>

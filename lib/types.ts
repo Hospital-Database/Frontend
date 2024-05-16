@@ -1,5 +1,5 @@
 export interface Entity {
-	id: number;
+	id: string;
 	/** datetime in ISO format */
 	created_at: string;
 	/** datetime in ISO format */
@@ -44,7 +44,10 @@ export interface Attachment extends Entity {
 	file: string;
 	kind: string;
 	notes: string;
-	visit: number;
+	visit: string | null;
+	user: number;
+	file_name: string | null;
+	file_type: string;
 }
 
 export interface Patient extends Entity {
@@ -57,12 +60,18 @@ export interface Patient extends Entity {
 	gender: Gender;
 	martial_status: string;
 	status: string;
+	/** user ID, a generic user table in the backend to just group data and keep DRY */
+	user: number;
 	/** date in ISO format */
 	date_of_birth: string;
 	notes: string;
 	blood_type: string;
 	disease_type: string;
 	email: string;
+}
+
+export interface PatientVerbose extends Patient {
+	doctors: Doctor[];
 }
 
 export interface User extends Entity {
@@ -90,12 +99,13 @@ export interface Doctor extends Entity {
 	email: string;
 	marital_status: string;
 	nationality: string;
-	user: number;
 	notes: string;
 	address: Address | null;
 	phone: PhoneNumber | null;
 	/** date in ISO format */
 	date_of_birth: string;
+	/** user ID, a generic user table in the backend to just group data and keep DRY */
+	user: number;
 }
 
 export interface Address {

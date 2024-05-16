@@ -36,11 +36,11 @@ export default function PatientPage({
 						<PatientImage patient={patient} />
 					</div>
 					<Stack>
-						<Title component={"h1"}>Patient {patientId}</Title>
+						<Title component={"h1"}>{patient.full_name}</Title>
 						<Breadcrumbs>
 							<Anchor href={"/dashboard"}>Dashboard</Anchor>
 							<Anchor href={"/dashboard/patients"}>Patients</Anchor>
-							<span>Patients {patientId}</span>
+							<span>{patient.full_name}</span>
 						</Breadcrumbs>
 					</Stack>
 				</Group>

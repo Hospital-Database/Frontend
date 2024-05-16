@@ -1,8 +1,9 @@
 import type { FetchOptions } from "@/hooks/use-our-table";
 import { http } from "@/lib/axios";
 import getTableSearchParams from "@/lib/get-search-params";
+import { notifyError, notifySuccess } from "@/lib/notifications";
 import type { Attachment } from "@/lib/types";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 // -------- CREATE
 
@@ -28,3 +29,36 @@ export function useAttachments(options: FetchOptions) {
 // -------- UPDATE
 
 // -------- DELETE
+
+export async function deleteAttachment(
+	id: string,
+	method: "soft" | "hard" = "soft",
+) {
+	return await http.delete(`/visit/attachment/${id}/`, {
+		params: {
+			method,
+		},
+	});
+}
+
+export function useDeleteAttachment(
+	id: string,
+	method: "soft" | "hard" = "soft",
+	{ onSuccess, onError }: { onSuccess?: () => void; onError?: () => void } = {},
+) {
+	return useMutation({
+		mutationFn: () => deleteAttachment(id, method),
+		onSuccess: () => {
+			notifySuccess({
+				title: "Attachment was deleted successfully",
+			});
+			onSuccess?.();
+		},
+		onError: () => {
+			notifyError({
+				title: "Couldn't delete the attachment",
+			});
+			onError?.();
+		},
+	});
+}

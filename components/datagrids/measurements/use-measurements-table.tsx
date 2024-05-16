@@ -5,9 +5,13 @@ import { useMemo } from "react";
 
 export default function useMeasurementsTable({
 	data,
-}: UseTableOptions<Measurement> = {}) {
-	const columns = useMemo<MRT_ColumnDef<Measurement>[]>(
+}: UseTableOptions<Measurement & { date: string }> = {}) {
+	const columns = useMemo<MRT_ColumnDef<Measurement & { date: string }>[]>(
 		() => [
+			{
+				accessorKey: "date",
+				header: "Date",
+			},
 			{
 				accessorKey: "blood_pressure",
 				header: "Blood pressure",
@@ -41,7 +45,11 @@ export default function useMeasurementsTable({
 			id: "measurements",
 			fetchData: data
 				? () => Promise.resolve({ count: data.length, results: data })
-				: () => Promise.resolve({ count: 0, results: [] as Measurement[] }),
+				: () =>
+						Promise.resolve({
+							count: 0,
+							results: [],
+						}),
 		},
 		{
 			columns,

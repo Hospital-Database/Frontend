@@ -23,7 +23,9 @@ export default function LangSwitch() {
 			</Menu.Target>
 			<Menu.Dropdown>
 				{availableLocales.map(({ code, localName }) => (
-					<Menu.Item onClick={() => handleChange(code)}>{localName}</Menu.Item>
+					<Menu.Item key={code} onClick={() => handleChange(code)}>
+						{localName}
+					</Menu.Item>
 				))}
 			</Menu.Dropdown>
 		</Menu>

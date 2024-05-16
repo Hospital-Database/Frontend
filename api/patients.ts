@@ -1,9 +1,9 @@
-import type { FetchOptions } from "@/hooks/use-datagrid";
+import type { FetchOptions } from "@/hooks/use-our-table";
 import { http } from "@/lib/axios";
 import { getErrorMessageSync } from "@/lib/err-msg";
 import getTableSearchParams from "@/lib/get-search-params";
 import { notifyError, notifySuccess } from "@/lib/notifications";
-import type { Patient } from "@/lib/types";
+import type { Patient, PatientVerbose } from "@/lib/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import type { AxiosResponse } from "axios";
 import { useTranslations } from "next-intl";
@@ -76,9 +76,39 @@ export async function getPatients(options: FetchOptions) {
 		.then(({ data }) => data);
 }
 
+export async function getPatient(id: string | number) {
+	return await http
+		.get<PatientVerbose>(`/accounts/patient/${id}/`)
+		.then((res) => res.data);
+}
+
+export async function getPatientByNationalId(nationalId: string) {
+	const { results } = await getPatients({
+		pagination: {
+			pageIndex: 0,
+			pageSize: 1,
+		},
+		columnFilters: [
+			{
+				id: "national_id",
+				value: nationalId,
+			},
+		],
+	});
+	return results[0];
+}
+
 export function usePatients(options: FetchOptions) {
+	const params = getTableSearchParams(options);
 	return useQuery({
-		queryKey: ["patients", options],
+		queryKey: ["patients", params.toString()],
 		queryFn: () => getPatients(options),
+	});
+}
+
+export function usePatient(id: string | number) {
+	return useQuery({
+		queryKey: ["patient", id],
+		queryFn: () => getPatient(id),
 	});
 }

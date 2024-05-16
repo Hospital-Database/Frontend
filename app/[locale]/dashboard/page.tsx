@@ -1,6 +1,6 @@
 "use client";
 
-import useVisitsTable from "@/hooks/datagrids/visits";
+import useVisitsTable from "@/components/datagrids/visits/use-visits-table";
 import { Box, Title } from "@mantine/core";
 import { MantineReactTable } from "mantine-react-table";
 import DashboardHeader from "./_components/header";

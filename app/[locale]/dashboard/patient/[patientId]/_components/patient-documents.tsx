@@ -1,13 +1,31 @@
 import "@mantine/dropzone/styles.css";
 
-import { Box, Group, Stack, TextInput, Title } from "@mantine/core";
+import { useAttachments } from "@/api/attachments";
+import type { Patient } from "@/lib/types";
+import { Box, Group, Loader, Stack, TextInput, Title } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
-import FileCard from "./file-card";
+import AttachmentCard from "./file-card";
 import { FilesDropzone } from "./files-dropzone";
 
-export default function PatientDocuments({
-	patientId: _,
-}: { patientId: string }) {
+export default function PatientDocuments({ patient }: { patient: Patient }) {
+	const attachments = useAttachments({
+		// fetch all
+		pagination: {
+			pageIndex: 0,
+			pageSize: 1e8,
+		},
+		columnFilters: [
+			{
+				id: "user",
+				value: patient.user,
+			},
+		],
+	});
+
+	if (attachments.isLoading) return <Loader />;
+	if (attachments.isError) return <div>Error fetching attachments</div>;
+	if (!attachments.data) return <div>No attachments found</div>;
+
 	return (
 		<Box mt="xl">
 			<Title component={"h2"}>Attached Documents</Title>
@@ -24,10 +42,9 @@ export default function PatientDocuments({
 				/>
 			</Group>
 			<Stack gap="lg" mt="md">
-				<FileCard />
-				<FileCard />
-				<FileCard />
-				<FileCard />
+				{attachments.data.results.map((att) => (
+					<AttachmentCard attachment={att} key={att.id} />
+				))}
 			</Stack>
 		</Box>
 	);

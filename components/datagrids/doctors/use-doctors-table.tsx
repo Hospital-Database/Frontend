@@ -1,18 +1,19 @@
 import { getDoctors } from "@/api/doctors";
 import type { Doctor } from "@/lib/types";
-import { Menu } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css"; //if using mantine date picker features
-import type { MRT_ColumnDef, MRT_Row } from "mantine-react-table";
+import type { MRT_ColumnDef } from "mantine-react-table";
 import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
 import { useMemo } from "react";
-import useDatagrid from "../../../hooks/use-datagrid";
+import useOurTable, {
+	type UseTableOptions,
+} from "../../../hooks/use-our-table";
 
 export default function useDoctorsTable({
-	onEdit,
-}: {
-	onEdit?: (row: MRT_Row<Doctor>) => void;
-} = {}) {
+	data,
+	initialFilters,
+	tableOptions,
+}: UseTableOptions<Doctor> = {}) {
 	const columns = useMemo<MRT_ColumnDef<Doctor>[]>(
 		() => [
 			{
@@ -39,17 +40,19 @@ export default function useDoctorsTable({
 		[],
 	);
 
-	return useDatagrid(getDoctors, {
-		columns,
-		enableRowActions: true,
-		renderRowActionMenuItems: ({ row }) => (
-			<>
-				<Menu.Item onClick={() => onEdit?.(row)}>Edit</Menu.Item>
-				<Menu.Item onClick={() => console.info("Deactivate")}>
-					Deactivate
-				</Menu.Item>
-				<Menu.Item onClick={() => console.info("Delete")}>Delete</Menu.Item>
-			</>
-		),
-	});
+	return useOurTable(
+		{
+			id: "doctors",
+			fetchData: data
+				? () => Promise.resolve({ count: data.length, results: data })
+				: getDoctors,
+			initialFilters,
+			manual: !!data,
+		},
+		{
+			columns,
+			enableRowActions: true,
+			...tableOptions,
+		},
+	);
 }

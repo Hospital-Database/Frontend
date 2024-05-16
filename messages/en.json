@@ -45,6 +45,7 @@
 		"password": "Password",
 		"login": "Login",
 		"username": "Username",
-		"username-placeholder": "user-xyz"
+		"username-placeholder": "user-xyz",
+		"national-id": "National ID"
 	}
 }

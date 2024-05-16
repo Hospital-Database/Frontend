@@ -1,4 +1,4 @@
-import type { FetchOptions } from "@/hooks/use-datagrid";
+import type { FetchOptions } from "@/hooks/use-our-table";
 import { http } from "@/lib/axios";
 import { getErrorMessageSync } from "@/lib/err-msg";
 import getTableSearchParams from "@/lib/get-search-params";
@@ -94,7 +94,7 @@ export function useDoctors(options: FetchOptions) {
 export async function updateDoctor(
 	allData: Omit<z.input<typeof doctorSchema>, "date_of_birth"> & {
 		date_of_birth?: string;
-	} & { id: number },
+	} & { id: string },
 ) {
 	const { id, ...data } = allData;
 	return await http.patch<Doctor>(`/accounts/doctor/${id}/`, data);

@@ -5,10 +5,11 @@ import { ActionIcon, Button, Group, Menu, Tooltip } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css"; //if using mantine date picker features
 import { IconDownload, IconRefresh } from "@tabler/icons-react";
-import { type WithRequired, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { download, generateCsv, mkConfig } from "export-to-csv";
-import { merge } from "lodash";
+import { get, merge } from "lodash";
 import {
+	type MRT_ColumnDef,
 	type MRT_ColumnFilterFnsState,
 	type MRT_ColumnFiltersState,
 	type MRT_PaginationState,
@@ -38,8 +39,14 @@ export interface FetchOptions {
 	sorting?: MRT_SortingState;
 }
 
+export type OurTableColumnDef<TData extends MRT_RowData> =
+	MRT_ColumnDef<TData> & {
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+		getExportedValue?: (value: any) => string | null | boolean;
+	};
+
 const csvConfig = mkConfig({
-	fieldSeparator: ",",
+	fieldSeparator: ";",
 	decimalSeparator: ".",
 	useKeysAsHeaders: true,
 });
@@ -47,6 +54,20 @@ const csvConfig = mkConfig({
 const handleExportRows = <TData extends MRT_RowData>(data: TData[]) => {
 	const csv = generateCsv(csvConfig)(data);
 	download(csvConfig)(csv);
+};
+
+const getExportedRow = <TData extends MRT_RowData>(
+	columns: OurTableColumnDef<TData>[],
+	row: TData,
+) => {
+	const exportedRow: Record<string, string | null | boolean> = {};
+	for (const column of columns) {
+		if (!column.accessorKey) continue;
+		if (typeof column.getExportedValue === "function")
+			exportedRow[column.accessorKey] = column.getExportedValue(row);
+		else exportedRow[column.accessorKey] = get(row, column.accessorKey);
+	}
+	return exportedRow;
 };
 
 export default function useOurTable<TData extends MRT_RowData>(
@@ -66,7 +87,9 @@ export default function useOurTable<TData extends MRT_RowData>(
 			results: TData[];
 		}>;
 	},
-	tableOptions: WithRequired<Partial<MRT_TableOptions<TData>>, "columns">,
+	tableOptions: Omit<Partial<MRT_TableOptions<TData>>, "columns"> & {
+		columns: OurTableColumnDef<TData>[];
+	},
 ) {
 	const t = useTranslations();
 	const tempId = useId();
@@ -96,6 +119,8 @@ export default function useOurTable<TData extends MRT_RowData>(
 		pageIndex: 0,
 		pageSize: 10,
 	});
+
+	console.log(pagination);
 
 	const fetchOptions = {
 		columnFilterFns,
@@ -166,7 +191,11 @@ export default function useOurTable<TData extends MRT_RowData>(
 													pageSize: totalRowCount,
 												},
 											});
-											handleExportRows(allData);
+											handleExportRows(
+												allData.map((obj) =>
+													getExportedRow(tableOptions.columns, obj),
+												),
+											);
 										} catch (e) {
 											const message = getErrorMessageSync(e, t);
 											notifyError({
@@ -185,7 +214,11 @@ export default function useOurTable<TData extends MRT_RowData>(
 									//export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
 									onClick={() =>
 										handleExportRows(
-											table.getRowModel().rows.map((row) => row.original),
+											table
+												.getRowModel()
+												.rows.map((row) =>
+													getExportedRow(tableOptions.columns, row.original),
+												),
 										)
 									}
 									leftSection={<IconDownload />}
@@ -202,7 +235,9 @@ export default function useOurTable<TData extends MRT_RowData>(
 										handleExportRows(
 											table
 												.getSelectedRowModel()
-												.rows.map((row) => row.original),
+												.rows.map((row) =>
+													getExportedRow(tableOptions.columns, row.original),
+												),
 										)
 									}
 									leftSection={<IconDownload />}

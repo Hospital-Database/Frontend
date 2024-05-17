@@ -1,5 +1,4 @@
 "use client";
-
 import DoctorsCRUDTable from "@/components/datagrids/doctors/doctors-crud";
 import { Anchor, Box, Breadcrumbs, Title } from "@mantine/core";
 

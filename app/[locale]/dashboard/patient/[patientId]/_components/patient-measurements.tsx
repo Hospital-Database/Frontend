@@ -3,7 +3,7 @@
 import "@mantine/charts/styles.css";
 
 import { useVisits } from "@/api/visits";
-import { MeasurementsTable } from "@/components/datagrids/measurements/measurements";
+import { MeasurementsTable } from "@/components/table/measurements/measurements";
 import type {
 	ExtractedMeasurement,
 	Measurement,

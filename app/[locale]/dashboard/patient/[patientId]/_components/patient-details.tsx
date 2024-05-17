@@ -1,6 +1,6 @@
-import { DoctorsTable } from "@/components/datagrids/doctors/doctors";
-import { VisitsTable } from "@/components/datagrids/visits/visits";
 import DetailsCard from "@/components/details-card";
+import { DoctorsTable } from "@/components/table/doctors/doctors";
+import { VisitsTable } from "@/components/table/visits/visits";
 import type { PatientVerbose } from "@/lib/types";
 import { formatAddress } from "@/lib/utils";
 import { Box, Title } from "@mantine/core";

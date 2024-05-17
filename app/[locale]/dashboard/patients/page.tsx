@@ -1,6 +1,6 @@
 "use client";
 
-import PatientsCRUDTable from "@/components/datagrids/patients/patients-crud";
+import PatientsCRUDTable from "@/components/table/patients/patients-crud";
 import { Anchor, Box, Breadcrumbs, Title } from "@mantine/core";
 
 export default function PatientsPage() {

@@ -12,15 +12,27 @@ import { z } from "zod";
 export const doctorSchema = z.object({
 	full_name: z.string().min(2),
 	national_id: z.string().regex(/^\d{14}$/, "National ID must be 14 digits"),
-	gender: z.literal("female").or(z.literal("male")).optional(),
+	email: z.preprocess((val) => val || undefined, z.string().optional()),
 	speciality: z.string().min(2),
-	license_number: z.string().optional(),
-	experience_years: z.number().optional(),
-	work_days: z.string().optional(),
-	email: z.string().optional(),
-	marital_status: z.string().optional(),
 	nationality: z.string().min(3),
-	notes: z.string().optional(),
+	gender: z.preprocess(
+		(val) => val || undefined,
+		z.literal("female").or(z.literal("male")).optional(),
+	),
+	license_number: z.preprocess(
+		(val) => val || undefined,
+		z.string().optional(),
+	),
+	experience_years: z.preprocess(
+		(val) => val || undefined,
+		z.number().optional(),
+	),
+	work_days: z.preprocess((val) => val || undefined, z.string().optional()),
+	marital_status: z.preprocess(
+		(val) => val || undefined,
+		z.string().optional(),
+	),
+	notes: z.preprocess((val) => val || undefined, z.string().optional()),
 	address: z
 		.object({
 			street: z.string().optional(),
@@ -28,13 +40,17 @@ export const doctorSchema = z.object({
 			governorate: z.string().optional(),
 		})
 		.optional(),
+	// TODO: fix the form to make the phone optional
 	phone: z
 		.object({
-			mobile: z.string().optional(),
+			mobile: z.preprocess(
+				(val) => val || undefined,
+				z.string().min(3).optional(),
+			),
 		})
 		.optional(),
 	/** date in ISO format */
-	date_of_birth: z.date().optional(),
+	date_of_birth: z.preprocess((val) => val || undefined, z.date().optional()),
 });
 
 // -------- CREATE

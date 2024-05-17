@@ -7,6 +7,40 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 // -------- CREATE
 
+export async function createAttachment({
+	userId,
+	file,
+	visit,
+}: {
+	userId: number;
+	file: File;
+	visit?: string;
+}) {
+	return await http.postForm("/visit/attachment/", {
+		file: file,
+		user: userId,
+		visit,
+		kind: "blood",
+	});
+}
+
+export function useCreateAttachment() {
+	return useMutation({
+		mutationFn: createAttachment,
+		onSuccess: () => {
+			notifySuccess({
+				title: "Attachment was upload successfully",
+			});
+		},
+		onError: (e) => {
+			console.log(e);
+			notifyError({
+				title: "Couldn't upload the attachment",
+			});
+		},
+	});
+}
+
 // -------- READ
 
 export async function getAttachments(options: FetchOptions) {

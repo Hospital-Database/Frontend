@@ -29,13 +29,14 @@ export default function PatientDocuments({ patient }: { patient: Patient }) {
 
 	return (
 		<Box mt="xl">
-			<Title component={"h2"}>{t("attached-documents")}</Title>
-			<FilesDropzone
-				mt="md"
-				onDrop={(files) => {
-					console.log(files);
-				}}
-			/>
+			<Title component={"h2"} mb="md">
+				{t("attached-documents")}
+			</Title>
+			{/**I tried to call onDrop here give me error
+			 *useMutation Render more than one time Error:
+			 * */}
+
+			<FilesDropzone patient={patient} />
 			<Group justify="end" mt="xl">
 				<TextInput
 					placeholder="Search attachments"

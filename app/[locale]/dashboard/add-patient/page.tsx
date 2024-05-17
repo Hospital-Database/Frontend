@@ -1,13 +1,8 @@
+'use client'
 import { useCreatePatient } from "@/api/patients";
 import { useRouter } from "@/navigation";
-import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
 import AddPatientForm from "../../../../components/forms/patient-form/form";
-
-export const metadata: Metadata = {
-	title: "Add patient",
-	description: "Add patient to our database",
-};
 
 export default function AddPatient() {
 	const t = useTranslations("Forms");
@@ -23,7 +18,7 @@ export default function AddPatient() {
 				{t("add-new-patient")}
 			</h1>
 			<AddPatientForm
-				initalValue={{
+				initialValue={{
 					national_id: "",
 					full_name: "",
 					address: {},

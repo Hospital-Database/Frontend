@@ -69,10 +69,10 @@ function ManageVisitButton() {
 }
 
 function OtherActions({ patientId }: { patientId: string }) {
+	const router = useRouter();
 	const { mutate } = useDeletePatient(() => {
 		router.push("/dashboard/patients");
 	});
-	const router = useRouter();
 	return (
 		<Menu>
 			<Menu.Target>
@@ -81,7 +81,10 @@ function OtherActions({ patientId }: { patientId: string }) {
 				</ActionIcon>
 			</Menu.Target>
 			<Menu.Dropdown>
-				<Menu.Item>Edit</Menu.Item>
+				<Menu.Item onClick={
+					() => router.push(
+						`/dashboard/patient/edit/${patientId}`)
+				}>Edit</Menu.Item>
 				<Menu.Item
 					color="red"
 					onClick={() => {

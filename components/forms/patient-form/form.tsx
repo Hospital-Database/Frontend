@@ -13,10 +13,10 @@ import AdditionalContent from "./additional-content";
 import MainContent from "./main-content";
 
 export default function AddPatientForm({
-	initalValue,
+	initialValue,
 	onSubmit,
 }: {
-	initalValue: Omit<z.infer<typeof patientSchema>, "image">;
+	initialValue: Omit<z.infer<typeof patientSchema>, "image">;
 	onSubmit: (
 		data: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
 			date_of_birth?: string | undefined;
@@ -26,7 +26,7 @@ export default function AddPatientForm({
 	const t = useTranslations("Forms");
 	const form = useForm<z.infer<typeof patientSchema>>({
 		validate: zodResolver(patientSchema),
-		initialValues: initalValue,
+		initialValues: initialValue,
 	});
 	const [isPending, setIsPending] = useState(false);
 	return (

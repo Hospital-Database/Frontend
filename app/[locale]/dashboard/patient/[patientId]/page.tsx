@@ -1,13 +1,16 @@
 "use client";
 
-import { usePatient } from "@/api/patients";
+import { useDeletePatient, usePatient } from "@/api/patients";
+import { useRouter } from "@/navigation";
 import {
+	ActionIcon,
 	Anchor,
 	Box,
 	Breadcrumbs,
 	Button,
 	Group,
 	Loader,
+	Menu,
 	Stack,
 	Title,
 } from "@mantine/core";
@@ -46,7 +49,7 @@ export default function PatientPage({
 				</Group>
 				<Group gap={"md"}>
 					<ManageVisitButton />
-					<OtherActions />
+					<OtherActions patientId={patientId} />
 				</Group>
 			</Group>
 			{true && (
@@ -65,10 +68,29 @@ function ManageVisitButton() {
 	return <Button>Start visit</Button>;
 }
 
-function OtherActions() {
+function OtherActions({ patientId }: { patientId: string }) {
+	const { mutate } = useDeletePatient(() => {
+		router.push("/dashboard/patients");
+	});
+	const router = useRouter();
 	return (
-		<Button variant="outline">
-			<IconDots />
-		</Button>
+		<Menu>
+			<Menu.Target>
+				<ActionIcon size={"lg"} variant="default">
+					<IconDots size={20} />
+				</ActionIcon>
+			</Menu.Target>
+			<Menu.Dropdown>
+				<Menu.Item>Edit</Menu.Item>
+				<Menu.Item
+					color="red"
+					onClick={() => {
+						mutate(patientId);
+					}}
+				>
+					Delete
+				</Menu.Item>
+			</Menu.Dropdown>
+		</Menu>
 	);
 }

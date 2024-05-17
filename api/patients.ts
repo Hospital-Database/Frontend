@@ -41,7 +41,6 @@ export async function createPatient({
 }: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
 	date_of_birth?: string;
 }) {
-	console.log(data, image);
 	const response = await http.post<Patient>("/accounts/patient/", data);
 	if (image) await createUserImage({ image: image, user: response.data.user });
 	return response;
@@ -116,5 +115,28 @@ export function usePatient(id: string | number) {
 	return useQuery({
 		queryKey: ["patient", id],
 		queryFn: () => getPatient(id),
+	});
+}
+
+export async function deletePatient(id: string) {
+	return await http.delete(`/accounts/patient/${id}`);
+}
+
+export function useDeletePatient(
+	onSuccess?: (response: AxiosResponse<Patient>) => void,
+) {
+	return useMutation({
+		mutationFn: deletePatient,
+		onSuccess: (response) => {
+			notifySuccess({
+				title: "Patient was deleted successfully",
+			});
+			onSuccess?.(response);
+		},
+		onError: () => {
+			notifyError({
+				title: "patient can't deleted",
+			});
+		},
 	});
 }

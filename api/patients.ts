@@ -38,6 +38,7 @@ export async function createPatient(
 		date_of_birth?: string;
 	},
 ) {
+	data.image;
 	return await http.post<Patient>("/accounts/patient/", data);
 }
 

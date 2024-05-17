@@ -66,6 +66,7 @@ export default function AttachmentCard({
 				opened={isDeleting}
 				onClose={() => setIsDeleting(false)}
 				withCloseButton={false}
+				title="Delete attachment"
 			>
 				<Title component={"h4"} fz={"h4"} mb="md">
 					Are you sure you want to delete this file?

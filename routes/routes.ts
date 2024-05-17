@@ -11,10 +11,10 @@ export const Routes = makeRoutes(
 			home: makeRoute("/"),
 			login: makeRoute("/login", { type: "public" }),
 			dashboard: makeRoute("/dashboard", {
-				type: "admin-only",
+				type: "private",
 			}),
 			patient: makeRoute("/dashboard/patient/:id", {
-				type: "admin-only",
+				type: "private",
 				params: z.object({
 					id: z.string().regex(/^\d+$/, "Invalid patient ID").or(z.number()),
 				}),

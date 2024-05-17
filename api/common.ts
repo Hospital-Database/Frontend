@@ -17,4 +17,5 @@ export const imageSchema = z
 	.refine(
 		(files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
 		"Only .jpg, .jpeg, .png and .webp formats are supported.",
-	);
+	)
+	.transform((file) => file as File);

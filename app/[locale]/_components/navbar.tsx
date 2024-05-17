@@ -1,5 +1,5 @@
-import LangSwitch from "../../../_components/lang-switch";
-import { ThemeSwitch } from "../../../_components/theme-switch";
+import LangSwitch from "./lang-switch";
+import { ThemeSwitch } from "./theme-switch";
 
 export default function Navbar() {
 	return (

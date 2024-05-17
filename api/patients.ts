@@ -35,6 +35,7 @@ export const patientSchema = z.object({
 export async function createUserImage(data: { image: File; user: number }) {
 	await http.postForm("/accounts/user-image/", data);
 }
+
 export async function createPatient({
 	image,
 	...data

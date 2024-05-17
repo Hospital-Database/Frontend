@@ -5,7 +5,7 @@ import { TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import { useTranslations } from "next-intl";
 import type { z } from "zod";
-import useCheckNationalId from "../_hooks/use-check-national-id";
+import useCheckNationalId from "./_hooks/use-check-national-id";
 import UploadImage from "./image-upload";
 
 export default function MainContent({

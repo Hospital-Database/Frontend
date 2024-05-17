@@ -1,43 +1,45 @@
 "use client";
 
-import { patientSchema, useCreatePatient } from "@/api/patients";
-import { useRouter } from "@/navigation";
+import { patientSchema } from "@/api/patients";
 import { Button } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconMessageCircleUser, IconShieldPlus } from "@tabler/icons-react";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import type { z } from "zod";
 import AccordionTitle from "./accordion-title";
 import AdditionalContent from "./additional-content";
 import MainContent from "./main-content";
 
-export default function AddPatientForm() {
+export default function AddPatientForm({
+	initialValue,
+	onSubmit,
+}: {
+	initialValue: Omit<z.infer<typeof patientSchema>, "image">;
+	onSubmit: (
+		data: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
+			date_of_birth?: string | undefined;
+		},
+	) => void | Promise<void>;
+}) {
 	const t = useTranslations("Forms");
-	const router = useRouter();
 	const form = useForm<z.infer<typeof patientSchema>>({
 		validate: zodResolver(patientSchema),
-		initialValues: {
-			national_id: "",
-			full_name: "",
-			address: {},
-			phone: {},
-		},
+		initialValues: initialValue,
 	});
-	const createPatient = useCreatePatient({
-		onSuccess(res) {
-			router.push(`/dashboard/patient/${res.data.id}`);
-		},
-	});
+	const [isPending, setIsPending] = useState(false);
 	return (
 		<form
 			className="space-y-8"
-			onSubmit={form.onSubmit((data) => {
+			onSubmit={form.onSubmit(async (data) => {
+				setIsPending(true);
 				const newData = {
 					...data,
 					date_of_birth: data?.date_of_birth?.toISOString().slice(0, 10),
 				};
-				createPatient.mutate(newData);
+				await onSubmit(newData);
+				setIsPending(false);
 			})}
 		>
 			<section className="space-y-6">
@@ -57,11 +59,7 @@ export default function AddPatientForm() {
 				<AdditionalContent form={form} />
 			</section>
 			<section>
-				<Button
-					loading={createPatient.isPending}
-					type="submit"
-					className="me-2"
-				>
+				<Button loading={isPending} type="submit" className="me-2">
 					{t("save")}
 				</Button>
 				{/* TODO: other actions, save and create visit, save and add new, ...etc, maybe dropdown and save the last choosen as the default action */}

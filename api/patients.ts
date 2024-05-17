@@ -1,3 +1,4 @@
+"use client";
 import type { FetchOptions } from "@/hooks/use-our-table";
 import { http } from "@/lib/axios";
 import { getErrorMessageSync } from "@/lib/err-msg";
@@ -32,14 +33,19 @@ export const patientSchema = z.object({
 });
 
 // -------- CREATE
+export async function createUserImage(data: { image: File; user: number }) {
+	await http.postForm("/accounts/user-image/", data);
+}
 
-export async function createPatient(
-	data: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
-		date_of_birth?: string;
-	},
-) {
-	data.image;
-	return await http.post<Patient>("/accounts/patient/", data);
+export async function createPatient({
+	image,
+	...data
+}: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
+	date_of_birth?: string;
+}) {
+	const response = await http.post<Patient>("/accounts/patient/", data);
+	if (image) await createUserImage({ image: image, user: response.data.user });
+	return response;
 }
 
 export function useCreatePatient({
@@ -111,5 +117,28 @@ export function usePatient(id: string | number) {
 	return useQuery({
 		queryKey: ["patient", id],
 		queryFn: () => getPatient(id),
+	});
+}
+
+export async function deletePatient(id: string) {
+	return await http.delete(`/accounts/patient/${id}`);
+}
+
+export function useDeletePatient(
+	onSuccess?: (response: AxiosResponse<Patient>) => void,
+) {
+	return useMutation({
+		mutationFn: deletePatient,
+		onSuccess: (response) => {
+			notifySuccess({
+				title: "Patient was deleted successfully",
+			});
+			onSuccess?.(response);
+		},
+		onError: () => {
+			notifyError({
+				title: "patient can't deleted",
+			});
+		},
 	});
 }

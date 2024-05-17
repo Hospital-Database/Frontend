@@ -1,52 +1,53 @@
 {
-  "Home": {
-    "hello-world": "Hello World!"
-  },
-  "Common": {
-    "errors": {
-      "something-went-wrong": "Something Went wrong"
-    }
-  },
-  "Forms": {
-    "add-new-patient": "Add new patient",
-    "main-details": "Main details",
-    "complete-the-main-details-of-the-patient": "Complete the main details of the patient",
-    "save": "Save",
-    "save-and-start-visit": "Save and start visit",
-    "national-id-must-be-14-digits": "National ID must be 14 digits",
-    "user-is-already-exist": "User is already exist",
-    "new-national-id": "This national ID is new",
-    "see-details": "See details",
-    "full-name": "Full Name",
-    "AddPatiententer-the-full-name-of-4-parts-as-in-the-national-id": "Enter the full name of 4 parts as in the national ID",
-    "address": "Address",
-    "nothing-found": "Nothing found...",
-    "phone-number": "Phone Number",
-    "gender": "Gender",
-    "male": "Male",
-    "female": "Female",
-    "material-status": "Material status",
-    "choose-your-material-status": "Choose your material status",
-    "date-of-birth": "Date of birth",
-    "date-input": "Date input",
-    "finished": "Finished",
-    "single": "Single",
-    "notes": "Notes",
-    "enter-some-notes-here": "Enter some notes here",
-    "status": "Status",
-    "street": "Street",
-    "governorate": "Governorate",
-    "other-details": "Other details",
-    "additional-details-you-can-complete-later": "Additional details, you can complete later",
-    "national-id": "National ID"
-  },
-  "Login": {
-    "usernam-error-message": "Invalid username, it must only contains letters, numbers, _, or - but not at the beggining or at the end",
-    "password": "Password",
-    "login": "Login",
-    "username": "Username",
-    "username-placeholder": "user-xyz",
-    "national-id": "National ID",
-    "national-id-placeholder": "01234567891011"
-  }
+	"Home": {
+		"hello-world": "Hello World!"
+	},
+	"Common": {
+		"errors": {
+			"something-went-wrong": "Something Went wrong"
+		}
+	},
+	"Forms": {
+		"add-new-patient": "Add new patient",
+		"main-details": "Main details",
+		"complete-the-main-details-of-the-patient": "Complete the main details of the patient",
+		"save": "Save",
+		"save-and-start-visit": "Save and start visit",
+		"national-id-must-be-14-digits": "National ID must be at most 14 digits",
+		"user-is-already-exist": "User is already exist",
+		"new-national-id": "This national ID is new",
+		"see-details": "See details",
+		"full-name": "Full Name",
+		"AddPatiententer-the-full-name-of-4-parts-as-in-the-national-id": "Enter the full name of 4 parts as in the national ID",
+		"address": "Address",
+		"nothing-found": "Nothing found...",
+		"phone-number": "Phone Number",
+		"gender": "Gender",
+		"male": "Male",
+		"female": "Female",
+		"material-status": "Material status",
+		"choose-your-material-status": "Choose your material status",
+		"date-of-birth": "Date of birth",
+		"date-input": "Date input",
+		"finished": "Finished",
+		"single": "Single",
+		"notes": "Notes",
+		"enter-some-notes-here": "Enter some notes here",
+		"status": "Status",
+		"street": "Street",
+		"governorate": "Governorate",
+		"other-details": "Other details",
+		"additional-details-you-can-complete-later": "Additional details, you can complete later",
+		"national-id": "National ID",
+		"national-id-at-least-14-digits": "National id at least 14 digits"
+	},
+	"Login": {
+		"usernam-error-message": "Invalid username, it must only contains letters, numbers, _, or - but not at the beggining or at the end",
+		"password": "Password",
+		"login": "Login",
+		"username": "Username",
+		"username-placeholder": "user-xyz",
+		"national-id": "National ID",
+		"national-id-placeholder": "01234567891011"
+	}
 }

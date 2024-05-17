@@ -1,4 +1,4 @@
-import { getPatients } from "@/api/patients";
+import { getDeletedPatients, getPatients } from "@/api/patients";
 import type { Patient } from "@/lib/types";
 import { Routes } from "@/routes/routes";
 import { Anchor } from "@mantine/core";
@@ -7,9 +7,16 @@ import "@mantine/dates/styles.css"; //if using mantine date picker features
 import type { MRT_ColumnDef } from "mantine-react-table";
 import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
 import { useMemo } from "react";
-import useOurTable from "../../../hooks/use-our-table";
+import useOurTable, {
+	type UseTableOptions,
+} from "../../../hooks/use-our-table";
 
-export default function usePatientsTable() {
+export default function usePatientsTable({
+	data,
+	initialFilters,
+	tableOptions,
+	deleted,
+}: UseTableOptions<Patient> = {}) {
 	const columns = useMemo<MRT_ColumnDef<Patient>[]>(
 		() => [
 			{
@@ -48,9 +55,19 @@ export default function usePatientsTable() {
 	);
 
 	return useOurTable(
-		{ id: "patients", fetchData: getPatients },
+		{
+			id: "patients",
+			deleted,
+			initialFilters,
+			fetchData: data
+				? () => Promise.resolve({ count: data.length, results: data })
+				: deleted
+					? getDeletedPatients
+					: getPatients,
+		},
 		{
 			columns,
+			...tableOptions,
 		},
 	);
 }

@@ -106,6 +106,15 @@ export async function getPatientByNationalId(nationalId: string) {
 	return results[0];
 }
 
+export async function getDeletedPatients(options: FetchOptions) {
+	const params = getTableSearchParams(options);
+	return await http
+		.get<{ count: number; results: Patient[] }>("/accounts/patient/deleted/", {
+			params,
+		})
+		.then((res) => res.data);
+}
+
 export function usePatients(options: FetchOptions) {
 	const params = getTableSearchParams(options);
 	return useQuery({

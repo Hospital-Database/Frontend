@@ -32,13 +32,19 @@ export const patientSchema = z.object({
 });
 
 // -------- CREATE
-
-export async function createPatient(
-	data: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
-		date_of_birth?: string;
-	},
-) {
-	return await http.post<Patient>("/accounts/patient/", data);
+export async function createUserImage(data: { image: File; user: number }) {
+	await http.postForm("/accounts/user-image/", data);
+}
+export async function createPatient({
+	image,
+	...data
+}: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
+	date_of_birth?: string;
+}) {
+	console.log(data, image);
+	const response = await http.post<Patient>("/accounts/patient/", data);
+	if (image) await createUserImage({ image: image, user: response.data.user });
+	return response;
 }
 
 export function useCreatePatient({

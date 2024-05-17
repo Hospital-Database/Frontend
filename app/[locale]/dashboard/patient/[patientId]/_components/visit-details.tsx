@@ -11,7 +11,7 @@ export default function VisitDetails({ patientId: _ }: { patientId: string }) {
 	const t = useTranslations("Patient");
 	return (
 		<DetailsCard
-			title="Current visit"
+			title={t("current-visit")}
 			details={[
 				{ title: t("ticket"), value: 128746817234 },
 				{ title: t("duration"), value: formatElapsedTime(startedAt, now) },

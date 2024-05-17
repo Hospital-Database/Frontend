@@ -12,6 +12,7 @@ import { Box, Button, Flex, Menu, SegmentedControl } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { MantineReactTable } from "mantine-react-table";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import type { z } from "zod";
 import useDoctorsTable from "./use-doctors-table";
@@ -78,6 +79,7 @@ export default function DoctorsCRUDTable() {
 			),
 		},
 	});
+	const t = useTranslations("Doctors");
 
 	return (
 		<Box>
@@ -102,7 +104,7 @@ export default function DoctorsCRUDTable() {
 						setFormState("create");
 					}}
 				>
-					Add doctor
+					{t("add-doctor")}
 				</Button>
 			</Flex>
 			<MantineReactTable table={doctorsTable} />

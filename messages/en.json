@@ -44,7 +44,12 @@
 		"maried": "Maried",
 		"widowed": "Widowed",
 		"divorsed": "Divorced",
-		"error-fetching-the-patient": "Error fetching the patient"
+		"error-fetching-the-patient": "Error fetching the patient",
+		"speciality": "Speciality",
+		"nationality": "Nationality",
+		"email": "Email",
+		"national-id-at-least-14-digits-0": "National ID",
+		"logout": "Logout"
 	},
 	"Login": {
 		"usernam-error-message": "Invalid username, it must only contains letters, numbers, _, or - but not at the beggining or at the end",
@@ -65,7 +70,8 @@
 		"speciality": "Speciality",
 		"national-id": "National ID",
 		"nationality": "Nationality",
-		"phone": "Phone"
+		"phone": "Phone",
+		"add-doctor": "Add doctor"
 	},
 	"Dashboard": {
 		"total-patients": "Total patients",
@@ -114,7 +120,8 @@
 		"temprature": "Temprature",
 		"weight": "Weight",
 		"height": "Height",
-		"speciality": "Speciality"
+		"speciality": "Speciality",
+		"current-visit": "Current visit"
 	},
 	"Navbar": {
 		"zu-hospital": "ZU Hospital",

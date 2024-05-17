@@ -39,13 +39,17 @@
 		"additional-details-you-can-complete-later": "تفاصيل إضافية، يمكنك إكمالها لاحقًا",
 		"national-id": "الهوية الوطنية",
 		"new-national-id": "هذا الرقم القومي جديد",
-		"national-id-at-least-14-digits": "",
+		"national-id-at-least-14-digits": "الهوية الوطنية لا تقل عن 14 رقم",
 		"national-id-at-least-14-digits-0": "المعرف الوطني مكون من 14 رقمًا على الأقل",
 		"divorsed": "مُطلّق",
 		"edit-patient": "تحرير المريض",
 		"maried": "متزوج",
 		"widowed": "الأرامل",
-		"error-fetching-the-patient": "خطأ في إحضار المريض"
+		"error-fetching-the-patient": "خطأ في إحضار المريض",
+		"email": "بريد إلكتروني",
+		"nationality": "جنسية",
+		"speciality": "تخصص",
+		"logout": "تسجيل خروج"
 	},
 	"Login": {
 		"login": "تسجيل الدخول",
@@ -71,7 +75,8 @@
 		"national-id": "الهوية الوطنية",
 		"nationality": "جنسية",
 		"phone": "هاتف",
-		"speciality": "تخصص"
+		"speciality": "تخصص",
+		"add-doctor": "أضف طبيب"
 	},
 	"Patient": {
 		"are-you-sure-you-want-to-delete-this-file": "هل أنت متأكد أنك تريد حذف هذا الملف؟",
@@ -89,14 +94,14 @@
 		"no-attachments-found": "لم يتم العثور على أي مرفقات",
 		"no-file-name": "لا يوجد اسم الملف",
 		"visits": "الزيارات",
-		"address": "عنوان",
-		"age": "عمر",
+		"address": "العنوان",
+		"age": "العمر",
 		"blood-pressure": "ضغط الدم",
 		"dashboard": "لوحة القيادة",
-		"date": "تاريخ",
+		"date": "التاريخ",
 		"date-of-birth": "تاريخ الميلاد",
-		"duration": "مدة",
-		"edit": "يحرر",
+		"duration": "المدة",
+		"edit": "حرر",
 		"error-fetching-the-patient": "خطأ في إحضار المريض",
 		"full-name": "الاسم الكامل",
 		"gender": "جنس",
@@ -115,13 +120,14 @@
 		"temprature": "درجة الحرارة",
 		"ticket": "تذكرة",
 		"visit-number": "رقم الزيارة",
-		"weight": "وزن"
+		"weight": "الوزن",
+		"current-visit": "الزيارة الحالية"
 	},
 	"Navbar": {
-		"zu-hospital": "مستشفى ZU",
+		"zu-hospital": "مستشفى الزقازيق",
 		"add-patient": "إضافة المريض",
-		"dashboard": "لوحة القيادة",
+		"dashboard": "لوحة الادمن",
 		"doctors": "الأطباء",
-		"patients": "مرضى"
+		"patients": "المرضي"
 	}
 }

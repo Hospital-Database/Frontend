@@ -87,13 +87,16 @@ export default function DoctorForm({
 							{...form.getInputProps("national_id")}
 						/>
 					</div>
-					<TextInput label="Speciality" {...form.getInputProps("speciality")} />
 					<TextInput
-						label="Nationality"
+						label={t("speciality")}
+						{...form.getInputProps("speciality")}
+					/>
+					<TextInput
+						label={t("nationality")}
 						{...form.getInputProps("nationality")}
 					/>
 					<TextInput
-						label="Email"
+						label={t("email")}
 						type="email"
 						{...form.getInputProps("email")}
 					/>
@@ -105,7 +108,7 @@ export default function DoctorForm({
 						</Group>
 					</Radio.Group>
 					<Button mt="md" type="submit" loading={saveDoctor.isPending}>
-						Save
+						{t("save")}
 					</Button>
 				</Stack>
 			</form>

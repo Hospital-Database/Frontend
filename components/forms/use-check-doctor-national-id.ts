@@ -15,8 +15,12 @@ export default function useCheckDoctorNationalId(
 	const checkNationalId = useCallback(
 		debounce(async (national_id: string) => {
 			if (initialValue && initialValue === national_id) return;
-			if (typeof national_id !== "string" || national_id.length !== 14) {
+			if (typeof national_id !== "string" || national_id.length > 14) {
 				form.setFieldError("national_id", t("national-id-must-be-14-digits"));
+				return;
+				// biome-ignore lint/style/noUselessElse: <explanation>
+			} else if (national_id.length < 14) {
+				form.setFieldError("national_id", t("national-id-at-least-14-digits"));
 				return;
 			}
 			const { results } = await getDoctors({

@@ -2,6 +2,7 @@
 
 import { useDeletePatient, usePatient } from "@/api/patients";
 import { useRouter } from "@/navigation";
+import { Routes } from "@/routes/routes";
 import {
 	ActionIcon,
 	Anchor,
@@ -81,10 +82,11 @@ function OtherActions({ patientId }: { patientId: string }) {
 				</ActionIcon>
 			</Menu.Target>
 			<Menu.Dropdown>
-				<Menu.Item onClick={
-					() => router.push(
-						`/dashboard/patient/edit/${patientId}`)
-				}>Edit</Menu.Item>
+				<Menu.Item
+					onClick={() => router.push(Routes.editPatient({ patientId }))}
+				>
+					Edit
+				</Menu.Item>
 				<Menu.Item
 					color="red"
 					onClick={() => {

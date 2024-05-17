@@ -13,10 +13,16 @@ export const Routes = makeRoutes(
 			dashboard: makeRoute("/dashboard", {
 				type: "private",
 			}),
-			patient: makeRoute("/dashboard/patient/:id", {
+			editPatient: makeRoute("/dashboard/patient/:patientId/edit", {
 				type: "private",
 				params: z.object({
-					id: z.string().regex(/^\d+$/, "Invalid patient ID").or(z.number()),
+					patientId: z.string().uuid(),
+				}),
+			}),
+			patient: makeRoute("/dashboard/patient/:patientId", {
+				type: "private",
+				params: z.object({
+					patientId: z.string().uuid(),
 				}),
 			}),
 		};

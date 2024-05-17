@@ -14,6 +14,7 @@ import { useForm, zodResolver } from "@mantine/form";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import type { z } from "zod";
+import useCheckDoctorNationalId from "./use-check-doctor-national-id";
 
 type DoctorFormProps = NonNullable<Parameters<typeof useCreateDoctor>[0]> &
 	Omit<ModalProps, "onSubmit" | "children"> & {
@@ -55,20 +56,33 @@ export default function DoctorForm({
 		onSuccess,
 	});
 
+	useCheckDoctorNationalId(form, initialValues?.national_id);
+
 	return (
 		<Modal {...props}>
-			<form onSubmit={form.onSubmit(() => {})}>
+			<form
+				onSubmit={form.onSubmit(() => {
+					const data = form.getValues();
+					const newData = {
+						...data,
+						date_of_birth: data?.date_of_birth?.toISOString().slice(0, 10),
+					};
+					saveDoctor.mutate(newData);
+				})}
+			>
 				<Stack>
 					<TextInput
 						withAsterisk
 						label="Full name"
 						{...form.getInputProps("full_name")}
 					/>
-					<TextInput
-						withAsterisk
-						label="National ID"
-						{...form.getInputProps("national_id")}
-					/>
+					<div className="space-y-2">
+						<TextInput
+							withAsterisk
+							label="National ID"
+							{...form.getInputProps("national_id")}
+						/>
+					</div>
 					<TextInput
 						withAsterisk
 						label="Nationality"
@@ -80,19 +94,7 @@ export default function DoctorForm({
 						{...form.getInputProps("speciality")}
 					/>
 					<TextInput label="Phone" {...form.getInputProps("phone.mobile")} />
-					<Button
-						mt="md"
-						type="submit"
-						loading={saveDoctor.isPending}
-						onClick={() => {
-							const data = form.getValues();
-							const newData = {
-								...data,
-								date_of_birth: data?.date_of_birth?.toISOString().slice(0, 10),
-							};
-							saveDoctor.mutate(newData);
-						}}
-					>
+					<Button mt="md" type="submit" loading={saveDoctor.isPending}>
 						Save
 					</Button>
 				</Stack>

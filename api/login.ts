@@ -46,7 +46,7 @@ export function usePatientSignIn() {
 			return patient;
 		},
 		onSuccess: (patient) => {
-			router.push(Routes.patient({ id: patient.id }));
+			router.push(Routes.patient({ patientId: patient.id }));
 		},
 	});
 }

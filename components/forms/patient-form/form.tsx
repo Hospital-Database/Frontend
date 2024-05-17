@@ -11,12 +11,20 @@ import type { z } from "zod";
 import AccordionTitle from "./accordion-title";
 import AdditionalContent from "./additional-content";
 import MainContent from "./main-content";
+import useCheckPatientNationalId from "./use-check-national-id";
 
-export default function AddPatientForm({
+const emptyValues = {
+	national_id: "",
+	full_name: "",
+	address: {},
+	phone: {},
+};
+
+export default function PatientForm({
 	initialValue,
 	onSubmit,
 }: {
-	initialValue: Omit<z.infer<typeof patientSchema>, "image">;
+	initialValue?: Omit<z.infer<typeof patientSchema>, "image">;
 	onSubmit: (
 		data: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
 			date_of_birth?: string | undefined;
@@ -26,9 +34,12 @@ export default function AddPatientForm({
 	const t = useTranslations("Forms");
 	const form = useForm<z.infer<typeof patientSchema>>({
 		validate: zodResolver(patientSchema),
-		initialValues: initialValue,
+		initialValues: initialValue || emptyValues,
 	});
 	const [isPending, setIsPending] = useState(false);
+
+	useCheckPatientNationalId(form, initialValue?.national_id);
+
 	return (
 		<form
 			className="space-y-8"
@@ -38,8 +49,11 @@ export default function AddPatientForm({
 					...data,
 					date_of_birth: data?.date_of_birth?.toISOString().slice(0, 10),
 				};
-				await onSubmit(newData);
-				setIsPending(false);
+				try {
+					await onSubmit(newData);
+				} finally {
+					setIsPending(false);
+				}
 			})}
 		>
 			<section className="space-y-6">

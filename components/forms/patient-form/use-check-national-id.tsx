@@ -7,12 +7,14 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
 import type { z } from "zod";
 
-export default function useCheckNationalId(
+export default function useCheckPatientNationalId(
 	form: UseFormReturnType<z.infer<typeof patientSchema>>,
+	initialValue?: string,
 ) {
 	const t = useTranslations("Forms");
 	const checkNationalId = useCallback(
 		debounce(async (national_id: string) => {
+			if (initialValue && initialValue === national_id) return;
 			if (typeof national_id !== "string" || national_id.length > 14) {
 				form.setFieldError("national_id", t("national-id-must-be-14-digits"));
 				return;

@@ -5,7 +5,6 @@ import { TextInput } from "@mantine/core";
 import type { UseFormReturnType } from "@mantine/form";
 import { useTranslations } from "next-intl";
 import type { z } from "zod";
-import useCheckNationalId from "./_hooks/use-check-national-id";
 import UploadImage from "./image-upload";
 
 export default function MainContent({
@@ -16,8 +15,6 @@ export default function MainContent({
 	const t = useTranslations("Forms");
 	const nationalIdDoesnotExist =
 		!form.errors.national_id && form.isDirty("national_id");
-
-	useCheckNationalId(form);
 
 	return (
 		<section className="space-y-3 grid grid-cols-3 gap-x-8">

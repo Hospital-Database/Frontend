@@ -10,6 +10,7 @@ import type { AxiosResponse } from "axios";
 import { useTranslations } from "next-intl";
 import * as z from "zod";
 import { imageSchema } from "./common";
+import { createUserImage, updateUserImage } from "./users";
 
 export const patientSchema = z.object({
 	national_id: z.string().min(14).max(14),
@@ -33,9 +34,6 @@ export const patientSchema = z.object({
 });
 
 // -------- CREATE
-export async function createUserImage(data: { image: File; user: number }) {
-	await http.postForm("/accounts/user-image/", data);
-}
 
 export async function createPatient({
 	image,
@@ -44,7 +42,10 @@ export async function createPatient({
 	date_of_birth?: string;
 }) {
 	const response = await http.post<Patient>("/accounts/patient/", data);
-	if (image) await createUserImage({ image: image, user: response.data.user });
+	try {
+		if (image)
+			await createUserImage({ image: image, user: response.data.user });
+	} catch {}
 	return response;
 }
 
@@ -119,6 +120,57 @@ export function usePatient(id: string | number) {
 		queryFn: () => getPatient(id),
 	});
 }
+
+// -------- UPDATE
+
+export async function updatePatient({
+	prevData: { id, image: prevImage },
+	newData: { image, ...data },
+}: {
+	prevData: Patient;
+	newData: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
+		date_of_birth?: string;
+	};
+}) {
+	const response = await http.patch<Patient>(`/accounts/patient/${id}/`, data);
+	try {
+		if (image) {
+			if (prevImage)
+				await updateUserImage(prevImage.id, {
+					image: image,
+					user: response.data.user,
+				});
+			else await createUserImage({ image: image, user: response.data.user });
+		}
+	} catch {}
+	return response;
+}
+
+export function useUpdatePatient({
+	onSuccess,
+}: {
+	onSuccess?: (response: AxiosResponse<Patient>) => void;
+} = {}) {
+	const t = useTranslations();
+	return useMutation({
+		mutationFn: updatePatient,
+		onSuccess: (response) => {
+			notifySuccess({
+				title: "Patient was updated successfully",
+			});
+			onSuccess?.(response);
+		},
+		onError: (e) => {
+			const message = getErrorMessageSync(e, t);
+			notifyError({
+				title: "Couldn't update the patient",
+				message,
+			});
+		},
+	});
+}
+
+// -------- DELETE
 
 export async function deletePatient(id: string) {
 	return await http.delete(`/accounts/patient/${id}`);

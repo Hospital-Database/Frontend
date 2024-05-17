@@ -121,7 +121,8 @@
 		"weight": "Weight",
 		"height": "Height",
 		"speciality": "Speciality",
-		"current-visit": "Current visit"
+		"current-visit": "Current visit",
+		"cancel": "Cancel"
 	},
 	"Navbar": {
 		"zu-hospital": "ZU Hospital",
@@ -129,5 +130,16 @@
 		"patients": "Patients",
 		"add-patient": "Add patient",
 		"doctors": "Doctors"
+	},
+	"Patients": {
+		"dashboard": "Dashboard",
+		"patients": "Patients"
+	},
+	"Table": {
+		"error-loading-data": "Error loading data",
+		"export": "Export",
+		"export-all-rows": "Export All Rows",
+		"export-page-rows": "Export Page Rows",
+		"export-selected-rows": "Export Selected Rows"
 	}
 }

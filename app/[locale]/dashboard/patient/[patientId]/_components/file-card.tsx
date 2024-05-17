@@ -77,7 +77,7 @@ export default function AttachmentCard({
 				</Title>
 				<Group justify="end">
 					<Button variant="default" onClick={() => setIsDeleting(false)}>
-						Cancel
+						{t("cancel")}
 					</Button>
 					<Button
 						color="red"

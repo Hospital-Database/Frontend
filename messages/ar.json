@@ -121,7 +121,8 @@
 		"ticket": "تذكرة",
 		"visit-number": "رقم الزيارة",
 		"weight": "الوزن",
-		"current-visit": "الزيارة الحالية"
+		"current-visit": "الزيارة الحالية",
+		"cancel": "يلغي"
 	},
 	"Navbar": {
 		"zu-hospital": "مستشفى الزقازيق",
@@ -129,5 +130,19 @@
 		"dashboard": "لوحة الادمن",
 		"doctors": "الأطباء",
 		"patients": "المرضي"
-	}
+	},
+	"Patients": {
+		"patients": "المرضى",
+		"dashboard": "لوحة القيادة"
+	},
+	"Table": {
+		"error-loading-data": "حدث خطأ أثناء تحميل البيانات",
+		"export": "يصدّر",
+		"export-all-rows": "تصدير كافة الصفوف",
+		"export-page-rows": "تصدير صفوف الصفحة",
+		"export-selected-rows": "تصدير الصفوف المحددة"
+	},
+	"error-loading-data": "حدث خطأ أثناء تحميل البيانات",
+	"export": "يصدّر",
+	"export-all-rows": "تصدير كافة الصفوف"
 }

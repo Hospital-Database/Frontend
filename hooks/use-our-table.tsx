@@ -91,7 +91,8 @@ export default function useOurTable<TData extends MRT_RowData>(
 		columns: OurTableColumnDef<TData>[];
 	},
 ) {
-	const t = useTranslations();
+	const t = useTranslations("Table");
+	const $t = useTranslations();
 	const tempId = useId();
 
 	const id = useMemo(() => {
@@ -151,7 +152,7 @@ export default function useOurTable<TData extends MRT_RowData>(
 							color: "red",
 							children: (
 								<>
-									<p>Error loading data</p>
+									<p>{t("error-loading-data")}</p>
 									<p>{error?.toString()}</p>
 								</>
 							),
@@ -171,7 +172,7 @@ export default function useOurTable<TData extends MRT_RowData>(
 									variant="subtle"
 									c="white"
 								>
-									Export
+									{t("export")}
 								</Button>
 							</Menu.Target>
 							<Menu.Dropdown>
@@ -197,7 +198,7 @@ export default function useOurTable<TData extends MRT_RowData>(
 												),
 											);
 										} catch (e) {
-											const message = getErrorMessageSync(e, t);
+											const message = getErrorMessageSync(e, $t);
 											notifyError({
 												title: "Couldn't export all the rows",
 												message,
@@ -207,7 +208,7 @@ export default function useOurTable<TData extends MRT_RowData>(
 									}}
 									leftSection={<IconDownload />}
 								>
-									Export All Rows
+									{t("export-all-rows")}
 								</Menu.Item>
 								<Menu.Item
 									disabled={table.getRowModel().rows.length === 0}
@@ -223,7 +224,7 @@ export default function useOurTable<TData extends MRT_RowData>(
 									}
 									leftSection={<IconDownload />}
 								>
-									Export Page Rows
+									{t("export-page-rows")}
 								</Menu.Item>
 								<Menu.Item
 									disabled={
@@ -242,7 +243,7 @@ export default function useOurTable<TData extends MRT_RowData>(
 									}
 									leftSection={<IconDownload />}
 								>
-									Export Selected Rows
+									{t("export-selected-rows")}
 								</Menu.Item>
 							</Menu.Dropdown>
 						</Menu>

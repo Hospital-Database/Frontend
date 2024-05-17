@@ -1,5 +1,4 @@
 "use client";
-
 import "@mantine/charts/styles.css";
 
 import { useVisits } from "@/api/visits";

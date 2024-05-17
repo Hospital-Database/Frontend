@@ -1,4 +1,5 @@
 "use client";
+
 import type { patientSchema } from "@/api/patients";
 import AddressField from "@/components/address-field/address-field";
 import { Group, Radio, Select, TextInput, Textarea } from "@mantine/core";
@@ -34,7 +35,7 @@ export default function AdditionalContent({
 				{...form.getInputProps("martial_status")}
 				label={t("material-status")}
 				placeholder={t("choose-your-material-status")}
-				data={[t("finished"), t("single")]}
+				data={[t("maried"), t("single"), t("divorsed"), t("widowed")]}
 			/>
 			<AddressField form={form} />
 			<DatePickerInput

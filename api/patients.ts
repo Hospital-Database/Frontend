@@ -1,3 +1,4 @@
+"use client";
 import type { FetchOptions } from "@/hooks/use-our-table";
 import { http } from "@/lib/axios";
 import { getErrorMessageSync } from "@/lib/err-msg";
@@ -9,6 +10,7 @@ import type { AxiosResponse } from "axios";
 import { useTranslations } from "next-intl";
 import * as z from "zod";
 import { imageSchema } from "./common";
+import { createUserImage, updateUserImage } from "./users";
 
 export const patientSchema = z.object({
 	national_id: z.string().min(14).max(14),
@@ -33,12 +35,18 @@ export const patientSchema = z.object({
 
 // -------- CREATE
 
-export async function createPatient(
-	data: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
-		date_of_birth?: string;
-	},
-) {
-	return await http.post<Patient>("/accounts/patient/", data);
+export async function createPatient({
+	image,
+	...data
+}: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
+	date_of_birth?: string;
+}) {
+	const response = await http.post<Patient>("/accounts/patient/", data);
+	try {
+		if (image)
+			await createUserImage({ image: image, user: response.data.user });
+	} catch {}
+	return response;
 }
 
 export function useCreatePatient({
@@ -98,6 +106,15 @@ export async function getPatientByNationalId(nationalId: string) {
 	return results[0];
 }
 
+export async function getDeletedPatients(options: FetchOptions) {
+	const params = getTableSearchParams(options);
+	return await http
+		.get<{ count: number; results: Patient[] }>("/accounts/patient/deleted/", {
+			params,
+		})
+		.then((res) => res.data);
+}
+
 export function usePatients(options: FetchOptions) {
 	const params = getTableSearchParams(options);
 	return useQuery({
@@ -110,5 +127,79 @@ export function usePatient(id: string | number) {
 	return useQuery({
 		queryKey: ["patient", id],
 		queryFn: () => getPatient(id),
+	});
+}
+
+// -------- UPDATE
+
+export async function updatePatient({
+	prevData: { id, image: prevImage },
+	newData: { image, ...data },
+}: {
+	prevData: Patient;
+	newData: Omit<z.infer<typeof patientSchema>, "date_of_birth"> & {
+		date_of_birth?: string;
+	};
+}) {
+	const response = await http.patch<Patient>(`/accounts/patient/${id}/`, data);
+	try {
+		if (image) {
+			if (prevImage)
+				await updateUserImage(prevImage.id, {
+					image: image,
+					user: response.data.user,
+				});
+			else await createUserImage({ image: image, user: response.data.user });
+		}
+	} catch {}
+	return response;
+}
+
+export function useUpdatePatient({
+	onSuccess,
+}: {
+	onSuccess?: (response: AxiosResponse<Patient>) => void;
+} = {}) {
+	const t = useTranslations();
+	return useMutation({
+		mutationFn: updatePatient,
+		onSuccess: (response) => {
+			notifySuccess({
+				title: "Patient was updated successfully",
+			});
+			onSuccess?.(response);
+		},
+		onError: (e) => {
+			const message = getErrorMessageSync(e, t);
+			notifyError({
+				title: "Couldn't update the patient",
+				message,
+			});
+		},
+	});
+}
+
+// -------- DELETE
+
+export async function deletePatient(id: string) {
+	return await http.delete(`/accounts/patient/${id}`);
+}
+
+export function useDeletePatient(
+	onSuccess?: (response: AxiosResponse<Patient>) => void,
+) {
+	return useMutation({
+		mutationFn: deletePatient,
+		onSuccess: (response) => {
+			notifySuccess({
+				title: "Patient was deleted successfully",
+			});
+			onSuccess?.(response);
+		},
+		onError: () => {
+			notifyError({
+				title: "patient can't deleted",
+			});
+		},
 	});
 }

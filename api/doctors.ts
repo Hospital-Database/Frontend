@@ -12,15 +12,27 @@ import { z } from "zod";
 export const doctorSchema = z.object({
 	full_name: z.string().min(2),
 	national_id: z.string().regex(/^\d{14}$/, "National ID must be 14 digits"),
-	gender: z.literal("female").or(z.literal("male")).optional(),
+	email: z.preprocess((val) => val || undefined, z.string().optional()),
 	speciality: z.string().min(2),
-	license_number: z.string().optional(),
-	experience_years: z.number().optional(),
-	work_days: z.string().optional(),
-	email: z.string().optional(),
-	marital_status: z.string().optional(),
 	nationality: z.string().min(3),
-	notes: z.string().optional(),
+	gender: z.preprocess(
+		(val) => val || undefined,
+		z.literal("female").or(z.literal("male")).optional(),
+	),
+	license_number: z.preprocess(
+		(val) => val || undefined,
+		z.string().optional(),
+	),
+	experience_years: z.preprocess(
+		(val) => val || undefined,
+		z.number().optional(),
+	),
+	work_days: z.preprocess((val) => val || undefined, z.string().optional()),
+	marital_status: z.preprocess(
+		(val) => val || undefined,
+		z.string().optional(),
+	),
+	notes: z.preprocess((val) => val || undefined, z.string().optional()),
 	address: z
 		.object({
 			street: z.string().optional(),
@@ -28,13 +40,17 @@ export const doctorSchema = z.object({
 			governorate: z.string().optional(),
 		})
 		.optional(),
+	// TODO: fix the form to make the phone optional
 	phone: z
 		.object({
-			mobile: z.string().optional(),
+			mobile: z.preprocess(
+				(val) => val || undefined,
+				z.string().min(3).optional(),
+			),
 		})
 		.optional(),
 	/** date in ISO format */
-	date_of_birth: z.date().optional(),
+	date_of_birth: z.preprocess((val) => val || undefined, z.date().optional()),
 });
 
 // -------- CREATE
@@ -82,6 +98,15 @@ export async function getDoctors(options: FetchOptions) {
 		.then((res) => res.data);
 }
 
+export async function getDeletedDoctors(options: FetchOptions) {
+	const params = getTableSearchParams(options);
+	return await http
+		.get<{ count: number; results: Doctor[] }>("/accounts/doctor/deleted/", {
+			params,
+		})
+		.then((res) => res.data);
+}
+
 export function useDoctors(options: FetchOptions) {
 	return useQuery({
 		queryKey: ["doctors", options],
@@ -118,6 +143,71 @@ export function useUpdateDoctor({
 			const message = getErrorMessageSync(e, t);
 			notifyError({
 				title: "Couldn't update the doctor",
+				message,
+			});
+		},
+	});
+}
+
+// -------- DELETE
+
+export async function deleteDoctor(
+	id: string,
+	method: "soft" | "hard" = "soft",
+) {
+	return await http.delete(`/accounts/doctor/${id}/`, {
+		params: {
+			method,
+		},
+	});
+}
+
+export function useDeleteDoctor({
+	onSuccess,
+}: {
+	onSuccess?: () => void;
+} = {}) {
+	const t = useTranslations();
+	return useMutation({
+		mutationFn: deleteDoctor,
+		onSuccess: () => {
+			notifySuccess({
+				title: "Doctor was deleted successfully",
+			});
+			onSuccess?.();
+		},
+		onError: (e) => {
+			const message = getErrorMessageSync(e, t);
+			notifyError({
+				title: "Couldn't delete the doctor",
+				message,
+			});
+		},
+	});
+}
+
+export async function restoreDoctor(id: string) {
+	return await http.post(`/accounts/deleted-doctor/restore/${id}/`);
+}
+
+export function useRestoreDoctor({
+	onSuccess,
+}: {
+	onSuccess?: () => void;
+} = {}) {
+	const t = useTranslations();
+	return useMutation({
+		mutationFn: restoreDoctor,
+		onSuccess: () => {
+			notifySuccess({
+				title: "Doctor was restored successfully",
+			});
+			onSuccess?.();
+		},
+		onError: (e) => {
+			const message = getErrorMessageSync(e, t);
+			notifyError({
+				title: "Couldn't restore the doctor",
 				message,
 			});
 		},

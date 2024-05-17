@@ -11,12 +11,18 @@ export const Routes = makeRoutes(
 			home: makeRoute("/"),
 			login: makeRoute("/login", { type: "public" }),
 			dashboard: makeRoute("/dashboard", {
-				type: "admin-only",
+				type: "private",
 			}),
-			patient: makeRoute("/dashboard/patient/:id", {
-				type: "admin-only",
+			editPatient: makeRoute("/dashboard/patient/:patientId/edit", {
+				type: "private",
 				params: z.object({
-					id: z.string().regex(/^\d+$/, "Invalid patient ID").or(z.number()),
+					patientId: z.string().uuid(),
+				}),
+			}),
+			patient: makeRoute("/dashboard/patient/:patientId", {
+				type: "private",
+				params: z.object({
+					patientId: z.string().uuid(),
 				}),
 			}),
 		};

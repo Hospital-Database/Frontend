@@ -13,7 +13,7 @@
 		"complete-the-main-details-of-the-patient": "Complete the main details of the patient",
 		"save": "Save",
 		"save-and-start-visit": "Save and start visit",
-		"national-id-must-be-14-digits": "National ID must be 14 digits",
+		"national-id-must-be-14-digits": "National ID must be at most 14 digits",
 		"user-is-already-exist": "User is already exist",
 		"new-national-id": "This national ID is new",
 		"see-details": "See details",
@@ -38,7 +38,12 @@
 		"governorate": "Governorate",
 		"other-details": "Other details",
 		"additional-details-you-can-complete-later": "Additional details, you can complete later",
-		"national-id": "National ID"
+		"national-id": "National ID",
+		"national-id-at-least-14-digits": "National id at least 14 digits",
+		"edit-patient": "Edit patient",
+		"maried": "Maried",
+		"widowed": "Widowed",
+		"divorsed": "Divorced"
 	},
 	"Login": {
 		"usernam-error-message": "Invalid username, it must only contains letters, numbers, _, or - but not at the beggining or at the end",
@@ -46,6 +51,7 @@
 		"login": "Login",
 		"username": "Username",
 		"username-placeholder": "user-xyz",
-		"national-id": "National ID"
+		"national-id": "National ID",
+		"national-id-placeholder": "01234567891011"
 	}
 }

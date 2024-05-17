@@ -13,7 +13,7 @@
 		"complete-the-main-details-of-the-patient": "أكمل التفاصيل الرئيسية للمريض",
 		"save-and-start-visit": "احفظ وابدأ الزيارة",
 		"save": "يحفظ",
-		"national-id-must-be-14-digits": "يجب أن تتكون الهوية الوطنية من 14 رقمًا",
+		"national-id-must-be-14-digits": "يجب أن تتكون بطاقة الهوية الوطنية من 14 رقمًا على الأكثر",
 		"user-is-already-exist": "المستخدم موجود بالفعل",
 		"see-details": "انظر للتفاصيل",
 		"full-name": "الاسم الكامل",
@@ -38,7 +38,9 @@
 		"other-details": "تفاصيل أخرى",
 		"additional-details-you-can-complete-later": "تفاصيل إضافية، يمكنك إكمالها لاحقًا",
 		"national-id": "الهوية الوطنية",
-		"new-national-id": "هذا الرقم القومي جديد"
+		"new-national-id": "هذا الرقم القومي جديد",
+		"national-id-at-least-14-digits": "",
+		"national-id-at-least-14-digits-0": "المعرف الوطني مكون من 14 رقمًا على الأقل"
 	},
 	"Login": {
 		"login": "تسجيل الدخول",

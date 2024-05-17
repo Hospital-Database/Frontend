@@ -9,7 +9,6 @@ import { FilesDropzone } from "./files-dropzone";
 
 export default function PatientDocuments({ patient }: { patient: Patient }) {
 	const attachments = useAttachments({
-		// fetch all
 		pagination: {
 			pageIndex: 0,
 			pageSize: 1e8,

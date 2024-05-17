@@ -14,14 +14,18 @@ export default function middleware(req: NextRequest) {
 	const accessToken = accessTokenCookie.get();
 	const pathname = req.nextUrl.pathname;
 
-	if (!accessToken && !checkRouteType(pathname, "auth")) {
+	if (
+		!accessToken &&
+		!checkRouteType(pathname, "auth") &&
+		!Routes.home.doesMatch(pathname)
+	) {
 		if (Routes.home.doesMatch(pathname)) {
-			return NextResponse.redirect(new URL("/login", req.url));
+			return NextResponse.redirect(new URL(Routes.login(), req.url));
 		}
 	}
 
-	if (Routes.home.doesMatch(pathname)) {
-		return NextResponse.redirect(new URL("/dashboard", req.url));
+	if (accessToken && Routes.home.doesMatch(pathname)) {
+		return NextResponse.redirect(new URL(Routes.dashboard(), req.url));
 	}
 
 	return intlMiddleware(req);

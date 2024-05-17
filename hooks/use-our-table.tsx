@@ -26,6 +26,7 @@ export type UseTableOptions<TData extends MRT_RowData> =
 			data?: TData[];
 			initialFilters?: MRT_ColumnFiltersState;
 			tableOptions?: Partial<MRT_TableOptions<TData>>;
+			deleted?: boolean;
 	  }
 	| undefined;
 
@@ -52,10 +53,12 @@ export default function useOurTable<TData extends MRT_RowData>(
 	{
 		id: idProp,
 		manual = true,
+		deleted,
 		fetchData,
 		initialFilters,
 	}: {
 		id?: string;
+		deleted?: boolean;
 		manual?: boolean;
 		initialFilters?: MRT_ColumnFiltersState;
 		fetchData: (fetchOptions: FetchOptions) => Promise<{
@@ -104,7 +107,10 @@ export default function useOurTable<TData extends MRT_RowData>(
 
 	//call our custom react-query hook
 	const { data, isError, isFetching, isLoading, refetch, error } = useQuery({
-		queryKey: [id, getTableSearchParams(fetchOptions).toString()],
+		queryKey: [
+			deleted ? `${id}-deleted` : id,
+			getTableSearchParams(fetchOptions).toString(),
+		],
 		queryFn: () => fetchData(fetchOptions),
 	});
 

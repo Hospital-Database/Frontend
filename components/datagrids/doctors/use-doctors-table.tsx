@@ -1,4 +1,4 @@
-import { getDoctors } from "@/api/doctors";
+import { getDeletedDoctors, getDoctors } from "@/api/doctors";
 import type { Doctor } from "@/lib/types";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css"; //if using mantine date picker features
@@ -13,6 +13,7 @@ export default function useDoctorsTable({
 	data,
 	initialFilters,
 	tableOptions,
+	deleted,
 }: UseTableOptions<Doctor> = {}) {
 	const columns = useMemo<MRT_ColumnDef<Doctor>[]>(
 		() => [
@@ -43,9 +44,12 @@ export default function useDoctorsTable({
 	return useOurTable(
 		{
 			id: "doctors",
+			deleted,
 			fetchData: data
 				? () => Promise.resolve({ count: data.length, results: data })
-				: getDoctors,
+				: deleted
+					? getDeletedDoctors
+					: getDoctors,
 			initialFilters,
 			manual: !!data,
 		},

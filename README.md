@@ -36,7 +36,6 @@ Mantine docs recommended adding this to `.vscode/settings.json` file:
 
 ## General Links
 
-- [Figma](https://www.figma.com/file/uxb11MLYQ1fNDeGFOt7w6F/ZU-Hospital?type=design&mode=design&t=5kIZTGtOXSifi3yg-0)
 - [tldraw](https://www.tldraw.com/v/yjshwRT1in9ukWbv7p6zt?v=-5354,296,4471,2363&p=page)
 - [API Docs](https://zhospital.azurewebsites.net/swagger/)
 
@@ -85,9 +84,10 @@ Mantine docs recommended adding this to `.vscode/settings.json` file:
 
 ### Theme & Translation
 
-- The main task here is to make sure all page implemented translation and dark/light modes correctly.
+- The main task here is to make sure all pages implement translation and dark/light modes correctly.
 - We used [**Mantine**](https://mantine.dev/) library for the UI components.
-- We used VSCode [**i18n-ally**](https://github.com/lokalise/i18n-ally) extension for the translation.
+- We used VSCode [**i18n-ally**](https://github.com/lokalise/i18n-ally) extension to easily translate and extract text.
+- `next-intl` library is used with Next.js and configured to support `ar` and `en` locales.
 
 ### Table component
 

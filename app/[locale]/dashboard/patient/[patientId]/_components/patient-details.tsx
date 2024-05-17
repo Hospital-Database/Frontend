@@ -5,6 +5,7 @@ import type { PatientVerbose } from "@/lib/types";
 import { formatAddress } from "@/lib/utils";
 import { Box, Title } from "@mantine/core";
 import { useFormatter } from "next-intl";
+import { useTranslations } from "next-intl";
 
 export default function PatientDetails({
 	patient,
@@ -13,36 +14,37 @@ export default function PatientDetails({
 	const age = formatter.relativeTime(new Date(patient.date_of_birth), {
 		unit: "year",
 	});
+	const t = useTranslations("Patient");
 	return (
 		<>
 			<Box mt="md">
 				<Title component={"h2"} mb="md">
-					Details
+					{t("details")}
 				</Title>
 				<DetailsCard
 					details={[
-						{ title: "Name", value: patient.full_name },
-						{ title: "National ID", value: patient.national_id },
+						{ title: t("name"), value: patient.full_name },
+						{ title: t("national-id"), value: patient.national_id },
 						{
-							title: "Date of birth",
+							title: t("date-of-birth"),
 							value: formatter.dateTime(new Date(patient.date_of_birth)),
 						},
-						{ title: "Age", value: age },
-						{ title: "Gender", value: patient.gender },
-						{ title: "Address", value: formatAddress(patient.address) },
-						{ title: "Phone number", value: patient.phone?.mobile },
+						{ title: t("age"), value: age },
+						{ title: t("gender"), value: patient.gender },
+						{ title: t("address"), value: formatAddress(patient.address) },
+						{ title: t("phone-number"), value: patient.phone?.mobile },
 					]}
 				/>
 			</Box>
 			<Box mt="xl">
 				<Title component={"h2"} mb="md">
-					Visits
+					{t("visits")}
 				</Title>
 				<VisitsTable />
 			</Box>
 			<Box mt="xl">
 				<Title component={"h2"} mb="md">
-					Doctors
+					{t("doctors")}
 				</Title>
 				{/* TODO: display data */}
 				<DoctorsTable data={patient.doctors} />

@@ -12,6 +12,7 @@ import type {
 } from "@/lib/types";
 import { AreaChart } from "@mantine/charts";
 import { Box, Title } from "@mantine/core";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
 const colors = [
@@ -65,6 +66,7 @@ function fixMeasurements(m: ExtractedMeasurement[]) {
 }
 
 export default function PatientMeasurements({ patient }: { patient: Patient }) {
+	const t = useTranslations("Patient");
 	const visitsQuery = useVisits({
 		columnFilters: [{ id: "patient", value: patient.id }],
 	});
@@ -77,7 +79,7 @@ export default function PatientMeasurements({ patient }: { patient: Patient }) {
 	return (
 		<Box>
 			<Title component={"h2"} mt="xl" mb="md">
-				Measurements
+				{t("measurements")}
 			</Title>
 			<MeasurementsTable
 				data={visitsQuery.data?.results.map((vis) => ({
@@ -86,7 +88,7 @@ export default function PatientMeasurements({ patient }: { patient: Patient }) {
 				}))}
 			/>
 			<Title component={"h2"} mt="xl" mb="md">
-				Charts
+				{t("charts")}
 			</Title>
 			<AreaChart
 				h={300}

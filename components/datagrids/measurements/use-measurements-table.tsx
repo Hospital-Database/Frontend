@@ -1,43 +1,45 @@
 import useOurTable, { type UseTableOptions } from "@/hooks/use-our-table";
 import type { Measurement } from "@/lib/types";
 import type { MRT_ColumnDef } from "mantine-react-table";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
 export default function useMeasurementsTable({
 	data,
 }: UseTableOptions<Measurement & { date: string }> = {}) {
+	const t = useTranslations("Patient");
 	const columns = useMemo<MRT_ColumnDef<Measurement & { date: string }>[]>(
 		() => [
 			{
 				accessorKey: "date",
-				header: "Date",
+				header: t("date"),
 			},
 			{
 				accessorKey: "blood_pressure",
-				header: "Blood pressure",
+				header: t("blood-pressure"),
 			},
 			{
 				accessorKey: "oxygen_level",
-				header: "Oxygen level",
+				header: t("oxygen-level"),
 			},
 			{
 				accessorKey: "pulse",
-				header: "Pulse",
+				header: t("pulse"),
 			},
 			{
 				accessorKey: "temperature",
-				header: "Temprature",
+				header: t("temprature"),
 			},
 			{
 				accessorKey: "weight",
-				header: "Weight",
+				header: t("weight"),
 			},
 			{
 				accessorKey: "height",
-				header: "Height",
+				header: t("height"),
 			},
 		],
-		[],
+		[t],
 	);
 
 	return useOurTable(

@@ -1,8 +1,10 @@
 import { Group, Text, rem } from "@mantine/core";
 import { Dropzone, type DropzoneProps } from "@mantine/dropzone";
 import { IconFileText, IconUpload, IconX } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 
 export function FilesDropzone(props: Omit<DropzoneProps, "maxSize">) {
+	const t = useTranslations("Patient");
 	return (
 		<Dropzone maxSize={10 * 1024 ** 2} {...props}>
 			<Group
@@ -44,10 +46,12 @@ export function FilesDropzone(props: Omit<DropzoneProps, "maxSize">) {
 
 				<div>
 					<Text size="xl" inline>
-						Drag files here or click to select files
+						{t("drag-files-here-or-click-to-select-files")}
 					</Text>
 					<Text size="sm" c="dimmed" inline mt={7}>
-						Attach as many files as you like, each file should not exceed 10mb
+						{t(
+							"attach-as-many-files-as-you-like-each-file-should-not-exceed-10mb",
+						)}
 					</Text>
 				</div>
 			</Group>

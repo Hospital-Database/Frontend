@@ -1,6 +1,8 @@
 "use client";
 
 import { useDeletePatient, usePatient } from "@/api/patients";
+import { useCreateVisit, type visitSchema } from "@/api/visits";
+import VisitForm from "@/components/forms/visits";
 import { useRouter } from "@/navigation";
 import { Routes } from "@/routes/routes";
 import {
@@ -17,6 +19,8 @@ import {
 } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import type { z } from "zod";
 import PatientImage from "./_components/patient-image";
 import PatientTabs from "./_components/patient-tabs";
 import VisitDetails from "./_components/visit-details";
@@ -52,7 +56,7 @@ export default function PatientPage({
 					</Stack>
 				</Group>
 				<Group gap={"md"}>
-					<ManageVisitButton />
+					<ManageVisitButton patientId={patientId} />
 					<OtherActions patientId={patientId} />
 				</Group>
 			</Group>
@@ -68,9 +72,27 @@ export default function PatientPage({
 	);
 }
 
-function ManageVisitButton() {
+function ManageVisitButton({ patientId }: { patientId: string }) {
+	const [formState, setFormState] = useState<"update" | "create">();
+	const [initialValues, _setInitialValues] =
+		useState<z.infer<typeof visitSchema>>();
 	const t = useTranslations("Patient");
-	return <Button>{t("start-visit")}</Button>;
+	const { mutate } = useCreateVisit();
+	return (
+		<Box>
+			<Button onClick={() => setFormState("create")}>{t("start-visit")}</Button>
+			<VisitForm
+				onSubmit={(data) => {
+					if (formState === "create")
+						return mutate({ ...data, patient: patientId });
+				}}
+				opened={!!formState}
+				onSuccess={() => setFormState(undefined)}
+				onClose={() => setFormState(undefined)}
+				initialValues={initialValues}
+			/>
+		</Box>
+	);
 }
 
 function OtherActions({ patientId }: { patientId: string }) {

@@ -141,5 +141,11 @@
 		"export-all-rows": "Export All Rows",
 		"export-page-rows": "Export Page Rows",
 		"export-selected-rows": "Export Selected Rows"
+	},
+	"visit-is-created": "Visit is created",
+	"cant-create-visit": "can't create Visit",
+	"Visits": {
+		"visit-is-created": "visit is created",
+		"can-not-create-visit": "can not create visit"
 	}
 }

@@ -35,7 +35,6 @@ export default function PatientDocuments({ patient }: { patient: Patient }) {
 			{/**I tried to call onDrop here give me error
 			 *useMutation Render more than one time Error:
 			 * */}
-
 			<FilesDropzone patient={patient} />
 			<Group justify="end" mt="xl">
 				<TextInput

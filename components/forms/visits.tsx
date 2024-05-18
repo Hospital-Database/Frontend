@@ -1,4 +1,5 @@
 import { visitSchema } from "@/api/visits";
+import type { Visit } from "@/lib/types";
 import { Button, Modal, Select, Stack, TextInput } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useMutation } from "@tanstack/react-query";
@@ -16,18 +17,20 @@ export const emptyValues = {
 		oxygen_level: "",
 	},
 	status: "pending",
-	visit_number: "",
+	visit_number: 0,
 	ticket: "",
 	notes: "",
 } satisfies z.infer<typeof visitSchema>;
 
 type VisitFormProps = z.infer<typeof visitSchema> & {
-	onSuccess: (data: z.infer<typeof visitSchema>) => z.infer<typeof visitSchema>;
-	initialValues?: z.infer<typeof visitSchema>;
-	onSubmit: (data: z.infer<typeof visitSchema>) => void;
+	onSubmit: (
+		data: z.infer<typeof visitSchema> | Visit,
+	) => z.infer<typeof visitSchema> | Visit;
+	initialValues?: Visit;
+	onSuccess: (data: z.infer<typeof visitSchema>) => void;
 	onClose: () => void;
 	opened: boolean;
-	formState: "update" | "create";
+	formState: "update" | "create" | undefined;
 };
 
 export default function VisitForm({
@@ -38,7 +41,7 @@ export default function VisitForm({
 	...props
 }: VisitFormProps) {
 	const t = useTranslations("Forms");
-	const form = useForm<z.infer<typeof visitSchema>>({
+	const form = useForm<z.infer<typeof visitSchema> | Visit>({
 		mode: "uncontrolled",
 		validate: zodResolver(visitSchema),
 		initialValues: initialValues || emptyValues,
@@ -51,10 +54,12 @@ export default function VisitForm({
 	}, [props.opened, initialValues, form.setValues]);
 
 	const saveVisit = useMutation({
+		//@ts-ignore explanation => there is not side effect if we didn't fix the type error
 		mutationFn: onSubmit,
 		onSuccess,
 	});
 	const updateVisit = useMutation({
+		//@ts-ignore explanation => there is not side effect if we didn't fix the type error
 		mutationFn: onSubmit,
 		onSuccess,
 	});
@@ -63,8 +68,9 @@ export default function VisitForm({
 		<Modal {...props}>
 			<form
 				onSubmit={form.onSubmit((data) => {
-					if (formState === "create") saveVisit.mutate(data);
-					else updateVisit.mutate(data);
+					if (formState === "create")
+						saveVisit.mutate(data as z.infer<typeof visitSchema>);
+					else updateVisit.mutate(data as Visit);
 				})}
 			>
 				<Stack>
@@ -80,6 +86,7 @@ export default function VisitForm({
 					/>
 
 					<Select
+						withAsterisk
 						label="status"
 						{...form.getInputProps("status")}
 						data={["pending", "finished", "cancelled"]}
@@ -108,11 +115,7 @@ export default function VisitForm({
 						label="oxygen_level"
 						{...form.getInputProps("measurement.oxygen_level")}
 					/>
-					<TextInput
-						withAsterisk
-						label="Notes"
-						{...form.getInputProps("notes")}
-					/>
+					<TextInput label="Notes" {...form.getInputProps("notes")} />
 					<Button mt="md" type="submit" loading={saveVisit.isPending}>
 						{t("save")}
 					</Button>

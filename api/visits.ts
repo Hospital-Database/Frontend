@@ -9,20 +9,20 @@ import { z } from "zod";
 
 // -------- SCHEMA
 const measurementSchema = z.object({
-	height: z.string(),
-	weight: z.string(),
-	blood_pressure: z.string(),
-	temperature: z.string(),
-	pulse: z.string(),
-	oxygen_level: z.string(),
+	height: z.string().optional(),
+	weight: z.string().optional(),
+	blood_pressure: z.string().optional(),
+	temperature: z.string().optional(),
+	pulse: z.string().optional(),
+	oxygen_level: z.string().optional(),
 });
 
 export const visitSchema = z.object({
 	measurement: measurementSchema,
-	status: z.string(),
-	visit_number: z.string(),
+	visit_number: z.number(),
 	ticket: z.string(),
-	notes: z.string(),
+	status: z.string(),
+	notes: z.string().optional(),
 	patient: z.string().optional(),
 });
 
@@ -79,19 +79,19 @@ export function useUpdateVisit() {
 		},
 	});
 }
+
 // -------- DELETE
 export async function deleteVisit(options: { id: string; ticket: string }) {
-	console.log(options);
 	return http.delete(`/visit/visit/${options.id}`);
 }
+
 export function useDeleteVisit() {
 	return useMutation({
 		mutationFn: deleteVisit,
 		onSuccess: () => {
 			notifySuccess({ title: "Visit is delete Successfully" });
 		},
-		onError: (e) => {
-			console.log(e);
+		onError: () => {
 			notifyError({ title: "Visit can't delete" });
 		},
 	});

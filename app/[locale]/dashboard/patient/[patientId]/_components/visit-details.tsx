@@ -3,7 +3,7 @@
 import { useUpdateVisit, useVisits } from "@/api/visits";
 import DetailsCard from "@/components/details-card";
 import { formatElapsedTime } from "@/lib/datetime";
-import { useRouter } from "@/navigation";
+import type { Visit } from "@/lib/types";
 import { ActionIcon, Menu } from "@mantine/core";
 import { useFormatter, useNow, useTranslations } from "next-intl";
 
@@ -53,7 +53,6 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 }
 
 function VisitAction({ visitData }: { visitData: Visit }) {
-	const router = useRouter();
 	const deteteVisit = useDeleteVisit();
 	const updateVisit = useUpdateVisit();
 	const t = useTranslations("Patient");
@@ -68,14 +67,14 @@ function VisitAction({ visitData }: { visitData: Visit }) {
 				<Menu.Item
 					onClick={() => updateVisit.mutate({ ...visitData, status: "done" })}
 				>
-					End visit
+					{t("end-visit")}
 				</Menu.Item>
 				<Menu.Item
 					onClick={() =>
 						updateVisit.mutate({ ...visitData, status: "canceled" })
 					}
 				>
-					Cancel visit
+					{t("cancel-visit")}
 				</Menu.Item>
 				<Menu.Item
 					color="red"
@@ -83,7 +82,7 @@ function VisitAction({ visitData }: { visitData: Visit }) {
 						deteteVisit.mutate({ id: visitData.id, ticket: visitData.ticket });
 					}}
 				>
-					delete visit
+					{t("delete-visit")}
 				</Menu.Item>
 			</Menu.Dropdown>
 		</Menu>

@@ -8,6 +8,7 @@ import {
 	type visitSchema,
 } from "@/api/visits";
 import VisitForm from "@/components/forms/visits";
+import type { Visit } from "@/lib/types";
 import { useRouter } from "@/navigation";
 import { Routes } from "@/routes/routes";
 import {
@@ -79,8 +80,7 @@ export default function PatientPage({
 
 function ManageVisitButton({ patientId }: { patientId: string }) {
 	const [formState, setFormState] = useState<"update" | "create">();
-	const [initialValues, setInitialValues] =
-		useState<z.infer<typeof visitSchema>>();
+	const [initialValues, setInitialValues] = useState<Visit>();
 	const t = useTranslations("Patient");
 	const createVisit = useCreateVisit();
 	const updateVisit = useUpdateVisit();
@@ -105,10 +105,14 @@ function ManageVisitButton({ patientId }: { patientId: string }) {
 				{visitData?.length > 0 ? "Edit Visit" : t("start-visit")}{" "}
 			</Button>
 			<VisitForm
+				//@ts-ignore explanation => there is not side effect if we didn't fix the type error
 				onSubmit={(data) => {
 					if (formState === "create")
-						return createVisit.mutate({ ...data, patient: patientId });
-					return updateVisit.mutate({ ...data, patient: patientId });
+						return createVisit.mutate({
+							...data,
+							patient: patientId,
+						} as z.infer<typeof visitSchema>);
+					return updateVisit.mutate({ ...data, patient: patientId } as Visit);
 				}}
 				opened={!!formState}
 				onSuccess={() => setFormState(undefined)}

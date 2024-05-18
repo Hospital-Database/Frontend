@@ -71,12 +71,17 @@
 		"national-id": "National ID",
 		"nationality": "Nationality",
 		"phone": "Phone",
-		"add-doctor": "Add doctor"
+		"add-doctor": "Add doctor",
+		"deleted": "Deleted",
+		"current": "Current"
 	},
 	"Dashboard": {
 		"total-patients": "Total patients",
 		"total-employees": "Total Employees",
-		"total-doctors": "Total Doctors"
+		"total-doctors": "Total Doctors",
+		"active-visits": "Active visits",
+		"upcomming-visits": "Upcomming visits",
+		"missed-visits": "Missed visits"
 	},
 	"Patient": {
 		"no-file-name": "No file name",
@@ -125,7 +130,16 @@
 		"cancel": "Cancel",
 		"end-visit": "End Visit",
 		"cancel-visit": "Cancel visit",
-		"delete-visit": "delete visit"
+		"delete-visit": "delete visit",
+		"ends-at": "Ends at",
+		"notes": "Notes",
+		"no-active-visit": "No active visit",
+		"no-cancelled-visit": "No cancelled visit",
+		"no-finished-visit": "No finished visit",
+		"canceled": "Canceled",
+		"done": "Done",
+		"current": "Current",
+		"deleted": "Deleted"
 	},
 	"Navbar": {
 		"zu-hospital": "ZU Hospital",
@@ -153,6 +167,9 @@
 		"visit-is-updated": "visit-is-updated",
 		"can-not-update-visit": "can-not-update-visit"
 	},
-	"end-visit": "End visit",
-	"Visitscan-not-update-visit": "can-not-update-visit"
+	"export-all-rows": "Export all rows",
+	"export": "Export",
+	"error-loading-data": "Error when loading data",
+	"current": "Current",
+	"deleted": "Deleted"
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useUpdateVisit, useVisits } from "@/api/visits";
+import { useDeleteVisit } from "@/api/visits";
 import DetailsCard from "@/components/details-card";
 import { formatElapsedTime } from "@/lib/datetime";
 import type { Visit } from "@/lib/types";
@@ -13,10 +14,8 @@ import {
 	Stack,
 	Title,
 } from "@mantine/core";
-import { useFormatter, useNow, useTranslations } from "next-intl";
-
-import { useDeleteVisit } from "@/api/visits";
 import { IconDots } from "@tabler/icons-react";
+import { useFormatter, useLocale, useNow, useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
 
 export default function VisitDetails({ patientId }: { patientId: string }) {
@@ -47,12 +46,12 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 				<SegmentedControl
 					radius="xl"
 					data={[
-						{ value: "pending", label: "Current" },
+						{ value: "pending", label: t("current") },
 						{
 							value: "canceled",
-							label: "Canceled",
+							label: t("canceled"),
 						},
-						{ value: "done", label: "Done" },
+						{ value: "done", label: t("done") },
 					]}
 					onChange={(val) => {
 						setTab(val as tabType);
@@ -88,7 +87,7 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 								),
 							},
 							{
-								title: "Ends at",
+								title: t("ends-at"),
 								value: pendingVisit[0]?.end_at
 									? formatter.dateTime(new Date(pendingVisit[0]?.end_at), {
 											year: "numeric",
@@ -98,14 +97,14 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 									: "N/A",
 							},
 							{
-								title: "Notes",
+								title: t("notes"),
 								value: pendingVisit[0]?.notes || "N/A",
 							},
 						]}
 					/>
 				</Stack>
 			) : (
-				tab === "pending" && <NoVisit> No active visit </NoVisit>
+				tab === "pending" && <NoVisit> {t("no-active-visit")} </NoVisit>
 			)}
 			{canceledVisits.length > 0 && tab === "canceled" ? (
 				<>
@@ -130,7 +129,7 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 										}),
 									},
 									{
-										title: "Ends at",
+										title: t("ends-at"),
 										value: item.end_at
 											? formatter.dateTime(new Date(item.end_at), {
 													year: "numeric",
@@ -140,7 +139,7 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 											: "N/A",
 									},
 									{
-										title: "Notes",
+										title: t("notes"),
 										value: item?.notes || "N/A",
 									},
 								]}
@@ -149,7 +148,7 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 					))}
 				</>
 			) : (
-				tab === "canceled" && <NoVisit> No cancelled visit </NoVisit>
+				tab === "canceled" && <NoVisit> {t("no-cancelled-visit")} </NoVisit>
 			)}
 			{doneVisits.length > 0 && tab === "done" ? (
 				<>
@@ -174,7 +173,7 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 										}),
 									},
 									{
-										title: "Ends at",
+										title: t("ends-at"),
 										value: item?.end_at
 											? formatter.dateTime(new Date(item?.end_at), {
 													year: "numeric",
@@ -184,7 +183,7 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 											: "N/A",
 									},
 									{
-										title: "Notes",
+										title: t("notes"),
 										value: item?.notes || "N/A",
 									},
 								]}
@@ -193,7 +192,7 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 					))}
 				</>
 			) : (
-				tab === "done" && <NoVisit> No finished visit </NoVisit>
+				tab === "done" && <NoVisit> {t("no-finished-visit")} </NoVisit>
 			)}
 		</main>
 	);
@@ -329,5 +328,10 @@ function NoVisit({ children }: { children: ReactNode }) {
 	);
 }
 function ActionContainer({ children }: { children: ReactNode }) {
-	return <section className="absolute right-4">{children}</section>;
+	const locale = useLocale();
+	return (
+		<section className={`absolute ${locale === "en" ? "right-4" : "left-4"}`}>
+			{children}
+		</section>
+	);
 }

@@ -11,9 +11,9 @@ export interface Visit extends Entity {
 	measurement: Measurement;
 	attachment: Attachment[];
 	visit_number: number;
-	start_at: string;
-	end_at: string;
-	status: string;
+	start_at: null | string;
+	end_at: null | string;
+	status: null | "pending" | "done" | "canceled";
 	doctors: number[];
 	ticket: number;
 	notes: string;

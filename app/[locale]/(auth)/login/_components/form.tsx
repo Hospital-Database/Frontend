@@ -24,7 +24,7 @@ export default function LoginForm() {
 		mode: "uncontrolled",
 		validate: zodResolver(loginSchema),
 	});
-	const { mutate, error, isPending } = useSignIn();
+	const { mutate, error, isPending, isSuccess } = useSignIn();
 	return (
 		<form
 			className="space-y-7"
@@ -32,10 +32,8 @@ export default function LoginForm() {
 				mutate(loginInfo);
 			})}
 		>
-			{error?.response?.data.detail && (
-				<p className="text-red-600 text-center text-sm">
-					{error?.response?.data.detail}
-				</p>
+			{error?.detail && (
+				<p className="text-red-600 text-center text-sm">{error?.detail}</p>
 			)}
 			<div className="space-y-3">
 				<TextInput
@@ -50,7 +48,7 @@ export default function LoginForm() {
 					{...form.getInputProps("password")}
 				/>
 			</div>
-			<Button type="submit" className="w-full" loading={isPending}>
+			<Button type="submit" className="w-full" loading={isPending || isSuccess}>
 				{t("login")}
 			</Button>
 		</form>

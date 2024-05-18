@@ -40,13 +40,12 @@ export default function PatientDetails({
 				<Title component={"h2"} mb="md">
 					{t("visits")}
 				</Title>
-				<VisitsTable />
+				<VisitsTable initialFilters={[{ id: "patient", value: patient.id }]} />
 			</Box>
 			<Box mt="xl">
 				<Title component={"h2"} mb="md">
 					{t("doctors")}
 				</Title>
-				{/* TODO: display data */}
 				<DoctorsTable data={patient.doctors} />
 			</Box>
 		</>

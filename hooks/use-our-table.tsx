@@ -121,8 +121,6 @@ export default function useOurTable<TData extends MRT_RowData>(
 		pageSize: 10,
 	});
 
-	console.log(pagination);
-
 	const fetchOptions = {
 		columnFilterFns,
 		columnFilters,

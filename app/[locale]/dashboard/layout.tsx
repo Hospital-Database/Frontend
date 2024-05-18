@@ -1,7 +1,9 @@
 "use client";
 
 import Logout from "@/app/[locale]/_components/logout";
-import { Link } from "@/navigation";
+import { usePermissions } from "@/hooks/use-permissions";
+import { cn } from "@/lib/utils";
+import { Link, usePathname } from "@/navigation";
 import {
 	AppShell,
 	Burger,
@@ -30,6 +32,7 @@ export default function CollapseDesktop({
 	const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
 	const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
 	const t = useTranslations("Navbar");
+	const perms = usePermissions();
 	return (
 		<AppShell
 			header={{ height: 60 }}
@@ -78,15 +81,21 @@ export default function CollapseDesktop({
 				</Text>
 				<SearchField className="w-full md:hidden mt-4" />
 				<Stack gap={"md"} mt="md">
-					<NavLink href="/dashboard">
-						<IconDashboard /> {t("dashboard")}
-					</NavLink>
-					<NavLink href="/dashboard/patients">
-						<IconUser /> {t("patients")}
-					</NavLink>
-					<NavLink href="/dashboard/doctors">
-						<IconStethoscope /> {t("doctors")}
-					</NavLink>
+					{perms.dashboard.canSeeDashboard() && (
+						<NavLink href="/dashboard">
+							<IconDashboard /> {t("dashboard")}
+						</NavLink>
+					)}
+					{perms.patient.canSeePatient() && (
+						<NavLink href="/dashboard/patients">
+							<IconUser /> {t("patients")}
+						</NavLink>
+					)}
+					{perms.doctor.canSeeDoctors() && (
+						<NavLink href="/dashboard/doctors">
+							<IconStethoscope /> {t("doctors")}
+						</NavLink>
+					)}
 				</Stack>
 				<div className="md:hidden mt-4">
 					<Divider mb="md" />
@@ -106,10 +115,16 @@ function NavLink({
 	href,
 	children,
 }: { href: string; children: React.ReactNode }) {
+	const pathname = usePathname();
+	const active = pathname === href;
 	return (
 		<Link
 			href={href}
-			className="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900/70 dark:hover:bg-zinc-900 rounded"
+			aria-current={active ? "page" : undefined}
+			className={cn(
+				"px-4 py-2 bg-slate-100 border-s-4 border-transparent hover:bg-slate-200 dark:bg-zinc-900/70 dark:hover:bg-zinc-900 rounded",
+				active && "border-blue-600 font-bold",
+			)}
 		>
 			<Group>{children}</Group>
 		</Link>

@@ -19,7 +19,7 @@ const measurementSchema = z.object({
 
 export const visitSchema = z.object({
 	measurement: measurementSchema,
-	visit_number: z.number(),
+	visit_number: z.coerce.number(),
 	ticket: z.coerce.number(),
 	status: z.string(),
 	notes: z.string().optional(),

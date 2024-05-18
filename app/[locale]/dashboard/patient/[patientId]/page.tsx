@@ -1,7 +1,12 @@
 "use client";
 
 import { useDeletePatient, usePatient } from "@/api/patients";
-import { useCreateVisit, type visitSchema } from "@/api/visits";
+import {
+	useCreateVisit,
+	useUpdateVisit,
+	useVisits,
+	type visitSchema,
+} from "@/api/visits";
 import VisitForm from "@/components/forms/visits";
 import { useRouter } from "@/navigation";
 import { Routes } from "@/routes/routes";
@@ -19,7 +24,7 @@ import {
 } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { z } from "zod";
 import PatientImage from "./_components/patient-image";
 import PatientTabs from "./_components/patient-tabs";
@@ -74,22 +79,42 @@ export default function PatientPage({
 
 function ManageVisitButton({ patientId }: { patientId: string }) {
 	const [formState, setFormState] = useState<"update" | "create">();
-	const [initialValues, _setInitialValues] =
+	const [initialValues, setInitialValues] =
 		useState<z.infer<typeof visitSchema>>();
 	const t = useTranslations("Patient");
-	const { mutate } = useCreateVisit();
+	const createVisit = useCreateVisit();
+	const updateVisit = useUpdateVisit();
+
+	const { data } = useVisits({
+		columnFilters: [{ id: "patient", value: patientId }],
+	});
+	const visitData =
+		data?.results?.filter((item) => item.status === "pending") || [];
+	useEffect(() => {
+		setInitialValues(visitData?.[0]);
+	}, [visitData]);
+
 	return (
 		<Box>
-			<Button onClick={() => setFormState("create")}>{t("start-visit")}</Button>
+			<Button
+				onClick={() => {
+					if (visitData?.length > 0) setFormState("update");
+					else setFormState("create");
+				}}
+			>
+				{visitData?.length > 0 ? "Edit Visit" : t("start-visit")}{" "}
+			</Button>
 			<VisitForm
 				onSubmit={(data) => {
 					if (formState === "create")
-						return mutate({ ...data, patient: patientId });
+						return createVisit.mutate({ ...data, patient: patientId });
+					return updateVisit.mutate({ ...data, patient: patientId });
 				}}
 				opened={!!formState}
 				onSuccess={() => setFormState(undefined)}
 				onClose={() => setFormState(undefined)}
 				initialValues={initialValues}
+				formState={formState}
 			/>
 		</Box>
 	);

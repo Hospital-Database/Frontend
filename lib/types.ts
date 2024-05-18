@@ -17,6 +17,7 @@ export interface Visit extends Entity {
 	notes: string;
 	patient: number;
 	doctors: number[];
+	status: string;
 }
 
 export interface Measurement {

@@ -22,17 +22,19 @@ export const emptyValues = {
 } satisfies z.infer<typeof visitSchema>;
 
 type VisitFormProps = z.infer<typeof visitSchema> & {
-	onSuccess: () => void;
+	onSuccess: (data: z.infer<typeof visitSchema>) => z.infer<typeof visitSchema>;
 	initialValues?: z.infer<typeof visitSchema>;
 	onSubmit: (data: z.infer<typeof visitSchema>) => void;
 	onClose: () => void;
 	opened: boolean;
+	formState: "update" | "create";
 };
 
 export default function VisitForm({
 	onSuccess,
 	initialValues,
 	onSubmit,
+	formState,
 	...props
 }: VisitFormProps) {
 	const t = useTranslations("Forms");
@@ -52,12 +54,17 @@ export default function VisitForm({
 		mutationFn: onSubmit,
 		onSuccess,
 	});
+	const updateVisit = useMutation({
+		mutationFn: onSubmit,
+		onSuccess,
+	});
 
 	return (
 		<Modal {...props}>
 			<form
 				onSubmit={form.onSubmit((data) => {
-					saveVisit.mutate(data);
+					if (formState === "create") saveVisit.mutate(data);
+					else updateVisit.mutate(data);
 				})}
 			>
 				<Stack>

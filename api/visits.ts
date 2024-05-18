@@ -8,7 +8,6 @@ import { useTranslations } from "next-intl";
 import { z } from "zod";
 
 // -------- SCHEMA
-
 const measurementSchema = z.object({
 	height: z.string(),
 	weight: z.string(),
@@ -24,12 +23,12 @@ export const visitSchema = z.object({
 	visit_number: z.string(),
 	ticket: z.string(),
 	notes: z.string(),
-	patient: z.number().positive().int().optional(),
+	patient: z.string().optional(),
 });
 
 // -------- CREATE
 export async function createVisit(data: z.infer<typeof visitSchema>) {
-	return await http.post("/visit/visit/", data);
+	return await http.post("/visit/visit/", { ...data, start_at: new Date() });
 }
 export function useCreateVisit() {
 	const t = useTranslations("Visits");
@@ -64,5 +63,36 @@ export function useVisits(options: FetchOptions) {
 }
 
 // -------- UPDATE
+export async function updateVisit(data: Visit) {
+	return await http.put(`/visit/visit/${data.id}/`, data);
+}
 
+export function useUpdateVisit() {
+	const t = useTranslations("Visits");
+	return useMutation({
+		mutationFn: updateVisit,
+		onSuccess: () => {
+			notifySuccess({ title: t("visit-is-updated") });
+		},
+		onError: () => {
+			notifyError({ title: t("can-not-update-visit") });
+		},
+	});
+}
 // -------- DELETE
+export async function deleteVisit(options: { id: string; ticket: string }) {
+	console.log(options);
+	return http.delete(`/visit/visit/${options.id}`);
+}
+export function useDeleteVisit() {
+	return useMutation({
+		mutationFn: deleteVisit,
+		onSuccess: () => {
+			notifySuccess({ title: "Visit is delete Successfully" });
+		},
+		onError: (e) => {
+			console.log(e);
+			notifyError({ title: "Visit can't delete" });
+		},
+	});
+}

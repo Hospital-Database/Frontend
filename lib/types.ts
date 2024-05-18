@@ -15,18 +15,18 @@ export interface Visit extends Entity {
 	end_at: string;
 	status: string;
 	doctors: number[];
-	ticket: string;
+	ticket: number;
 	notes: string;
 	patient: string;
 }
 
 export interface Measurement {
-	height?: string;
-	weight?: string;
-	blood_pressure?: string;
-	temperature?: string;
-	pulse?: string;
-	oxygen_level?: string;
+	height?: number;
+	weight?: number;
+	blood_pressure?: number;
+	temperature?: number;
+	pulse?: number;
+	oxygen_level?: number;
 }
 
 export interface ExtractedMeasurement {

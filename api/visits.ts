@@ -9,18 +9,18 @@ import { z } from "zod";
 
 // -------- SCHEMA
 const measurementSchema = z.object({
-	height: z.string().optional(),
-	weight: z.string().optional(),
-	blood_pressure: z.string().optional(),
-	temperature: z.string().optional(),
-	pulse: z.string().optional(),
-	oxygen_level: z.string().optional(),
+	height: z.coerce.number().optional(),
+	weight: z.coerce.number().optional(),
+	blood_pressure: z.coerce.number().optional(),
+	temperature: z.coerce.number().optional(),
+	pulse: z.coerce.number().optional(),
+	oxygen_level: z.coerce.number().optional(),
 });
 
 export const visitSchema = z.object({
 	measurement: measurementSchema,
 	visit_number: z.number(),
-	ticket: z.string(),
+	ticket: z.coerce.number(),
 	status: z.string(),
 	notes: z.string().optional(),
 	patient: z.string().optional(),
@@ -81,7 +81,7 @@ export function useUpdateVisit() {
 }
 
 // -------- DELETE
-export async function deleteVisit(options: { id: string; ticket: string }) {
+export async function deleteVisit(options: { id: string; ticket: number }) {
 	return http.delete(`/visit/visit/${options.id}`);
 }
 

@@ -87,10 +87,10 @@ export default function DoctorsCRUDTable() {
 				<SegmentedControl
 					radius="xl"
 					data={[
-						{ value: "current", label: "Current" },
+						{ value: "current", label: t("current") },
 						{
 							value: "deleted",
-							label: "Deleted",
+							label: t("deleted"),
 						},
 					]}
 					onChange={(val) => {

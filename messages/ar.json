@@ -63,7 +63,10 @@
 	"Dashboard": {
 		"total-doctors": "مجموع الأطباء",
 		"total-employees": "عدد الموظفي",
-		"total-patients": "إجمالي المرضى"
+		"total-patients": "إجمالي المرضى",
+		"active-visits": "الزيارات النشطة",
+		"missed-visits": "الزيارات المفقودة",
+		"upcomming-visits": "الزيارات القادمة"
 	},
 	"Doctors": {
 		"dashboard": "لوحة القيادة",
@@ -76,7 +79,9 @@
 		"nationality": "جنسية",
 		"phone": "هاتف",
 		"speciality": "تخصص",
-		"add-doctor": "أضف طبيب"
+		"add-doctor": "أضف طبيب",
+		"current": "حاضِر",
+		"deleted": "تم الحذف"
 	},
 	"Patient": {
 		"are-you-sure-you-want-to-delete-this-file": "هل أنت متأكد أنك تريد حذف هذا الملف؟",
@@ -122,7 +127,19 @@
 		"visit-number": "رقم الزيارة",
 		"weight": "الوزن",
 		"current-visit": "الزيارة الحالية",
-		"cancel": "يلغي"
+		"cancel": "يلغي",
+		"cancel-visit": "إلغاء الزيارة",
+		"canceled": "ألغيت",
+		"current": "حاضِر",
+		"delete-visit": "حذف الزيارة",
+		"done": "منتهي",
+		"end-visit": "إنهاء الزيارة",
+		"ends-at": "ينتهي عند",
+		"no-active-visit": "لا توجد زيارة نشطة",
+		"no-cancelled-visit": "لا توجد زيارة ملغاة",
+		"no-finished-visit": "لا توجد زيارة نهائية",
+		"notes": "ملحوظات",
+		"deleted": "تم الحذف"
 	},
 	"Navbar": {
 		"zu-hospital": "مستشفى الزقازيق",
@@ -144,5 +161,14 @@
 	},
 	"error-loading-data": "حدث خطأ أثناء تحميل البيانات",
 	"export": "يصدّر",
-	"export-all-rows": "تصدير كافة الصفوف"
+	"export-all-rows": "تصدير كافة الصفوف",
+	"Visits": {
+		"can-not-create-visit": "لا يمكن إنشاء الزيارة",
+		"can-not-update-visit": "لا يمكن تحديث الزيارة",
+		"visit-is-created": "يتم إنشاء الزيارة",
+		"visit-is-updated": "تم تحديث الزيارة"
+	},
+	"cant-create-visit": "لا يمكن إنشاء زيارة",
+	"visit-is-created": "يتم إنشاء الزيارة",
+	"current": "حاضِر"
 }

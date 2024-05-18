@@ -16,6 +16,7 @@ import {
 	Title,
 } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import PatientImage from "./_components/patient-image";
 import PatientTabs from "./_components/patient-tabs";
 import VisitDetails from "./_components/visit-details";
@@ -23,6 +24,7 @@ import VisitDetails from "./_components/visit-details";
 export default function PatientPage({
 	params: { patientId },
 }: { params: { patientId: string } }) {
+	const t = useTranslations("Patient");
 	const query = usePatient(patientId);
 	if (query.isLoading)
 		return (
@@ -31,7 +33,8 @@ export default function PatientPage({
 			</Group>
 		);
 	const patient = query.data;
-	if (query.isError || !patient) return <div>Error fetching the patient</div>;
+	if (query.isError || !patient)
+		return <div>{t("error-fetching-the-patient")}</div>;
 	return (
 		<>
 			<Group mt="md" align="start" justify="space-between">
@@ -42,8 +45,8 @@ export default function PatientPage({
 					<Stack>
 						<Title component={"h1"}>{patient.full_name}</Title>
 						<Breadcrumbs>
-							<Anchor href={"/dashboard"}>Dashboard</Anchor>
-							<Anchor href={"/dashboard/patients"}>Patients</Anchor>
+							<Anchor href={"/dashboard"}>{t("dashboard")}</Anchor>
+							<Anchor href={"/dashboard/patients"}>{t("patients")}</Anchor>
 							<span>{patient.full_name}</span>
 						</Breadcrumbs>
 					</Stack>
@@ -66,7 +69,8 @@ export default function PatientPage({
 }
 
 function ManageVisitButton() {
-	return <Button>Start visit</Button>;
+	const t = useTranslations("Patient");
+	return <Button>{t("start-visit")}</Button>;
 }
 
 function OtherActions({ patientId }: { patientId: string }) {
@@ -74,6 +78,7 @@ function OtherActions({ patientId }: { patientId: string }) {
 	const { mutate } = useDeletePatient(() => {
 		router.push("/dashboard/patients");
 	});
+	const t = useTranslations("Patient");
 	return (
 		<Menu>
 			<Menu.Target>
@@ -85,7 +90,7 @@ function OtherActions({ patientId }: { patientId: string }) {
 				<Menu.Item
 					onClick={() => router.push(Routes.editPatient({ patientId }))}
 				>
-					Edit
+					{t("edit")}
 				</Menu.Item>
 				<Menu.Item
 					color="red"
@@ -93,7 +98,7 @@ function OtherActions({ patientId }: { patientId: string }) {
 						mutate(patientId);
 					}}
 				>
-					Delete
+					{t("delete")}
 				</Menu.Item>
 			</Menu.Dropdown>
 		</Menu>

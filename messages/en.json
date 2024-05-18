@@ -43,7 +43,13 @@
 		"edit-patient": "Edit patient",
 		"maried": "Maried",
 		"widowed": "Widowed",
-		"divorsed": "Divorced"
+		"divorsed": "Divorced",
+		"error-fetching-the-patient": "Error fetching the patient",
+		"speciality": "Speciality",
+		"nationality": "Nationality",
+		"email": "Email",
+		"national-id-at-least-14-digits-0": "National ID",
+		"logout": "Logout"
 	},
 	"Login": {
 		"usernam-error-message": "Invalid username, it must only contains letters, numbers, _, or - but not at the beggining or at the end",
@@ -53,5 +59,87 @@
 		"username-placeholder": "user-xyz",
 		"national-id": "National ID",
 		"national-id-placeholder": "01234567891011"
+	},
+	"Doctors": {
+		"doctors": "Doctors",
+		"dashboard": "Dashboard",
+		"no-file-name": "No file name",
+		"download": "Download",
+		"delete": "Delete",
+		"full-name": "Full name",
+		"speciality": "Speciality",
+		"national-id": "National ID",
+		"nationality": "Nationality",
+		"phone": "Phone",
+		"add-doctor": "Add doctor"
+	},
+	"Dashboard": {
+		"total-patients": "Total patients",
+		"total-employees": "Total Employees",
+		"total-doctors": "Total Doctors"
+	},
+	"Patient": {
+		"no-file-name": "No file name",
+		"download": "Download",
+		"delete": "Delete",
+		"are-you-sure-you-want-to-delete-this-file": "Are you sure you want to delete this file?",
+		"drag-files-here-or-click-to-select-files": "Drag files here or click to select files",
+		"attach-as-many-files-as-you-like-each-file-should-not-exceed-10mb": "Attach as many files as you like, each file should not exceed 10mb",
+		"details": "Details",
+		"visits": "Visits",
+		"doctors": "Doctors",
+		"error-fetching-attachments": "Error fetching attachments",
+		"no-attachments-found": "No attachments found",
+		"attached-documents": "Attached Documents",
+		"measurements": "Measurements",
+		"charts": "Charts",
+		"documents": "Documents",
+		"name": "Name",
+		"national-id": "National ID",
+		"date-of-birth": "Date of birth",
+		"age": "Age",
+		"gender": "Gender",
+		"address": "Address",
+		"phone-number": "Phone number",
+		"ticket": "Ticket",
+		"duration": "Duration",
+		"started-at": "Started at",
+		"error-fetching-the-patient": "Error fetching the patient",
+		"dashboard": "Dashboard",
+		"patients": "Patients",
+		"start-visit": "Start visit",
+		"edit": "Edit",
+		"visit-number": "Visit number",
+		"full-name": "Full name",
+		"phone": "Phone",
+		"martial-status": "Martial status",
+		"date": "Date",
+		"blood-pressure": "Blood pressure",
+		"oxygen-level": "Oxygen level",
+		"pulse": "Pulse",
+		"temprature": "Temprature",
+		"weight": "Weight",
+		"height": "Height",
+		"speciality": "Speciality",
+		"current-visit": "Current visit",
+		"cancel": "Cancel"
+	},
+	"Navbar": {
+		"zu-hospital": "ZU Hospital",
+		"dashboard": "Dashboard",
+		"patients": "Patients",
+		"add-patient": "Add patient",
+		"doctors": "Doctors"
+	},
+	"Patients": {
+		"dashboard": "Dashboard",
+		"patients": "Patients"
+	},
+	"Table": {
+		"error-loading-data": "Error loading data",
+		"export": "Export",
+		"export-all-rows": "Export All Rows",
+		"export-page-rows": "Export Page Rows",
+		"export-selected-rows": "Export Selected Rows"
 	}
 }

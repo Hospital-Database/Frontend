@@ -33,7 +33,8 @@ export default function EditPatient({
 		);
 
 	const patient = query.data;
-	if (query.isError || !patient) return <div>Error fetching the patient</div>;
+	if (query.isError || !patient)
+		return <div>{t("error-fetching-the-patient")}</div>;
 
 	return (
 		<main className="space-y-6 p-3 md:p-6 lg:p-8">

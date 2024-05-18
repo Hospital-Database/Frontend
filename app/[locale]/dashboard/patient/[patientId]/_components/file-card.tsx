@@ -13,6 +13,7 @@ import {
 } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -30,6 +31,7 @@ export default function AttachmentCard({
 			});
 		},
 	});
+	const t = useTranslations("Patient");
 	return (
 		<Card shadow="sm" radius="md">
 			<Group justify="space-between" align={"start"}>
@@ -41,11 +43,13 @@ export default function AttachmentCard({
 						width={100}
 						height={100}
 					/>
-					<Text fw="bold">{attachment.file_name || <NA>No file name</NA>}</Text>
+					<Text fw="bold">
+						{attachment.file_name || <NA>{t("no-file-name")}</NA>}
+					</Text>
 				</Group>
 				<Group gap={"sm"}>
 					<Link href={attachment.file} target="_blank">
-						<Button variant="default">Download</Button>
+						<Button variant="default">{t("download")}</Button>
 					</Link>
 					<Menu>
 						<Menu.Target>
@@ -54,9 +58,9 @@ export default function AttachmentCard({
 							</ActionIcon>
 						</Menu.Target>
 						<Menu.Dropdown>
-							<Menu.Item>Edit</Menu.Item>
+							<Menu.Item>{t("edit")}</Menu.Item>
 							<Menu.Item color="red" onClick={() => setIsDeleting(true)}>
-								Delete
+								{t("delete")}
 							</Menu.Item>
 						</Menu.Dropdown>
 					</Menu>
@@ -69,18 +73,18 @@ export default function AttachmentCard({
 				title="Delete attachment"
 			>
 				<Title component={"h4"} fz={"h4"} mb="md">
-					Are you sure you want to delete this file?
+					{t("are-you-sure-you-want-to-delete-this-file")}
 				</Title>
 				<Group justify="end">
 					<Button variant="default" onClick={() => setIsDeleting(false)}>
-						Cancel
+						{t("cancel")}
 					</Button>
 					<Button
 						color="red"
 						loading={deleteMutation.isPending}
 						onClick={() => deleteMutation.mutate()}
 					>
-						Delete
+						{t("delete")}
 					</Button>
 				</Group>
 			</Modal>

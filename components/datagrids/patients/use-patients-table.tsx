@@ -6,6 +6,7 @@ import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css"; //if using mantine date picker features
 import type { MRT_ColumnDef } from "mantine-react-table";
 import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import useOurTable, {
 	type UseTableOptions,
@@ -17,11 +18,12 @@ export default function usePatientsTable({
 	tableOptions,
 	deleted,
 }: UseTableOptions<Patient> = {}) {
+	const t = useTranslations("Patient");
 	const columns = useMemo<MRT_ColumnDef<Patient>[]>(
 		() => [
 			{
 				accessorKey: "full_name",
-				header: "Full name",
+				header: t("full-name"),
 				Cell: ({ cell }) => {
 					return (
 						<Anchor
@@ -36,22 +38,22 @@ export default function usePatientsTable({
 			},
 			{
 				accessorKey: "date_of_birth",
-				header: "Date of birth",
+				header: t("date-of-birth"),
 			},
 			{
 				accessorKey: "phone.mobile",
-				header: "Phone",
+				header: t("phone"),
 			},
 			{
 				accessorKey: "gender",
-				header: "Gender",
+				header: t("gender"),
 			},
 			{
 				accessorKey: "marital_status",
-				header: "Martial status",
+				header: t("martial-status"),
 			},
 		],
-		[],
+		[t],
 	);
 
 	return useOurTable(

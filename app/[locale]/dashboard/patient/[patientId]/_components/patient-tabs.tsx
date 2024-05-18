@@ -7,13 +7,14 @@ import {
 	IconFiles,
 	IconStethoscope,
 } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import PatientDetails from "./patient-details";
 import PatientDocuments from "./patient-documents";
 import PatientMeasurements from "./patient-measurements";
 
 export default function PatientTabs({ patient }: { patient: PatientVerbose }) {
 	const { setSearchParam, searchParams } = useURL();
-
+	const t = useTranslations("Patient");
 	return (
 		<Tabs
 			value={searchParams.get("tab") || "details"}
@@ -24,19 +25,19 @@ export default function PatientTabs({ patient }: { patient: PatientVerbose }) {
 					value="details"
 					leftSection={<IconFileDescription className="w-5 h-5" />}
 				>
-					Details
+					{t("details")}
 				</Tabs.Tab>
 				<Tabs.Tab
 					value="measurements"
 					leftSection={<IconStethoscope className="w-5 h-5" />}
 				>
-					Measurements
+					{t("measurements")}
 				</Tabs.Tab>
 				<Tabs.Tab
 					value="documents"
 					leftSection={<IconFiles className="w-5 h-5" />}
 				>
-					Documents
+					{t("documents")}
 				</Tabs.Tab>
 			</Tabs.List>
 			<Tabs.Panel value="details">

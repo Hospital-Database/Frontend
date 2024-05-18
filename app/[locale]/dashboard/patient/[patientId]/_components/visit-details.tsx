@@ -2,20 +2,21 @@
 
 import DetailsCard from "@/components/details-card";
 import { formatElapsedTime } from "@/lib/datetime";
-import { useFormatter, useNow } from "next-intl";
+import { useFormatter, useNow, useTranslations } from "next-intl";
 
 export default function VisitDetails({ patientId: _ }: { patientId: string }) {
 	const formatter = useFormatter();
 	const startedAt = useNow();
 	const now = useNow({ updateInterval: 1000 });
+	const t = useTranslations("Patient");
 	return (
 		<DetailsCard
-			title="Current visit"
+			title={t("current-visit")}
 			details={[
-				{ title: "Ticket", value: 128746817234 },
-				{ title: "Duration", value: formatElapsedTime(startedAt, now) },
+				{ title: t("ticket"), value: 128746817234 },
+				{ title: t("duration"), value: formatElapsedTime(startedAt, now) },
 				{
-					title: "Started at",
+					title: t("started-at"),
 					value: formatter.dateTime(startedAt, {
 						timeStyle: "short",
 						dateStyle: "long",

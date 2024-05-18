@@ -1,10 +1,20 @@
+import { useCreateAttachment } from "@/api/attachments";
+import type { Patient } from "@/lib/types";
 import { Group, Text, rem } from "@mantine/core";
-import { Dropzone, type DropzoneProps } from "@mantine/dropzone";
+import { Dropzone } from "@mantine/dropzone";
 import { IconFileText, IconUpload, IconX } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 
-export function FilesDropzone(props: Omit<DropzoneProps, "maxSize">) {
+export function FilesDropzone({ patient }: { patient: Patient }) {
+	const t = useTranslations("Patient");
+	const createAttachment = useCreateAttachment();
 	return (
-		<Dropzone maxSize={10 * 1024 ** 2} {...props}>
+		<Dropzone
+			maxSize={10 * 1024 ** 2}
+			onDrop={(file) =>
+				createAttachment.mutate({ userId: patient.user, file: file[0] })
+			}
+		>
 			<Group
 				justify="center"
 				gap="xl"
@@ -44,10 +54,12 @@ export function FilesDropzone(props: Omit<DropzoneProps, "maxSize">) {
 
 				<div>
 					<Text size="xl" inline>
-						Drag files here or click to select files
+						{t("drag-files-here-or-click-to-select-files")}
 					</Text>
 					<Text size="sm" c="dimmed" inline mt={7}>
-						Attach as many files as you like, each file should not exceed 10mb
+						{t(
+							"attach-as-many-files-as-you-like-each-file-should-not-exceed-10mb",
+						)}
 					</Text>
 				</div>
 			</Group>

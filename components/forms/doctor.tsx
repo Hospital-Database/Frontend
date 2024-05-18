@@ -63,7 +63,6 @@ export default function DoctorForm({
 	initialValues?.gender;
 
 	useCheckDoctorNationalId(form, initialValues?.national_id);
-
 	return (
 		<Modal {...props}>
 			<form
@@ -78,23 +77,26 @@ export default function DoctorForm({
 				<Stack>
 					<TextInput
 						withAsterisk
-						label="Full name"
+						label={t("full-name")}
 						{...form.getInputProps("full_name")}
 					/>
 					<div className="space-y-2">
 						<TextInput
 							withAsterisk
-							label="National ID"
+							label={t("national-id")}
 							{...form.getInputProps("national_id")}
 						/>
 					</div>
-					<TextInput label="Speciality" {...form.getInputProps("speciality")} />
 					<TextInput
-						label="Nationality"
+						label={t("speciality")}
+						{...form.getInputProps("speciality")}
+					/>
+					<TextInput
+						label={t("nationality")}
 						{...form.getInputProps("nationality")}
 					/>
 					<TextInput
-						label="Email"
+						label={t("email")}
 						type="email"
 						{...form.getInputProps("email")}
 					/>
@@ -106,7 +108,7 @@ export default function DoctorForm({
 						</Group>
 					</Radio.Group>
 					<Button mt="md" type="submit" loading={saveDoctor.isPending}>
-						Save
+						{t("save")}
 					</Button>
 				</Stack>
 			</form>

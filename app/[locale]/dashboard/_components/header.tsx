@@ -1,18 +1,23 @@
 "use client";
 import { Card, Text } from "@mantine/core";
+import { useTranslations } from "next-intl";
 import { useGetStatistics } from "../../../../api/statistics";
 
 export default function DashboardHeader() {
 	const { data } = useGetStatistics();
+	const t = useTranslations("Dashboard");
 	return (
 		<section className="grid grid-cols-3 gap-x-3">
 			<HeaderCard
-				text="Total patients"
+				text={t("total-patients")}
 				statistics={data?.data?.total_patients}
 			/>
-			<HeaderCard text="Total Doctors" statistics={data?.data?.total_doctors} />
 			<HeaderCard
-				text="Total Employees"
+				text={t("total-doctors")}
+				statistics={data?.data?.total_doctors}
+			/>
+			<HeaderCard
+				text={t("total-employees")}
 				statistics={data?.data?.total_employees}
 			/>
 		</section>

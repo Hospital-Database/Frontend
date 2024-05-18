@@ -19,6 +19,7 @@ import {
 	IconStethoscope,
 	IconUser,
 } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import LangSwitch from "../_components/lang-switch";
 import { ThemeSwitch } from "../_components/theme-switch";
@@ -28,6 +29,7 @@ export default function CollapseDesktop({
 }: { children: React.ReactNode }) {
 	const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
 	const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
+	const t = useTranslations("Navbar");
 	return (
 		<AppShell
 			header={{ height: 60 }}
@@ -72,18 +74,18 @@ export default function CollapseDesktop({
 			{/* TODO: fix for small screens */}
 			<AppShell.Navbar p="md">
 				<Text fw="bold" size="xl">
-					ZU Hospital
+					{t("zu-hospital")}
 				</Text>
 				<SearchField className="w-full md:hidden mt-4" />
 				<Stack gap={"md"} mt="md">
 					<NavLink href="/dashboard">
-						<IconDashboard /> Dashboard
+						<IconDashboard /> {t("dashboard")}
 					</NavLink>
 					<NavLink href="/dashboard/patients">
-						<IconUser /> Patients
+						<IconUser /> {t("patients")}
 					</NavLink>
 					<NavLink href="/dashboard/doctors">
-						<IconStethoscope /> Doctors
+						<IconStethoscope /> {t("doctors")}
 					</NavLink>
 				</Stack>
 				<div className="md:hidden mt-4">
@@ -125,10 +127,11 @@ function SearchField({ className }: { className?: string }) {
 }
 
 function AddPatientButton() {
+	const t = useTranslations("Navbar");
 	return (
 		<Link href="/dashboard/add-patient">
 			<Button leftSection={<IconPlus />} className="min-w-fit">
-				Add patient
+				{t("add-patient")}
 			</Button>
 		</Link>
 	);

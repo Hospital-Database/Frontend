@@ -1,7 +1,7 @@
+import type { UserType } from "@/hooks/use-permissions";
 import "client-only";
 
 import Cookies from "js-cookie";
-import type { UserType } from "./permissions";
 
 export const ACCESS_TOKEN_KEY = "access_token";
 export const REFRESH_TOKEN_KEY = "refresh_token";

@@ -40,7 +40,7 @@ const readings = [
 ] as const;
 
 function extractMeasurement(v: Visit) {
-	const date = new Date(v.start_at).getTime();
+	const date = new Date(v.start_at as string).getTime();
 
 	const meas: Partial<Record<keyof Measurement, number>> & { date: string } = {
 		date: new Date(date).toLocaleDateString(),
@@ -72,7 +72,9 @@ export default function PatientMeasurements({ patient }: { patient: Patient }) {
 
 	const data = useMemo(() => {
 		if (visitsQuery.data)
-			return fixMeasurements(visitsQuery.data.results.map(extractMeasurement));
+			return fixMeasurements(
+				visitsQuery.data.results.map(extractMeasurement).filter(Boolean),
+			);
 	}, [visitsQuery.data]);
 
 	return (
@@ -81,10 +83,17 @@ export default function PatientMeasurements({ patient }: { patient: Patient }) {
 				{t("measurements")}
 			</Title>
 			<MeasurementsTable
-				data={visitsQuery.data?.results.map((vis) => ({
-					...vis.measurement,
-					date: vis.start_at,
-				}))}
+				data={
+					visitsQuery.data?.results
+						.map((vis) => {
+							if (vis.start_at)
+								return {
+									...vis.measurement,
+									date: vis.start_at,
+								};
+						})
+						.filter(Boolean) as ExtractedMeasurement[]
+				}
 			/>
 			<Title component={"h2"} mt="xl" mb="md">
 				{t("charts")}

@@ -1,10 +1,10 @@
+import type { UserType } from "@/hooks/use-permissions";
 import { http } from "@/lib/axios";
 import {
 	accessTokenCookie,
 	refreshTokenCookie,
 	userTypeTokenCookie,
 } from "@/lib/cookies.client";
-import type { UserType } from "@/lib/permissions";
 import type { BackendError, Doctor, Patient, User } from "@/lib/types";
 import { useRouter } from "@/navigation";
 import { Routes } from "@/routes/routes";

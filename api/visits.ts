@@ -3,7 +3,7 @@ import { http } from "@/lib/axios";
 import getTableSearchParams from "@/lib/get-search-params";
 import { notifyError, notifySuccess } from "@/lib/notifications";
 import type { Visit } from "@/lib/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
 
@@ -24,12 +24,15 @@ export const visitSchema = z.object({
 	status: z.string(),
 	notes: z.string().optional(),
 	patient: z.string().optional(),
+	doctors: z.array(z.string()).optional(),
 });
 
 // -------- CREATE
 export async function createVisit(data: z.infer<typeof visitSchema>) {
+	console.log(visitSchema);
 	return await http.post("/visit/visit/", { ...data, start_at: new Date() });
 }
+
 export function useCreateVisit() {
 	const t = useTranslations("Visits");
 	return useMutation({
@@ -68,11 +71,13 @@ export async function updateVisit(data: Visit) {
 }
 
 export function useUpdateVisit() {
+	const queryClient = useQueryClient();
 	const t = useTranslations("Visits");
 	return useMutation({
 		mutationFn: updateVisit,
 		onSuccess: () => {
 			notifySuccess({ title: t("visit-is-updated") });
+			queryClient.invalidateQueries({ queryKey: ["visits"] });
 		},
 		onError: () => {
 			notifyError({ title: t("can-not-update-visit") });
@@ -86,10 +91,12 @@ export async function deleteVisit(options: { id: string; ticket: number }) {
 }
 
 export function useDeleteVisit() {
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: deleteVisit,
 		onSuccess: () => {
 			notifySuccess({ title: "Visit is delete Successfully" });
+			queryClient.invalidateQueries({ queryKey: ["visits"] });
 		},
 		onError: () => {
 			notifyError({ title: "Visit can't delete" });

@@ -9,16 +9,16 @@ import type { z } from "zod";
 
 export const emptyValues = {
 	measurement: {
-		height: "",
-		weight: "",
-		blood_pressure: "",
-		temperature: "",
-		pulse: "",
-		oxygen_level: "",
+		height: 0,
+		weight: 0,
+		blood_pressure: 0,
+		temperature: 0,
+		pulse: 0,
+		oxygen_level: 0,
 	},
-	status: "pending",
 	visit_number: 0,
-	ticket: "",
+	ticket: 0,
+	status: "pending",
 	notes: "",
 } satisfies z.infer<typeof visitSchema>;
 

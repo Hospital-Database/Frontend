@@ -108,7 +108,7 @@
 		"dashboard": "Dashboard",
 		"patients": "Patients",
 		"start-visit": "Start visit",
-		"edit": "Edit",
+		"edit": "Edit visit",
 		"visit-number": "Visit number",
 		"full-name": "Full name",
 		"phone": "Phone",
@@ -122,7 +122,10 @@
 		"height": "Height",
 		"speciality": "Speciality",
 		"current-visit": "Current visit",
-		"cancel": "Cancel"
+		"cancel": "Cancel",
+		"end-visit": "End Visit",
+		"cancel-visit": "Cancel visit",
+		"delete-visit": "delete visit"
 	},
 	"Navbar": {
 		"zu-hospital": "ZU Hospital",
@@ -141,5 +144,15 @@
 		"export-all-rows": "Export All Rows",
 		"export-page-rows": "Export Page Rows",
 		"export-selected-rows": "Export Selected Rows"
-	}
+	},
+	"visit-is-created": "Visit is created",
+	"cant-create-visit": "can't create Visit",
+	"Visits": {
+		"visit-is-created": "visit is created",
+		"can-not-create-visit": "can not create visit",
+		"visit-is-updated": "visit-is-updated",
+		"can-not-update-visit": "can-not-update-visit"
+	},
+	"end-visit": "End visit",
+	"Visitscan-not-update-visit": "can-not-update-visit"
 }

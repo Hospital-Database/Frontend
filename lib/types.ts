@@ -11,12 +11,13 @@ export interface Visit extends Entity {
 	measurement: Measurement;
 	attachment: Attachment[];
 	visit_number: number;
-	ticket: string;
 	start_at: string;
 	end_at: string;
-	notes: string;
-	patient: number;
+	status: string;
 	doctors: number[];
+	ticket: string;
+	notes: string;
+	patient: string;
 }
 
 export interface Measurement {

@@ -1,6 +1,14 @@
 "use client";
 
 import { useDeletePatient, usePatient } from "@/api/patients";
+import {
+	useCreateVisit,
+	useUpdateVisit,
+	useVisits,
+	type visitSchema,
+} from "@/api/visits";
+import VisitForm from "@/components/forms/visits";
+import type { Visit } from "@/lib/types";
 import { useRouter } from "@/navigation";
 import { Routes } from "@/routes/routes";
 import {
@@ -17,6 +25,8 @@ import {
 } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import type { z } from "zod";
 import PatientImage from "./_components/patient-image";
 import PatientTabs from "./_components/patient-tabs";
 import VisitDetails from "./_components/visit-details";
@@ -52,7 +62,7 @@ export default function PatientPage({
 					</Stack>
 				</Group>
 				<Group gap={"md"}>
-					<ManageVisitButton />
+					<ManageVisitButton patientId={patientId} />
 					<OtherActions patientId={patientId} />
 				</Group>
 			</Group>
@@ -68,9 +78,50 @@ export default function PatientPage({
 	);
 }
 
-function ManageVisitButton() {
+function ManageVisitButton({ patientId }: { patientId: string }) {
+	const [formState, setFormState] = useState<"update" | "create">();
+	const [initialValues, setInitialValues] = useState<Visit>();
 	const t = useTranslations("Patient");
-	return <Button>{t("start-visit")}</Button>;
+	const createVisit = useCreateVisit();
+	const updateVisit = useUpdateVisit();
+
+	const { data } = useVisits({
+		columnFilters: [{ id: "patient", value: patientId }],
+	});
+	const visitData =
+		data?.results?.filter((item) => item.status === "pending") || [];
+	useEffect(() => {
+		setInitialValues(visitData?.[0]);
+	}, [visitData]);
+
+	return (
+		<Box>
+			<Button
+				onClick={() => {
+					if (visitData?.length > 0) setFormState("update");
+					else setFormState("create");
+				}}
+			>
+				{visitData?.length > 0 ? "Edit Visit" : t("start-visit")}{" "}
+			</Button>
+			<VisitForm
+				//@ts-ignore explanation => there is not side effect if we didn't fix the type error
+				onSubmit={(data) => {
+					if (formState === "create")
+						return createVisit.mutate({
+							...data,
+							patient: patientId,
+						} as z.infer<typeof visitSchema>);
+					return updateVisit.mutate({ ...data, patient: patientId } as Visit);
+				}}
+				opened={!!formState}
+				onSuccess={() => setFormState(undefined)}
+				onClose={() => setFormState(undefined)}
+				initialValues={initialValues}
+				formState={formState}
+			/>
+		</Box>
+	);
 }
 
 function OtherActions({ patientId }: { patientId: string }) {

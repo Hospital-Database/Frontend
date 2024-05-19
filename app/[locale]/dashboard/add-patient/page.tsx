@@ -8,7 +8,7 @@ import PatientForm from "../../../../components/forms/patient-form/form";
 export default function AddPatient() {
 	const t = useTranslations("Forms");
 	const router = useRouter();
-	const { mutate } = useCreatePatient({
+	const { mutateAsync } = useCreatePatient({
 		onSuccess(res) {
 			router.push(`/dashboard/patient/${res.data.id}`);
 		},
@@ -19,8 +19,8 @@ export default function AddPatient() {
 				{t("add-new-patient")}
 			</h1>
 			<PatientForm
-				onSubmit={(data) => {
-					mutate(data);
+				onSubmit={async (data) => {
+					await mutateAsync(data);
 				}}
 			/>
 		</main>

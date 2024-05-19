@@ -40,6 +40,7 @@ const readings = [
 ] as const;
 
 function extractMeasurement(v: Visit) {
+	if (!v.measurement || !v.start_at) return null;
 	const date = new Date(v.start_at as string).getTime();
 
 	const meas: Partial<Record<keyof Measurement, number>> & { date: string } = {
@@ -73,7 +74,9 @@ export default function PatientMeasurements({ patient }: { patient: Patient }) {
 	const data = useMemo(() => {
 		if (visitsQuery.data)
 			return fixMeasurements(
-				visitsQuery.data.results.map(extractMeasurement).filter(Boolean),
+				visitsQuery.data.results
+					.map(extractMeasurement)
+					.filter(Boolean) as ExtractedMeasurement[],
 			);
 	}, [visitsQuery.data]);
 

@@ -1,6 +1,6 @@
 import createMiddleware from "next-intl/middleware";
 import { type NextRequest, NextResponse } from "next/server";
-import { accessTokenCookie } from "./lib/cookies.server";
+import { accessTokenCookie, userTypeTokenCookie } from "./lib/cookies.server";
 import { defaultLocale } from "./next.locales";
 import { Routes, checkRouteType } from "./routes/routes";
 
@@ -11,6 +11,7 @@ const intlMiddleware = createMiddleware({
 });
 
 export default function middleware(req: NextRequest) {
+	const userType = userTypeTokenCookie.get();
 	const accessToken = accessTokenCookie.get();
 	const pathname = req.nextUrl.pathname;
 
@@ -25,7 +26,8 @@ export default function middleware(req: NextRequest) {
 	}
 
 	if (accessToken && Routes.home.doesMatch(pathname)) {
-		return NextResponse.redirect(new URL(Routes.dashboard(), req.url));
+		if (userType !== "patient")
+			return NextResponse.redirect(new URL(Routes.dashboard(), req.url));
 	}
 
 	return intlMiddleware(req);

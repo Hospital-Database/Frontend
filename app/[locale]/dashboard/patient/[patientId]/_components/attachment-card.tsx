@@ -1,4 +1,4 @@
-import { useDeleteAttachment } from "@/api/attachments";
+import { useDeleteAttachment, useUpdateAttachment } from "@/api/attachments";
 import NA from "@/components/NA";
 import { usePermissions } from "@/hooks/use-permissions";
 import type { Attachment } from "@/lib/types";
@@ -10,20 +10,35 @@ import {
 	Menu,
 	Modal,
 	Text,
+	TextInput,
 	Title,
 } from "@mantine/core";
+import { useForm } from "@mantine/form";
 import { IconDots } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
+import { zodResolver } from "mantine-form-zod-resolver";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { z } from "zod";
+
+const attachementSchmea = z.object({
+	file_name: z.string(),
+	kind: z.string(),
+});
 
 export default function AttachmentCard({
 	attachment,
 }: { attachment: Attachment }) {
 	const [isDeleting, setIsDeleting] = useState(false);
+	const [isEditing, setIsEditing] = useState(false);
 	const queryClient = useQueryClient();
+	const updateAttachment = useUpdateAttachment({
+		onSuccess() {
+			setIsEditing(false);
+		},
+	});
 	const deleteMutation = useDeleteAttachment(attachment.id, "soft", {
 		onSuccess() {
 			setIsDeleting(false);
@@ -34,6 +49,13 @@ export default function AttachmentCard({
 	});
 	const t = useTranslations("Patient");
 	const perms = usePermissions();
+	const form = useForm({
+		initialValues: {
+			file_name: attachment.file_name || "",
+			kind: attachment.kind || "",
+		},
+		validate: zodResolver(attachementSchmea),
+	});
 
 	return (
 		<Card shadow="sm" radius="md">
@@ -46,9 +68,14 @@ export default function AttachmentCard({
 						width={100}
 						height={100}
 					/>
-					<Text fw="bold">
-						{attachment.file_name || <NA>{t("no-file-name")}</NA>}
-					</Text>
+					<div>
+						<Text fw="bold">
+							{attachment.file_name || <NA>{t("no-file-name")}</NA>}
+						</Text>
+						<Text c="grey">
+							{attachment.kind || <NA>{t("no-file-description")}</NA>}
+						</Text>
+					</div>
 				</Group>
 				<Group gap={"sm"}>
 					<Link href={attachment.file} target="_blank">
@@ -62,7 +89,9 @@ export default function AttachmentCard({
 								</ActionIcon>
 							</Menu.Target>
 							<Menu.Dropdown>
-								<Menu.Item>{t("edit")}</Menu.Item>
+								<Menu.Item onClick={() => setIsEditing(true)}>
+									{t("edit-attachment")}
+								</Menu.Item>
 								<Menu.Item color="red" onClick={() => setIsDeleting(true)}>
 									{t("delete")}
 								</Menu.Item>
@@ -92,6 +121,43 @@ export default function AttachmentCard({
 						{t("delete")}
 					</Button>
 				</Group>
+			</Modal>
+			<Modal
+				opened={isEditing}
+				onClose={() => setIsEditing(false)}
+				withCloseButton={false}
+				title={t("edit-attachment-name")}
+			>
+				<form
+					onSubmit={form.onSubmit((values) =>
+						updateAttachment.mutate({ data: values, id: attachment.id }),
+					)}
+				>
+					<div className="space-y-5">
+						<TextInput
+							withAsterisk
+							label={t("attachment-name")}
+							{...form.getInputProps("file_name")}
+						/>
+						<TextInput
+							withAsterisk
+							label={t("file-desciption")}
+							{...form.getInputProps("kind")}
+						/>
+					</div>
+					<Group justify="end" mt="md">
+						<Button variant="default" onClick={() => setIsEditing(false)}>
+							{t("cancel")}
+						</Button>
+						<Button
+							color="green"
+							loading={updateAttachment.isPending}
+							type="submit"
+						>
+							{t("update")}
+						</Button>
+					</Group>
+				</form>
 			</Modal>
 		</Card>
 	);

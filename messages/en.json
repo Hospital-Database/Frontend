@@ -142,7 +142,13 @@
 		"no-cancelled-visit": "No cancelled visits",
 		"ends-at": "Ends at",
 		"no-active-visit": "No active visits",
-		"no-finished-visit": "No finished visits"
+		"no-finished-visit": "No finished visits",
+		"edit-attachment": "Edit attachment",
+		"file-desciption": "File desciption",
+		"update": "update",
+		"attachment-name": "Attachment name",
+		"edit-attachment-name": "Edit attachment name",
+		"no-file-description": "No file description"
 	},
 	"Navbar": {
 		"zu-hospital": "ZU Hospital",
@@ -162,14 +168,10 @@
 		"export-page-rows": "Export Page Rows",
 		"export-selected-rows": "Export Selected Rows"
 	},
-	"visit-is-created": "Visit is created",
-	"cant-create-visit": "Can't create Visit",
 	"Visits": {
 		"visit-is-created": "Visit is created",
 		"can-not-create-visit": "Can not create visit",
 		"visit-is-updated": "Visit is updated",
 		"can-not-update-visit": "Can not update visit"
-	},
-	"end-visit": "End visit",
-	"Visitscan-not-update-visit": "Can not update visit"
+	}
 }

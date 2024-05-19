@@ -8,18 +8,19 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 
 // -------- CREATE
+interface AttachmentProps {
+	userId: number;
+	file: File;
+	file_name: string;
+	visit?: string;
+}
 
 export async function createAttachment({
 	userId,
 	file,
 	visit,
 	file_name,
-}: {
-	userId: number;
-	file: File;
-	visit?: string;
-	file_name: string;
-}) {
+}: AttachmentProps) {
 	return await http.postForm("/visit/attachment/", {
 		// TODO: add text field for kind (description of the file)
 		kind: "blood",
@@ -72,6 +73,35 @@ export function useAttachments(options: FetchOptions) {
 }
 
 // -------- UPDATE
+export async function updateAttachment({
+	data,
+	id,
+}: { data: { file_name: string; kind: string }; id: string }) {
+	return await http
+		.patch(`/visit/attachment/${id}/`, data)
+		.then((res) => res.data);
+}
+
+export function useUpdateAttachment({ onSuccess }: { onSuccess?: () => void }) {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: updateAttachment,
+		onSuccess: () => {
+			notifySuccess({
+				title: "Attachment was updated successfully",
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["attachments"],
+			});
+			onSuccess?.();
+		},
+		onError: () => {
+			notifyError({
+				title: "Couldn't update the attachment",
+			});
+		},
+	});
+}
 
 // -------- DELETE
 

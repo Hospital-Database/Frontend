@@ -176,5 +176,13 @@
 		"can-not-create-visit": "Can not create visit",
 		"visit-is-updated": "Visit is updated",
 		"can-not-update-visit": "Can not update visit"
-	}
+	},
+	"form": {
+		"national_id": "National id",
+		"full_name": "Full Name"
+	},
+	"cant-create-visit": "Can't create visit",
+	"end-visit": "End visit",
+	"Visitscan-not-update-visit": "can't update visit",
+	"visit-is-created": "Visit is Created"
 }

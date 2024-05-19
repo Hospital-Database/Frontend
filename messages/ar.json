@@ -142,7 +142,13 @@
 		"canceled": "ألغيت",
 		"current": "الحالية",
 		"done": "منتهي",
-		"ends-at": "ينتهي عند"
+		"ends-at": "ينتهي عند",
+		"file-desciption": "وصف الملف",
+		"no-file-description": "لا يوجد وصف للملف",
+		"attachment-name": "اسم المرفق",
+		"edit-attachment-name": "تحرير اسم المرفق",
+		"update": "تحديث",
+		"edit-attachment": "تحرير المرفق"
 	},
 	"Navbar": {
 		"zu-hospital": "مستشفى الزقازيق",
@@ -171,5 +177,9 @@
 	"cant-create-visit": "لم نتمكن من إنشاء زيارة",
 	"visit-is-created": "الزيارة اُنشئت",
 	"Visitscan-not-update-visit": "لا يمكن تحديث الزيارة",
-	"end-visit": "إنهاء الزيارة"
+	"end-visit": "إنهاء الزيارة",
+	"form": {
+		"full_name": "الاسم الكامل",
+		"national_id": "الهوية الوطنية"
+	}
 }

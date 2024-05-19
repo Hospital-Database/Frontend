@@ -5,7 +5,14 @@ import NA from "@/components/NA";
 import DetailsCard, { DetailsCardSkeleton } from "@/components/details-card";
 import { formatElapsedTime } from "@/lib/datetime";
 import type { Visit } from "@/lib/types";
-import { ActionIcon, Flex, Menu, SegmentedControl, Stack } from "@mantine/core";
+import {
+	ActionIcon,
+	Flex,
+	Group,
+	Menu,
+	SegmentedControl,
+	Stack,
+} from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { useFormatter, useLocale, useNow, useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
@@ -28,20 +35,23 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 	return (
 		<main>
 			<Flex mb="sm">
-				<SegmentedControl
-					radius="xl"
-					data={[
-						{ value: "pending", label: t("current") },
-						{
-							value: "canceled",
-							label: t("canceled"),
-						},
-						{ value: "done", label: t("done") },
-					]}
-					onChange={(val) => {
-						setTab(val as tabType);
-					}}
-				/>
+				<Group>
+					<span>{t("visits")}:</span>
+					<SegmentedControl
+						radius="xl"
+						data={[
+							{ value: "pending", label: t("current") },
+							{
+								value: "canceled",
+								label: t("canceled"),
+							},
+							{ value: "done", label: t("done") },
+						]}
+						onChange={(val) => {
+							setTab(val as tabType);
+						}}
+					/>
+				</Group>
 			</Flex>
 			{isLoading && <DetailsCardSkeleton />}
 			{pendingVisit.length > 0 && tab === "pending" ? (

@@ -8,6 +8,7 @@ import {
 	type visitSchema,
 } from "@/api/visits";
 import VisitForm from "@/components/forms/visits";
+import { usePermissions } from "@/hooks/use-permissions";
 import type { Visit } from "@/lib/types";
 import { useRouter } from "@/navigation";
 import { Routes } from "@/routes/routes";
@@ -79,6 +80,7 @@ export default function PatientPage({
 }
 
 function ManageVisitButton({ patientId }: { patientId: string }) {
+	const perms = usePermissions();
 	const [formState, setFormState] = useState<"update" | "create">();
 	const [initialValues, setInitialValues] = useState<Visit>();
 	const t = useTranslations("Patient");
@@ -94,6 +96,8 @@ function ManageVisitButton({ patientId }: { patientId: string }) {
 		setInitialValues(visitData?.[0]);
 	}, [visitData]);
 
+	if (!perms.visit.canCreateVisit()) return;
+
 	return (
 		<Box>
 			<Button
@@ -105,7 +109,7 @@ function ManageVisitButton({ patientId }: { patientId: string }) {
 				{visitData?.length > 0 ? "Edit Visit" : t("start-visit")}{" "}
 			</Button>
 			<VisitForm
-				//@ts-ignore explanation => there is not side effect if we didn't fix the type error
+				// @ts-ignore explanation => there is not side effect if we didn't fix the type error
 				onSubmit={(data) => {
 					if (formState === "create")
 						return createVisit.mutate({
@@ -125,6 +129,7 @@ function ManageVisitButton({ patientId }: { patientId: string }) {
 }
 
 function OtherActions({ patientId }: { patientId: string }) {
+	const perms = usePermissions();
 	const router = useRouter();
 	const { mutate } = useDeletePatient(() => {
 		router.push("/dashboard/patients");
@@ -139,12 +144,14 @@ function OtherActions({ patientId }: { patientId: string }) {
 			</Menu.Target>
 			<Menu.Dropdown>
 				<Menu.Item
+					disabled={!perms.patient.canUpdatePatient()}
 					onClick={() => router.push(Routes.editPatient({ patientId }))}
 				>
 					{t("edit")}
 				</Menu.Item>
 				<Menu.Item
 					color="red"
+					disabled={!perms.patient.canDeletePatient()}
 					onClick={() => {
 						mutate(patientId);
 					}}

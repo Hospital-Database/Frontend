@@ -43,10 +43,13 @@ export default function EditPatient({
 			</h1>
 			<PatientForm
 				initialValue={{
-					...patient,
+					full_name: patient.full_name,
+					national_id: patient.national_id,
+					gender: patient.gender,
 					phone: patient.phone ? patient.phone : {},
 					address: patient.address ? patient.address : {},
 					date_of_birth: new Date(patient.date_of_birth),
+					notes: patient.notes,
 				}}
 				onSubmit={async (data) => {
 					await updatePatient({ prevData: patient, newData: data });

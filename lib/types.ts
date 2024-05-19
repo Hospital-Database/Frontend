@@ -8,7 +8,7 @@ export interface Entity {
 }
 
 export interface Visit extends Entity {
-	measurement: Measurement;
+	measurement: Measurement | null;
 	attachment: Attachment[];
 	visit_number: number;
 	start_at: null | string;

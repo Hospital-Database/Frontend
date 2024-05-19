@@ -1,7 +1,7 @@
 import { userTypeTokenCookie } from "@/lib/cookies.client";
 import { useMemo } from "react";
 
-export type UserType = "patient" | "doctor" | "admin";
+export type UserType = "patient" | "doctor" | "admin" | "employee";
 
 export function usePermissions() {
 	const userType = userTypeTokenCookie.get();
@@ -21,16 +21,16 @@ export function usePermissions() {
 function getPatientPermissions(userType?: UserType) {
 	return {
 		canSeePatient() {
-			return userType === "admin" || userType === "doctor";
+			return userType === "admin" || userType === "doctor" || userType == "employee";
 		},
 		canCreatePatient() {
-			return userType === "admin";
+			return userType === "admin" || userType == "employee";
 		},
 		canUpdatePatient() {
-			return userType === "admin";
+			return userType === "admin" || userType == "employee";
 		},
 		canDeletePatient() {
-			return userType === "admin";
+			return userType === "admin" || userType == "employee";
 		},
 	};
 }
@@ -55,16 +55,16 @@ function getDoctorPermissions(userType?: UserType) {
 function getVisitPermissions(userType?: UserType) {
 	return {
 		canChangeVisitState() {
-			return userType === "admin" || userType === "doctor";
+			return userType === "admin" || userType === "doctor" || userType == "employee";
 		},
 		canDeleteVisit() {
-			return userType === "admin" || userType === "doctor";
+			return userType === "admin" || userType === "doctor" || userType == "employee";
 		},
 		canCreateVisit() {
-			return userType === "admin" || userType === "doctor";
+			return userType === "admin" || userType === "doctor" || userType == "employee";
 		},
 		canEditVisit() {
-			return userType === "admin" || userType === "doctor";
+			return userType === "admin" || userType === "doctor" || userType == "employee";
 		},
 	};
 }
@@ -72,7 +72,7 @@ function getVisitPermissions(userType?: UserType) {
 function getDashboardPermissions(userType?: UserType) {
 	return {
 		canSeeDashboard() {
-			return userType === "admin" || userType === "doctor";
+			return userType === "admin" || userType === "doctor" || userType == "employee";
 		},
 		canSeeStatistics() {
 			return userType === "admin";
@@ -80,18 +80,18 @@ function getDashboardPermissions(userType?: UserType) {
 	};
 }
 
-function getEmpolyeePermissions(userType?: UserType) {
+function getEmployeePermissions(userType?: UserType) {
 	return {
-		canChangeEmpolyeeState() {
+		canChangeEmployeeState() {
 			return userType === "admin";
 		},
-		canDeleteEmpolyee() {
+		canDeleteEmployee() {
 			return userType === "admin";
 		},
-		canCreateEmpolyee() {
+		canCreateEmployee() {
 			return userType === "admin";
 		},
-		canEditEmpolyee() {
+		canEditEmployee() {
 			return userType === "admin";
 		},
 	};

@@ -22,6 +22,7 @@ export type RouteBuilder<
 	useParams: () => z.output<Params>;
 	useSearchParams: () => z.output<Search>;
 	params: z.output<Params>;
+	search: z.output<Params>;
 	doesMatch: (path: string) => boolean;
 	type?: RouteType;
 };
@@ -119,8 +120,16 @@ export function makeRouteInner<
 
 	// set the type
 	routeBuilder.params = undefined as z.output<Params>;
+	routeBuilder.search = undefined as z.output<Search>;
 	// set the runtime getter
 	Object.defineProperty(routeBuilder, "params", {
+		get() {
+			throw new Error(
+				"Routes.[route].params is only for type usage, not runtime. Use it like `typeof Routes.[routes].params`",
+			);
+		},
+	});
+	Object.defineProperty(routeBuilder, "search", {
 		get() {
 			throw new Error(
 				"Routes.[route].params is only for type usage, not runtime. Use it like `typeof Routes.[routes].params`",

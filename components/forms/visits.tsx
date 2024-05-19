@@ -1,6 +1,15 @@
+import { useDoctors } from "@/api/doctors";
 import { visitSchema } from "@/api/visits";
 import type { Visit } from "@/lib/types";
-import { Button, Modal, Select, Stack, TextInput } from "@mantine/core";
+import {
+	Button,
+	Loader,
+	Modal,
+	MultiSelect,
+	Select,
+	Stack,
+	TextInput,
+} from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -20,6 +29,7 @@ export const emptyValues = {
 	ticket: 0,
 	status: "pending",
 	notes: "",
+	doctors: [""],
 } satisfies z.infer<typeof visitSchema>;
 
 type VisitFormProps = z.infer<typeof visitSchema> & {
@@ -63,6 +73,20 @@ export default function VisitForm({
 		mutationFn: onSubmit,
 		onSuccess,
 	});
+	const doctors = useDoctors({
+		pagination: {
+			pageIndex: 0,
+			pageSize: 1e6,
+		},
+	});
+	if (!doctors) return <Loader />;
+	const doctorsList =
+		doctors?.data?.results
+			?.filter((item) => item.speciality)
+			.map((name) => ({
+				value: name.id,
+				label: `${name.full_name} (${name.speciality})`,
+			})) || [];
 
 	return (
 		<Modal {...props}>
@@ -84,10 +108,15 @@ export default function VisitForm({
 						label="Ticket"
 						{...form.getInputProps("ticket")}
 					/>
-
+					<MultiSelect
+						label="doctors"
+						placeholder="choose doctor name"
+						{...form.getInputProps("doctors")}
+						data={doctorsList}
+					/>
 					<Select
-						withAsterisk
 						label="status"
+						placeholder="choose status"
 						{...form.getInputProps("status")}
 						data={["pending", "finished", "cancelled"]}
 					/>

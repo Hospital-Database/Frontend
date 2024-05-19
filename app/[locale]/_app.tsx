@@ -9,11 +9,15 @@ const theme = createTheme({});
 
 const queryClient = new QueryClient();
 
-export default function App({ children }: { children: React.ReactNode }) {
+export default function App({
+	children,
+	langDir,
+}: { children: React.ReactNode; langDir: string }) {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ReactQueryDevtools initialIsOpen={false} />
-			<MantineProvider theme={theme}>
+			{/** @ts-expect-error */}
+			<MantineProvider theme={{ ...theme, dir: langDir }}>
 				<ProgressBar
 					height="4px"
 					color="var(--mantine-primary-color-filled)"

@@ -8,6 +8,9 @@ import { IconDownload, IconRefresh } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { download, generateCsv, mkConfig } from "export-to-csv";
 import { get, merge } from "lodash";
+//@ts-ignore
+import { MRT_Localization_AR } from "mantine-react-table/locales/ar";
+
 import {
 	type MRT_ColumnDef,
 	type MRT_ColumnFilterFnsState,
@@ -269,6 +272,7 @@ export default function useOurTable<TData extends MRT_RowData>(
 				onPaginationChange: setPagination,
 				onSortingChange: setSorting,
 				rowCount: totalRowCount,
+				localization: MRT_Localization_AR,
 				state: {
 					columnFilterFns,
 					columnFilters,
@@ -284,9 +288,7 @@ export default function useOurTable<TData extends MRT_RowData>(
 		),
 	);
 
-	console.log("setGlobalFilter", outsideGlobalFilter);
 	useEffect(() => {
-		console.log("use effect", outsideGlobalFilter);
 		table.setGlobalFilter(outsideGlobalFilter);
 	}, [outsideGlobalFilter, table.setGlobalFilter]);
 

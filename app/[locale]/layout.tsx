@@ -34,7 +34,7 @@ export default function RootLayout({
 			</head>
 			<body className={cn(inter.className, noto.className)}>
 				<LocaleProvider>
-					<App>
+					<App langDir={langDir}>
 						<Notifications />
 						{children}
 					</App>

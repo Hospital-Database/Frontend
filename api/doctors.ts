@@ -4,8 +4,7 @@ import { getErrorMessageSync } from "@/lib/err-msg";
 import getTableSearchParams from "@/lib/get-search-params";
 import { notifyError, notifySuccess } from "@/lib/notifications";
 import type { Doctor } from "@/lib/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import type { AxiosResponse } from "axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
 
@@ -63,19 +62,21 @@ export async function createDoctor(
 	return await http.post<Doctor>("/accounts/doctor/", data);
 }
 
-export function useCreateDoctor({
-	onSuccess,
-}: {
-	onSuccess?: (response: AxiosResponse<Doctor>) => void;
-} = {}) {
+export function useCreateDoctor() {
 	const t = useTranslations();
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: createDoctor,
-		onSuccess: (response) => {
+		onSuccess: () => {
 			notifySuccess({
 				title: "Doctor was added successfully",
 			});
-			onSuccess?.(response);
+			queryClient.invalidateQueries({
+				queryKey: ["deleted-doctors"],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["doctors"],
+			});
 		},
 		onError: (e) => {
 			const message = getErrorMessageSync(e, t);
@@ -125,19 +126,21 @@ export async function updateDoctor(
 	return await http.patch<Doctor>(`/accounts/doctor/${id}/`, data);
 }
 
-export function useUpdateDoctor({
-	onSuccess,
-}: {
-	onSuccess?: (response: AxiosResponse<Doctor>) => void;
-} = {}) {
+export function useUpdateDoctor() {
 	const t = useTranslations();
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: updateDoctor,
-		onSuccess: (response) => {
+		onSuccess: () => {
 			notifySuccess({
 				title: "Doctor was updated successfully",
 			});
-			onSuccess?.(response);
+			queryClient.invalidateQueries({
+				queryKey: ["deleted-doctors"],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["doctors"],
+			});
 		},
 		onError: (e) => {
 			const message = getErrorMessageSync(e, t);
@@ -162,19 +165,21 @@ export async function deleteDoctor(
 	});
 }
 
-export function useDeleteDoctor({
-	onSuccess,
-}: {
-	onSuccess?: () => void;
-} = {}) {
+export function useDeleteDoctor() {
 	const t = useTranslations();
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: deleteDoctor,
 		onSuccess: () => {
 			notifySuccess({
 				title: "Doctor was deleted successfully",
 			});
-			onSuccess?.();
+			queryClient.invalidateQueries({
+				queryKey: ["deleted-doctors"],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["doctors"],
+			});
 		},
 		onError: (e) => {
 			const message = getErrorMessageSync(e, t);
@@ -190,19 +195,21 @@ export async function restoreDoctor(id: string) {
 	return await http.post(`/accounts/deleted-doctor/restore/${id}/`);
 }
 
-export function useRestoreDoctor({
-	onSuccess,
-}: {
-	onSuccess?: () => void;
-} = {}) {
+export function useRestoreDoctor() {
 	const t = useTranslations();
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: restoreDoctor,
 		onSuccess: () => {
 			notifySuccess({
 				title: "Doctor was restored successfully",
 			});
-			onSuccess?.();
+			queryClient.invalidateQueries({
+				queryKey: ["deleted-doctors"],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["doctors"],
+			});
 		},
 		onError: (e) => {
 			const message = getErrorMessageSync(e, t);

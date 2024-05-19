@@ -1,8 +1,4 @@
-import {
-	type createDoctor,
-	doctorSchema,
-	type useCreateDoctor,
-} from "@/api/doctors";
+import { type createDoctor, doctorSchema } from "@/api/doctors";
 import {
 	Button,
 	Group,
@@ -19,13 +15,13 @@ import { useEffect } from "react";
 import type { z } from "zod";
 import useCheckDoctorNationalId from "./use-check-doctor-national-id";
 
-type DoctorFormProps = NonNullable<Parameters<typeof useCreateDoctor>[0]> &
-	Omit<ModalProps, "onSubmit" | "children"> & {
-		onSubmit: (
-			data: Parameters<typeof createDoctor>[0],
-		) => ReturnType<typeof createDoctor>;
-		initialValues?: z.infer<typeof doctorSchema>;
-	};
+type DoctorFormProps = Omit<ModalProps, "onSubmit" | "children"> & {
+	onSubmit: (
+		data: Parameters<typeof createDoctor>[0],
+	) => ReturnType<typeof createDoctor>;
+	initialValues?: z.infer<typeof doctorSchema>;
+	onSuccess?: () => void;
+};
 
 export const emptyValues = {
 	full_name: "",
@@ -60,17 +56,34 @@ export default function DoctorForm({
 		onSuccess,
 	});
 
-	initialValues?.gender;
+	useCheckDoctorNationalId(
+		!saveDoctor.isError,
+		form,
+		initialValues?.national_id,
+	);
 
-	useCheckDoctorNationalId(form, initialValues?.national_id);
+	useEffect(() => {
+		if (saveDoctor.isError) {
+			const errors = saveDoctor.error as unknown as Record<string, string[]>;
+			for (const key in errors) {
+				form.setFieldError(key, errors[key]);
+			}
+		}
+	}, [saveDoctor.isError, saveDoctor.error, form.setFieldError]);
+
 	return (
 		<Modal {...props}>
 			<form
-				onSubmit={form.onSubmit((data) => {
+				onSubmit={form.onSubmit(({ national_id, ...data }) => {
 					const newData = {
 						...data,
+						national_id:
+							national_id === initialValues?.national_id
+								? undefined
+								: national_id,
 						date_of_birth: data?.date_of_birth?.toISOString().slice(0, 10),
 					};
+					// @ts-ignore
 					saveDoctor.mutate(newData);
 				})}
 			>
@@ -100,7 +113,10 @@ export default function DoctorForm({
 						type="email"
 						{...form.getInputProps("email")}
 					/>
-					<TextInput label="Phone" {...form.getInputProps("phone.mobile")} />
+					<TextInput
+						label={t("phone-number")}
+						{...form.getInputProps("phone.mobile")}
+					/>
 					<Radio.Group label={t("gender")} {...form.getInputProps("gender")}>
 						<Group>
 							<Radio value="male" label={t("male")} />

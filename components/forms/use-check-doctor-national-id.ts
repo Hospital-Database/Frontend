@@ -6,6 +6,7 @@ import { useCallback, useEffect } from "react";
 import type { z } from "zod";
 
 export default function useCheckDoctorNationalId(
+	active: boolean,
 	form: UseFormReturnType<z.infer<typeof doctorSchema>>,
 	initialValue?: string,
 ) {
@@ -42,6 +43,6 @@ export default function useCheckDoctorNationalId(
 
 	const nationalId = form.getValues().national_id;
 	useEffect(() => {
-		checkNationalId(nationalId);
-	}, [nationalId, checkNationalId]);
+		if (active) checkNationalId(nationalId);
+	}, [active, nationalId, checkNationalId]);
 }

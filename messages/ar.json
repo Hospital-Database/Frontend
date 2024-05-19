@@ -67,7 +67,8 @@
 		"active-visits": "الزيارات الحالية",
 		"missed-visits": "الزيارات الفائتة",
 		"upcomming-visits": "الزيارات القادمة",
-		"total-visits": "إجمالي الزيارات"
+		"total-visits": "إجمالي الزيارات",
+		"search-placeholder": "البحث عن المرضى أو أشياء أخرى"
 	},
 	"Doctors": {
 		"dashboard": "لوحة التحكم",
@@ -81,8 +82,10 @@
 		"phone": "هاتف",
 		"speciality": "تخصص",
 		"add-doctor": "أضف طبيب",
-		"current": "حاضِر",
-		"deleted": "تم الحذف"
+		"current": "الحالية",
+		"deleted": "تم الحذف",
+		"edit": "يحرر",
+		"restore": "يعيد"
 	},
 	"Patient": {
 		"are-you-sure-you-want-to-delete-this-file": "هل أنت متأكد أنك تريد حذف هذا الملف؟",
@@ -148,7 +151,8 @@
 		"attachment-name": "اسم المرفق",
 		"edit-attachment-name": "تحرير اسم المرفق",
 		"update": "تحديث",
-		"edit-attachment": "تحرير المرفق"
+		"edit-attachment": "تحرير المرفق",
+		"edit-visit": "تحرير الزيارة"
 	},
 	"Navbar": {
 		"zu-hospital": "مستشفى الزقازيق",
@@ -159,7 +163,8 @@
 	},
 	"Patients": {
 		"patients": "المرضى",
-		"dashboard": "لوحة التحكم"
+		"dashboard": "لوحة التحكم",
+		"edit-visit": "تحرير الزيارة"
 	},
 	"Table": {
 		"error-loading-data": "حدث خطأ أثناء تحميل البيانات",

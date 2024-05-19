@@ -10,7 +10,6 @@ import {
 import DoctorForm from "@/components/forms/doctor";
 import { Box, Button, Flex, Menu, SegmentedControl } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
-import { useQueryClient } from "@tanstack/react-query";
 import { MantineReactTable } from "mantine-react-table";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -23,24 +22,12 @@ export default function DoctorsCRUDTable() {
 	const [initialValues, setInitialValues] = useState<
 		z.infer<typeof doctorSchema> & { id?: string }
 	>();
+	const t = useTranslations("Doctors");
 
-	const queryClient = useQueryClient();
 	const createDoctor = useCreateDoctor();
 	const updateDoctor = useUpdateDoctor();
-	const deleteDoctor = useDeleteDoctor({
-		onSuccess() {
-			queryClient.invalidateQueries({
-				queryKey: ["doctors"],
-			});
-		},
-	});
-	const restoreDoctor = useRestoreDoctor({
-		onSuccess() {
-			queryClient.invalidateQueries({
-				queryKey: ["doctors"],
-			});
-		},
-	});
+	const deleteDoctor = useDeleteDoctor();
+	const restoreDoctor = useRestoreDoctor();
 
 	const doctorsTable = useDoctorsTable({
 		deleted: tab === "deleted",
@@ -49,37 +36,42 @@ export default function DoctorsCRUDTable() {
 				<>
 					<Menu.Item
 						onClick={() => {
+							const doctor = row.original;
 							setInitialValues({
-								...row.original,
-								date_of_birth: new Date(row.original.date_of_birth),
-								phone: row.original.phone || {},
-								address: row.original.address || {},
+								id: doctor.id,
+								full_name: doctor.full_name,
+								date_of_birth: new Date(doctor.date_of_birth),
+								phone: doctor.phone || {},
+								address: doctor.address || {},
+								national_id: doctor.national_id,
+								speciality: doctor.speciality,
+								nationality: doctor.nationality,
+								gender: doctor.gender,
 							});
 							setFormState("update");
 						}}
 					>
-						Edit
+						{t("edit")}
 					</Menu.Item>
 					{tab === "deleted" ? (
 						<Menu.Item
 							disabled={restoreDoctor.isPending}
 							onClick={() => restoreDoctor.mutateAsync(row.original.id)}
 						>
-							Restore
+							{t("restore")}
 						</Menu.Item>
 					) : (
 						<Menu.Item
 							disabled={deleteDoctor.isPending}
 							onClick={() => deleteDoctor.mutateAsync(row.original.id)}
 						>
-							Delete
+							{t("delete")}
 						</Menu.Item>
 					)}
 				</>
 			),
 		},
 	});
-	const t = useTranslations("Doctors");
 
 	return (
 		<Box>

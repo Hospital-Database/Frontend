@@ -57,6 +57,9 @@ export default function PatientForm({
 		<form
 			className="space-y-8"
 			onSubmit={form.onSubmit(async (data) => {
+				if (initialValue?.national_id === data.national_id)
+					// @ts-ignore
+					data.national_id = undefined;
 				const newData = {
 					...data,
 					date_of_birth: data?.date_of_birth?.toISOString().slice(0, 10),

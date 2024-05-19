@@ -73,7 +73,9 @@
 		"national-id": "National ID",
 		"nationality": "Nationality",
 		"phone": "Phone",
-		"add-doctor": "Add doctor"
+		"add-doctor": "Add doctor",
+		"restore": "Restore",
+		"edit": "Edit"
 	},
 	"Dashboard": {
 		"total-patients": "Total patients",

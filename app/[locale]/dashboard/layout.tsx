@@ -3,7 +3,8 @@
 import Logout from "@/app/[locale]/_components/logout";
 import { usePermissions } from "@/hooks/use-permissions";
 import { cn } from "@/lib/utils";
-import { Link, usePathname } from "@/navigation";
+import { Link, usePathname, useRouter } from "@/navigation";
+import { Routes } from "@/routes/routes";
 import {
 	AppShell,
 	Burger,
@@ -14,6 +15,7 @@ import {
 	Text,
 	TextInput,
 } from "@mantine/core";
+import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import {
 	IconDashboard,
@@ -133,13 +135,29 @@ function NavLink({
 
 function SearchField({ className }: { className?: string }) {
 	const perms = usePermissions();
+	const form = useForm({ initialValues: { q: "" } });
+	const router = useRouter();
 	if (!perms.patient.canSeePatient()) return null;
 	return (
-		<TextInput
+		<form
 			className={className}
-			placeholder="Search for patients or other things"
-			leftSection="🔎"
-		/>
+			onSubmit={form.onSubmit(({ q }) => {
+				router.push(
+					Routes.patients(
+						{},
+						{
+							search: { q },
+						},
+					),
+				);
+			})}
+		>
+			<TextInput
+				placeholder="Search for patients or other things"
+				leftSection="🔎"
+				{...form.getInputProps("q")}
+			/>
+		</form>
 	);
 }
 

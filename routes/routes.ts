@@ -13,6 +13,12 @@ export const Routes = makeRoutes(
 			dashboard: makeRoute("/dashboard", {
 				type: "private",
 			}),
+			patients: makeRoute("/dashboard/patients", {
+				type: "private",
+				search: z.object({
+					q: z.string().optional(),
+				}),
+			}),
 			editPatient: makeRoute("/dashboard/patient/:patientId/edit", {
 				type: "private",
 				params: z.object({

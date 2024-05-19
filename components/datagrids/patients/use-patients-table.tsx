@@ -16,6 +16,7 @@ export default function usePatientsTable({
 	data,
 	initialFilters,
 	tableOptions,
+	globalFilter,
 	deleted,
 }: UseTableOptions<Patient> = {}) {
 	const t = useTranslations("Patient");
@@ -61,6 +62,7 @@ export default function usePatientsTable({
 			id: "patients",
 			deleted,
 			initialFilters,
+			globalFilter,
 			fetchData: data
 				? () => Promise.resolve({ count: data.length, results: data })
 				: deleted

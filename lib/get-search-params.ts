@@ -23,18 +23,26 @@ export default function getTableSearchParams({
 				.join(),
 		);
 
-	if (globalFilter) params.set("search", globalFilter);
+	if (globalFilter) params.set("full_name__icontains", globalFilter);
 
 	if (columnFilters)
 		for (const { id, value } of columnFilters) {
-			if (typeof value === "string")
-				params.set(`${getId(id)}${getOperator(columnFilterFns?.[id])}`, value);
+			if (
+				typeof value === "string" ||
+				typeof value === "number" ||
+				typeof value === "boolean"
+			)
+				params.set(
+					`${getId(id)}${getOperator(columnFilterFns?.[id])}`,
+					value.toString(),
+				);
 		}
 
 	return params;
 }
 
 function getOperator(op?: MRT_FilterOption) {
+	// TODO: handle more operators
 	if (op === "contains") return "__icontains";
 	return "";
 }

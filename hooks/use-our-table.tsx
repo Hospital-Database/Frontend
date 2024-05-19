@@ -20,13 +20,14 @@ import {
 } from "mantine-react-table";
 import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
 import { useTranslations } from "next-intl";
-import { useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 
 export type UseTableOptions<TData extends MRT_RowData> =
 	| {
 			data?: TData[];
 			initialFilters?: MRT_ColumnFiltersState;
 			tableOptions?: Partial<MRT_TableOptions<TData>>;
+			globalFilter?: string;
 			deleted?: boolean;
 	  }
 	| undefined;
@@ -77,10 +78,12 @@ export default function useOurTable<TData extends MRT_RowData>(
 		deleted,
 		fetchData,
 		initialFilters,
+		globalFilter: outsideGlobalFilter,
 	}: {
 		id?: string;
 		deleted?: boolean;
 		manual?: boolean;
+		globalFilter?: string;
 		initialFilters?: MRT_ColumnFiltersState;
 		fetchData: (fetchOptions: FetchOptions) => Promise<{
 			count: number;
@@ -280,6 +283,12 @@ export default function useOurTable<TData extends MRT_RowData>(
 			tableOptions,
 		),
 	);
+
+	console.log("setGlobalFilter", outsideGlobalFilter);
+	useEffect(() => {
+		console.log("use effect", outsideGlobalFilter);
+		table.setGlobalFilter(outsideGlobalFilter);
+	}, [outsideGlobalFilter, table.setGlobalFilter]);
 
 	return table;
 }

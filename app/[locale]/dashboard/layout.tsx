@@ -134,6 +134,7 @@ function NavLink({
 }
 
 function SearchField({ className }: { className?: string }) {
+	const t = useTranslations("Dashboard");
 	const perms = usePermissions();
 	const form = useForm({ initialValues: { q: "" } });
 	const router = useRouter();
@@ -153,7 +154,7 @@ function SearchField({ className }: { className?: string }) {
 			})}
 		>
 			<TextInput
-				placeholder="Search for patients or other things"
+				placeholder={t("search-placeholder")}
 				leftSection="🔎"
 				{...form.getInputProps("q")}
 			/>

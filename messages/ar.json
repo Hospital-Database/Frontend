@@ -12,7 +12,7 @@
 		"main-details": "التفاصيل الرئيسية",
 		"complete-the-main-details-of-the-patient": "أكمل التفاصيل الرئيسية للمريض",
 		"save-and-start-visit": "احفظ وابدأ الزيارة",
-		"save": "يحفظ",
+		"save": "حفظ",
 		"national-id-must-be-14-digits": "يجب أن تتكون بطاقة الرقم القومي من 14 رقمًا على الأكثر",
 		"user-is-already-exist": "المستخدم موجود بالفعل",
 		"see-details": "انظر للتفاصيل",
@@ -140,7 +140,7 @@
 		"no-finished-visit": "لا توجد زيارة نهائية",
 		"deleted": "تم الحذف",
 		"canceled": "ألغيت",
-		"current": "حاضِر",
+		"current": "الحالية",
 		"done": "منتهي",
 		"ends-at": "ينتهي عند"
 	},

@@ -22,7 +22,7 @@ import {
 	useMantineReactTable,
 } from "mantine-react-table";
 import "mantine-react-table/styles.css"; //make sure MRT styles were imported in your app root (once)
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useId, useMemo, useState } from "react";
 
 export type UseTableOptions<TData extends MRT_RowData> =
@@ -97,6 +97,7 @@ export default function useOurTable<TData extends MRT_RowData>(
 		columns: OurTableColumnDef<TData>[];
 	},
 ) {
+	const locale = useLocale();
 	const t = useTranslations("Table");
 	const $t = useTranslations();
 	const tempId = useId();
@@ -272,7 +273,7 @@ export default function useOurTable<TData extends MRT_RowData>(
 				onPaginationChange: setPagination,
 				onSortingChange: setSorting,
 				rowCount: totalRowCount,
-				localization: MRT_Localization_AR,
+				localization: locale === "ar" ? MRT_Localization_AR : undefined,
 				state: {
 					columnFilterFns,
 					columnFilters,

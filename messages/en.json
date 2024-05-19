@@ -82,7 +82,8 @@
 		"active-visits": "Active visits",
 		"upcomming-visits": "Upcomming visits",
 		"missed-visits": "Missed visits",
-		"total-visits": "Total visits"
+		"total-visits": "Total visits",
+		"search-placeholder": "Search for patients or other things"
 	},
 	"Patient": {
 		"no-file-name": "No file name",
@@ -116,7 +117,7 @@
 		"dashboard": "Dashboard",
 		"patients": "Patients",
 		"start-visit": "Start visit",
-		"edit": "Edit visit",
+		"edit": "Edit",
 		"visit-number": "Visit number",
 		"full-name": "Full name",
 		"phone": "Phone",
@@ -148,7 +149,8 @@
 		"update": "update",
 		"attachment-name": "Attachment name",
 		"edit-attachment-name": "Edit attachment name",
-		"no-file-description": "No file description"
+		"no-file-description": "No file description",
+		"edit-visit": "Edit visit"
 	},
 	"Navbar": {
 		"zu-hospital": "ZU Hospital",
@@ -159,7 +161,8 @@
 	},
 	"Patients": {
 		"dashboard": "Dashboard",
-		"patients": "Patients"
+		"patients": "Patients",
+		"edit-visit": "Edit Visit"
 	},
 	"Table": {
 		"error-loading-data": "Error loading data",

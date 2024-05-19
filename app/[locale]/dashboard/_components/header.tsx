@@ -10,7 +10,7 @@ export default function DashboardHeader() {
 	const perms = usePermissions();
 	if (!perms.dashboard.canSeeStatistics()) return;
 	return (
-		<section className="grid grid-cols-3 gap-x-3">
+		<section className="md:flex gap-x-3">
 			<HeaderCard
 				text={t("total-patients")}
 				statistics={data?.data?.total_patients}

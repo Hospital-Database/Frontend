@@ -1,6 +1,6 @@
 "use client";
 
-import { useDeletePatient, usePatient } from "@/api/patients";
+import { useDeletePatient } from "@/api/patients";
 import {
 	useCreateVisit,
 	useUpdateVisit,
@@ -9,7 +9,7 @@ import {
 } from "@/api/visits";
 import VisitForm from "@/components/forms/visits";
 import { usePermissions } from "@/hooks/use-permissions";
-import type { Visit } from "@/lib/types";
+import type { PatientVerbose, Visit } from "@/lib/types";
 import { useRouter } from "@/navigation";
 import { Routes } from "@/routes/routes";
 import {
@@ -19,7 +19,6 @@ import {
 	Breadcrumbs,
 	Button,
 	Group,
-	Loader,
 	Menu,
 	Stack,
 	Title,
@@ -32,20 +31,9 @@ import PatientImage from "./_components/patient-image";
 import PatientTabs from "./_components/patient-tabs";
 import VisitDetails from "./_components/visit-details";
 
-export default function PatientPage({
-	params: { patientId },
-}: { params: { patientId: string } }) {
+export default function PatientPage({ patient }: { patient: PatientVerbose }) {
 	const t = useTranslations("Patient");
-	const query = usePatient(patientId);
-	if (query.isLoading)
-		return (
-			<Group justify="center">
-				<Loader />
-			</Group>
-		);
-	const patient = query.data;
-	if (query.isError || !patient)
-		return <div>{t("error-fetching-the-patient")}</div>;
+	const perms = usePermissions();
 	return (
 		<>
 			<Group mt="md" align="start" justify="space-between">
@@ -63,15 +51,15 @@ export default function PatientPage({
 					</Stack>
 				</Group>
 				<Group gap={"md"}>
-					<ManageVisitButton patientId={patientId} />
-					<OtherActions patientId={patientId} />
+					{perms.visit.canCreateVisit() && (
+						<ManageVisitButton patientId={patient.id} />
+					)}
+					<OtherActions patientId={patient.id} />
 				</Group>
 			</Group>
-			{true && (
-				<Box mt="md" mb="xl">
-					<VisitDetails patientId={patientId} />
-				</Box>
-			)}
+			<Box mt="md" mb="xl">
+				<VisitDetails patientId={patient.id} />
+			</Box>
 			<Box mt="xl">
 				<PatientTabs patient={patient} />
 			</Box>
@@ -80,7 +68,6 @@ export default function PatientPage({
 }
 
 function ManageVisitButton({ patientId }: { patientId: string }) {
-	const perms = usePermissions();
 	const [formState, setFormState] = useState<"update" | "create">();
 	const [initialValues, setInitialValues] = useState<Visit>();
 	const t = useTranslations("Patient");
@@ -96,8 +83,6 @@ function ManageVisitButton({ patientId }: { patientId: string }) {
 		setInitialValues(visitData?.[0]);
 	}, [visitData]);
 
-	if (!perms.visit.canCreateVisit()) return;
-
 	return (
 		<Box>
 			<Button
@@ -109,7 +94,7 @@ function ManageVisitButton({ patientId }: { patientId: string }) {
 				{visitData?.length > 0 ? t("edit-visit") : t("start-visit")}
 			</Button>
 			<VisitForm
-				// @ts-ignore explanation => there is not side effect if we didn't fix the type error
+				//@ts-ignore explanation => there is not side effect if we didn't fix the type error
 				onSubmit={(data) => {
 					if (formState === "create")
 						return createVisit.mutate({
@@ -129,12 +114,12 @@ function ManageVisitButton({ patientId }: { patientId: string }) {
 }
 
 function OtherActions({ patientId }: { patientId: string }) {
-	const perms = usePermissions();
 	const router = useRouter();
 	const { mutate } = useDeletePatient(() => {
 		router.push("/dashboard/patients");
 	});
 	const t = useTranslations("Patient");
+	const perms = usePermissions();
 	return (
 		<Menu>
 			<Menu.Target>

@@ -1,11 +1,10 @@
 import { userTypeTokenCookie } from "@/lib/cookies.client";
 import { useMemo } from "react";
 
-export type UserType = "patient" | "doctor" | "admin";
+export type UserType = "patient" | "doctor" | "admin" | "employee";
 
 export function usePermissions() {
 	const userType = userTypeTokenCookie.get();
-
 	return useMemo(
 		() => ({
 			patient: getPatientPermissions(userType),
@@ -20,13 +19,17 @@ export function usePermissions() {
 function getPatientPermissions(userType?: UserType) {
 	return {
 		canSeePatient() {
-			return userType === "admin" || userType === "doctor";
+			return (
+				userType === "admin" || userType === "doctor" || userType === "employee"
+			);
 		},
 		canCreatePatient() {
-			return userType === "admin";
+			return userType === "admin" || userType === "employee";
 		},
 		canUpdatePatient() {
-			return userType === "admin";
+			return (
+				userType === "admin" || userType === "doctor" || userType === "employee"
+			);
 		},
 		canDeletePatient() {
 			return userType === "admin";
@@ -54,16 +57,22 @@ function getDoctorPermissions(userType?: UserType) {
 function getVisitPermissions(userType?: UserType) {
 	return {
 		canChangeVisitState() {
-			return userType === "admin" || userType === "doctor";
+			return (
+				userType === "admin" || userType === "doctor" || userType === "employee"
+			);
 		},
 		canDeleteVisit() {
-			return userType === "admin" || userType === "doctor";
+			return userType === "admin";
 		},
 		canCreateVisit() {
-			return userType === "admin" || userType === "doctor";
+			return (
+				userType === "admin" || userType === "doctor" || userType === "employee"
+			);
 		},
 		canEditVisit() {
-			return userType === "admin" || userType === "doctor";
+			return (
+				userType === "admin" || userType === "doctor" || userType === "employee"
+			);
 		},
 	};
 }

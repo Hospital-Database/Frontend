@@ -5,7 +5,13 @@ import {
 	refreshTokenCookie,
 	userTypeTokenCookie,
 } from "@/lib/cookies.client";
-import type { BackendError, Doctor, Patient, User } from "@/lib/types";
+import type {
+	BackendError,
+	Doctor,
+	Employee,
+	Patient,
+	User,
+} from "@/lib/types";
 import { useRouter } from "@/navigation";
 import { Routes } from "@/routes/routes";
 import { useMutation } from "@tanstack/react-query";
@@ -19,12 +25,15 @@ export async function signIn(data: LoginData) {
 		user: User;
 		patient?: Patient;
 		doctor?: Doctor;
+		employee?: Employee;
 	}>("/accounts/token/", data);
-	const userType: UserType = res.patient
-		? "patient"
-		: res.doctor
-			? "doctor"
-			: "admin";
+	const userType: UserType = res.doctor
+		? "doctor"
+		: res.patient
+			? "patient"
+			: res.employee
+				? "employee"
+				: "admin";
 	refreshTokenCookie.set(res.refresh);
 	accessTokenCookie.set(res.access);
 	userTypeTokenCookie.set(userType);

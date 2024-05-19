@@ -15,9 +15,7 @@ export interface LoginData {
 export default function LoginForm() {
 	const t = useTranslations("Login");
 	const loginSchema = z.object({
-		username: z.string().regex(/^(?![-_])[A-Za-z0-9_-]*[A-Za-z0-9]$/, {
-			message: t("usernam-error-message"),
-		}),
+		username: z.string(),
 		password: z.string(),
 	});
 	const form = useForm<z.infer<typeof loginSchema>>({

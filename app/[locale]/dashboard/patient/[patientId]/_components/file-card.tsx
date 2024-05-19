@@ -1,5 +1,6 @@
 import { useDeleteAttachment } from "@/api/attachments";
 import NA from "@/components/NA";
+import { usePermissions } from "@/hooks/use-permissions";
 import type { Attachment } from "@/lib/types";
 import {
 	ActionIcon,
@@ -32,6 +33,8 @@ export default function AttachmentCard({
 		},
 	});
 	const t = useTranslations("Patient");
+	const perms = usePermissions();
+
 	return (
 		<Card shadow="sm" radius="md">
 			<Group justify="space-between" align={"start"}>
@@ -51,19 +54,21 @@ export default function AttachmentCard({
 					<Link href={attachment.file} target="_blank">
 						<Button variant="default">{t("download")}</Button>
 					</Link>
-					<Menu>
-						<Menu.Target>
-							<ActionIcon size={"lg"} variant="default">
-								<IconDots size={20} />
-							</ActionIcon>
-						</Menu.Target>
-						<Menu.Dropdown>
-							<Menu.Item>{t("edit")}</Menu.Item>
-							<Menu.Item color="red" onClick={() => setIsDeleting(true)}>
-								{t("delete")}
-							</Menu.Item>
-						</Menu.Dropdown>
-					</Menu>
+					{perms.patient.canUpdatePatient() && (
+						<Menu>
+							<Menu.Target>
+								<ActionIcon size={"lg"} variant="default">
+									<IconDots size={20} />
+								</ActionIcon>
+							</Menu.Target>
+							<Menu.Dropdown>
+								<Menu.Item>{t("edit")}</Menu.Item>
+								<Menu.Item color="red" onClick={() => setIsDeleting(true)}>
+									{t("delete")}
+								</Menu.Item>
+							</Menu.Dropdown>
+						</Menu>
+					)}
 				</Group>
 			</Group>
 			<Modal

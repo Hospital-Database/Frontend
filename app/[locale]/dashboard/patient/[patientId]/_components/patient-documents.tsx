@@ -23,7 +23,12 @@ export default function PatientDocuments({ patient }: { patient: Patient }) {
 		],
 	});
 
-	if (attachments.isLoading) return <Loader />;
+	if (attachments.isLoading)
+		return (
+			<div className="py-8 grid place-content-center">
+				<Loader />
+			</div>
+		);
 	if (attachments.isError) return <div>{t("error-fetching-attachments")}</div>;
 	if (!attachments.data) return <div>{t("no-attachments-found")}</div>;
 

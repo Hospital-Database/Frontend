@@ -2,17 +2,10 @@
 
 import { useDeleteVisit, useUpdateVisit, useVisits } from "@/api/visits";
 import NA from "@/components/NA";
-import DetailsCard from "@/components/details-card";
+import DetailsCard, { DetailsCardSkeleton } from "@/components/details-card";
 import { formatElapsedTime } from "@/lib/datetime";
 import type { Visit } from "@/lib/types";
-import {
-	ActionIcon,
-	Flex,
-	Loader,
-	Menu,
-	SegmentedControl,
-	Stack,
-} from "@mantine/core";
+import { ActionIcon, Flex, Menu, SegmentedControl, Stack } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { useFormatter, useLocale, useNow, useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
@@ -26,15 +19,12 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 	const { data, isLoading } = useVisits({
 		columnFilters: [{ id: "patient", value: patientId }],
 	});
-	if (isLoading) return <Loader />;
-	if (!data) return <> </>;
-	const pendingVisit = data?.results?.filter(
-		(item) => item.status === "pending",
-	);
-	const canceledVisits = data?.results?.filter(
-		(item) => item.status === "canceled",
-	);
-	const doneVisits = data?.results?.filter((item) => item.status === "done");
+	const pendingVisit =
+		data?.results?.filter((item) => item.status === "pending") || [];
+	const canceledVisits =
+		data?.results?.filter((item) => item.status === "canceled") || [];
+	const doneVisits =
+		data?.results?.filter((item) => item.status === "done") || [];
 	return (
 		<main>
 			<Flex mb="sm">
@@ -53,7 +43,7 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 					}}
 				/>
 			</Flex>
-
+			{isLoading && <DetailsCardSkeleton />}
 			{pendingVisit.length > 0 && tab === "pending" ? (
 				<Stack>
 					<ActionContainer>
@@ -85,23 +75,26 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 							},
 							{
 								title: t("end_at"),
-								value: pendingVisit[0]?.end_at
-									? formatter.dateTime(new Date(pendingVisit[0]?.end_at), {
-											year: "numeric",
-											month: "short",
-											day: "numeric",
-										})
-									: "N/A",
+								value: pendingVisit[0]?.end_at ? (
+									formatter.dateTime(new Date(pendingVisit[0]?.end_at), {
+										year: "numeric",
+										month: "short",
+										day: "numeric",
+									})
+								) : (
+									<NA />
+								),
 							},
 							{
 								title: t("notes"),
-								value: pendingVisit[0]?.notes || "N/A",
+								value: pendingVisit[0]?.notes || <NA />,
 							},
 						]}
 					/>
 				</Stack>
 			) : (
-				tab === "pending" && <NoVisit> {t("no-active-visit")} </NoVisit>
+				!isLoading &&
+				tab === "pending" && <NoVisit>{t("no-active-visit")}</NoVisit>
 			)}
 			{canceledVisits.length > 0 && tab === "canceled" ? (
 				<>
@@ -125,7 +118,7 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 									},
 									{
 										title: t("notes"),
-										value: item?.notes || "N/A",
+										value: item?.notes || <NA />,
 									},
 								]}
 							/>
@@ -133,7 +126,8 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 					))}
 				</>
 			) : (
-				tab === "canceled" && <NoVisit> {t("no-cancelled-visit")} </NoVisit>
+				!isLoading &&
+				tab === "canceled" && <NoVisit>{t("no-cancelled-visit")} </NoVisit>
 			)}
 			{doneVisits.length > 0 && tab === "done" ? (
 				<>
@@ -165,17 +159,19 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 									},
 									{
 										title: t("ends-at"),
-										value: item?.end_at
-											? formatter.dateTime(new Date(item?.end_at), {
-													year: "numeric",
-													month: "short",
-													day: "numeric",
-												})
-											: "N/A",
+										value: item?.end_at ? (
+											formatter.dateTime(new Date(item?.end_at), {
+												year: "numeric",
+												month: "short",
+												day: "numeric",
+											})
+										) : (
+											<NA />
+										),
 									},
 									{
 										title: t("notes"),
-										value: item?.notes || "N/A",
+										value: item?.notes || <NA />,
 									},
 								]}
 							/>
@@ -183,7 +179,8 @@ export default function VisitDetails({ patientId }: { patientId: string }) {
 					))}
 				</>
 			) : (
-				tab === "done" && <NoVisit> {t("no-finished-visit")} </NoVisit>
+				!isLoading &&
+				tab === "done" && <NoVisit>{t("no-finished-visit")} </NoVisit>
 			)}
 		</main>
 	);

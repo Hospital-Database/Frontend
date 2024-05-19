@@ -1,9 +1,11 @@
 import type { FetchOptions } from "@/hooks/use-our-table";
 import { http } from "@/lib/axios";
+import { getErrorMessageSync } from "@/lib/err-msg";
 import getTableSearchParams from "@/lib/get-search-params";
 import { notifyError, notifySuccess } from "@/lib/notifications";
 import type { Attachment } from "@/lib/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 
 // -------- CREATE
 
@@ -11,31 +13,40 @@ export async function createAttachment({
 	userId,
 	file,
 	visit,
+	file_name,
 }: {
 	userId: number;
 	file: File;
 	visit?: string;
+	file_name: string;
 }) {
 	return await http.postForm("/visit/attachment/", {
+		// TODO: add text field for kind (description of the file)
+		kind: "blood",
 		file: file,
 		user: userId,
 		visit,
-		kind: "blood",
+		file_name,
 	});
 }
 
 export function useCreateAttachment() {
+	const t = useTranslations();
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: createAttachment,
 		onSuccess: () => {
 			notifySuccess({
 				title: "Attachment was upload successfully",
 			});
+			queryClient.invalidateQueries({
+				queryKey: ["attachments"],
+			});
 		},
 		onError: (e) => {
-			console.log(e);
 			notifyError({
 				title: "Couldn't upload the attachment",
+				message: getErrorMessageSync(e, t),
 			});
 		},
 	});
@@ -80,17 +91,23 @@ export function useDeleteAttachment(
 	method: "soft" | "hard" = "soft",
 	{ onSuccess, onError }: { onSuccess?: () => void; onError?: () => void } = {},
 ) {
+	const t = useTranslations();
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: () => deleteAttachment(id, method),
 		onSuccess: () => {
 			notifySuccess({
 				title: "Attachment was deleted successfully",
 			});
+			queryClient.invalidateQueries({
+				queryKey: ["attachments"],
+			});
 			onSuccess?.();
 		},
-		onError: () => {
+		onError: (e) => {
 			notifyError({
 				title: "Couldn't delete the attachment",
+				message: getErrorMessageSync(e, t),
 			});
 			onError?.();
 		},

@@ -163,13 +163,13 @@
 		"export-selected-rows": "Export Selected Rows"
 	},
 	"visit-is-created": "Visit is created",
-	"cant-create-visit": "can't create Visit",
+	"cant-create-visit": "Can't create Visit",
 	"Visits": {
-		"visit-is-created": "visit is created",
-		"can-not-create-visit": "can not create visit",
-		"visit-is-updated": "visit-is-updated",
-		"can-not-update-visit": "can-not-update-visit"
+		"visit-is-created": "Visit is created",
+		"can-not-create-visit": "Can not create visit",
+		"visit-is-updated": "Visit is updated",
+		"can-not-update-visit": "Can not update visit"
 	},
 	"end-visit": "End visit",
-	"Visitscan-not-update-visit": "can-not-update-visit"
+	"Visitscan-not-update-visit": "Can not update visit"
 }

@@ -22,7 +22,7 @@ function getPatientPermissions(userType?: UserType) {
 		canSeePatient() {
 			return userType === "admin" || userType === "doctor";
 		},
-		canAddPatient() {
+		canCreatePatient() {
 			return userType === "admin";
 		},
 		canUpdatePatient() {

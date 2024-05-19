@@ -132,6 +132,8 @@ function NavLink({
 }
 
 function SearchField({ className }: { className?: string }) {
+	const perms = usePermissions();
+	if (!perms.patient.canSeePatient()) return null;
 	return (
 		<TextInput
 			className={className}
@@ -143,6 +145,8 @@ function SearchField({ className }: { className?: string }) {
 
 function AddPatientButton() {
 	const t = useTranslations("Navbar");
+	const perms = usePermissions();
+	if (!perms.patient.canCreatePatient()) return null;
 	return (
 		<Link href="/dashboard/add-patient">
 			<Button leftSection={<IconPlus />} className="min-w-fit">

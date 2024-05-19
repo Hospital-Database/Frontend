@@ -1,5 +1,5 @@
 "use client";
-import { Group, Stack, Text } from "@mantine/core";
+import { Card, Group, Skeleton, Stack, Text } from "@mantine/core";
 import NA from "./NA";
 
 export default function DetailsCard({
@@ -24,5 +24,19 @@ export default function DetailsCard({
 				})}
 			</Stack>
 		</div>
+	);
+}
+
+export function DetailsCardSkeleton() {
+	return (
+		<Card>
+			<Stack>
+				<Skeleton height={30} className="w-[300px] max-w-full" />
+				<Skeleton height={30} className="w-[250px] max-w-full" />
+				<Skeleton height={30} className="w-[250px] max-w-full" />
+				<Skeleton height={30} className="w-[350px] max-w-full" />
+				<Skeleton height={30} className="w-[350px] max-w-full" />
+			</Stack>
+		</Card>
 	);
 }

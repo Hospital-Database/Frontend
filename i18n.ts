@@ -7,6 +7,7 @@ export default getRequestConfig(async ({ locale }) => {
 	return {
 		messages: {
 			...(await import(`./messages/${locale}.json`)).default,
+			...(await import(`./messages/zod/${locale}.json`)).default,
 		},
 	};
 });

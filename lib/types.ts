@@ -109,6 +109,26 @@ export interface Doctor extends Entity {
 	user: number;
 }
 
+export interface Employee extends Entity {
+	full_name: string;
+	gender: Gender;
+	national_id: string;
+	speciality: string;
+	license_number: string;
+	experience_years: number;
+	work_days: string;
+	email: string;
+	marital_status: string;
+	nationality: string;
+	notes: string;
+	address: Address | null;
+	phone: PhoneNumber | null;
+	/** date in ISO format */
+	date_of_birth: string;
+	/** user ID, a generic user table in the backend to just group data and keep DRY */
+	user: number;
+}
+
 export interface Address {
 	street: string;
 	city: string;

@@ -11,6 +11,7 @@ export function usePermissions() {
 			patient: getPatientPermissions(userType),
 			doctor: getDoctorPermissions(userType),
 			visit: getVisitPermissions(userType),
+			employee: getEmployeePermissions(userType),
 			dashboard: getDashboardPermissions(userType),
 		}),
 		[userType],
@@ -74,6 +75,23 @@ function getDashboardPermissions(userType?: UserType) {
 			return userType === "admin" || userType === "doctor";
 		},
 		canSeeStatistics() {
+			return userType === "admin";
+		},
+	};
+}
+
+function getEmpolyeePermissions(userType?: UserType) {
+	return {
+		canChangeEmpolyeeState() {
+			return userType === "admin";
+		},
+		canDeleteEmpolyee() {
+			return userType === "admin";
+		},
+		canCreateEmpolyee() {
+			return userType === "admin";
+		},
+		canEditEmpolyee() {
 			return userType === "admin";
 		},
 	};

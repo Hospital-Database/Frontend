@@ -35,7 +35,7 @@ function HeaderCard({
 	statistics,
 }: { text: string; statistics?: number }) {
 	return (
-		<Card>
+		<Card className="flex-1">
 			<Text size="xl" fw="bold" c="blue.6">
 				{text}
 			</Text>

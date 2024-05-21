@@ -40,7 +40,10 @@ export default function PatientDetails({
 				<Title component={"h2"} mb="md">
 					{t("visits")}
 				</Title>
-				<VisitsTable initialFilters={[{ id: "patient", value: patient.id }]} />
+				<VisitsTable
+					hidePatientName
+					initialFilters={[{ id: "patient", value: patient.id }]}
+				/>
 			</Box>
 			<Box mt="xl">
 				<Title component={"h2"} mb="md">

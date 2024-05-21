@@ -81,3 +81,7 @@
     @apply min-h-[calc(100vh-64px)];
   }
 }
+
+[dir="rtl"] .mrt-table-pagination .mantine-ActionIcon-icon {
+  rotate: 180deg;
+}

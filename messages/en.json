@@ -77,6 +77,23 @@
 		"restore": "Restore",
 		"edit": "Edit"
 	},
+	"Employees": {
+		"current": "Current",
+		"deleted": "Deleted",
+		"employees": "Employees",
+		"dashboard": "Dashboard",
+		"no-file-name": "No file name",
+		"download": "Download",
+		"delete": "Delete",
+		"full-name": "Full name",
+		"speciality": "Speciality",
+		"national-id": "National ID",
+		"nationality": "Nationality",
+		"phone": "Phone",
+		"add-employee": "Add employee",
+		"restore": "Restore",
+		"edit": "Edit"
+	},
 	"Dashboard": {
 		"total-patients": "Total patients",
 		"total-employees": "Total Employees",
@@ -152,14 +169,16 @@
 		"attachment-name": "Attachment name",
 		"edit-attachment-name": "Edit attachment name",
 		"no-file-description": "No file description",
-		"edit-visit": "Edit visit"
+		"edit-visit": "Edit visit",
+		"patient": "Patient"
 	},
 	"Navbar": {
 		"zu-hospital": "ZU Hospital",
 		"dashboard": "Dashboard",
 		"patients": "Patients",
 		"add-patient": "Add patient",
-		"doctors": "Doctors"
+		"doctors": "Doctors",
+		"employees": "Employees"
 	},
 	"Patients": {
 		"dashboard": "Dashboard",
@@ -182,9 +201,5 @@
 	"form": {
 		"national_id": "National id",
 		"full_name": "Full Name"
-	},
-	"cant-create-visit": "Can't create visit",
-	"end-visit": "End visit",
-	"Visitscan-not-update-visit": "can't update visit",
-	"visit-is-created": "Visit is Created"
+	}
 }

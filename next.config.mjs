@@ -17,8 +17,10 @@ const nextConfig = {
 				hostname: "placehold.co",
 			},
 			{
-				protocol: "http",
 				hostname: "zhospital.azurewebsites.net",
+			},
+			{
+				hostname: "**.dropboxusercontent.com",
 			},
 		],
 	},

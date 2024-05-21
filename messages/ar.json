@@ -83,7 +83,7 @@
 		"speciality": "تخصص",
 		"add-doctor": "أضف طبيب",
 		"current": "الحالية",
-		"deleted": "تم الحذف",
+		"deleted": "المحذوف",
 		"edit": "يحرر",
 		"restore": "يعيد"
 	},
@@ -141,7 +141,7 @@
 		"no-active-visit": "لا توجد زيارة نشطة",
 		"no-cancelled-visit": "لا توجد زيارة ملغاة",
 		"no-finished-visit": "لا توجد زيارة نهائية",
-		"deleted": "تم الحذف",
+		"deleted": "المحذوف",
 		"canceled": "ألغيت",
 		"current": "الحالية",
 		"done": "منتهي",
@@ -149,22 +149,24 @@
 		"file-desciption": "وصف الملف",
 		"no-file-description": "لا يوجد وصف للملف",
 		"attachment-name": "اسم المرفق",
-		"edit-attachment-name": "تحرير اسم المرفق",
+		"edit-attachment-name": "تعديل اسم المرفق",
 		"update": "تحديث",
-		"edit-attachment": "تحرير المرفق",
-		"edit-visit": "تحرير الزيارة"
+		"edit-attachment": "تعديل المرفق",
+		"edit-visit": "تعديل الزيارة",
+		"patient": "مريض"
 	},
 	"Navbar": {
 		"zu-hospital": "مستشفى الزقازيق",
 		"add-patient": "إضافة المريض",
 		"dashboard": "لوحة التحكم",
 		"doctors": "الأطباء",
-		"patients": "المرضي"
+		"patients": "المرضي",
+		"employees": "الموظفين"
 	},
 	"Patients": {
 		"patients": "المرضى",
 		"dashboard": "لوحة التحكم",
-		"edit-visit": "تحرير الزيارة"
+		"edit-visit": "تعديل الزيارة"
 	},
 	"Table": {
 		"error-loading-data": "حدث خطأ أثناء تحميل البيانات",
@@ -179,12 +181,25 @@
 		"visit-is-created": "يتم إنشاء الزيارة",
 		"visit-is-updated": "تم تحديث الزيارة"
 	},
-	"cant-create-visit": "لم نتمكن من إنشاء زيارة",
-	"visit-is-created": "الزيارة اُنشئت",
-	"Visitscan-not-update-visit": "لا يمكن تحديث الزيارة",
-	"end-visit": "إنهاء الزيارة",
 	"form": {
 		"full_name": "الاسم الكامل",
 		"national_id": "الهوية الوطنية"
+	},
+	"Employees": {
+		"add-employee": "إضافة موظف",
+		"current": "حاضِر",
+		"dashboard": "التحكم",
+		"delete": "اسمح",
+		"deleted": "الحذوف",
+		"download": "تحميل",
+		"edit": "تعديل",
+		"employees": "الموظفين",
+		"full-name": "الاسم الكامل",
+		"national-id": "الهوية الوطنية",
+		"nationality": "جنسية",
+		"no-file-name": "لا يوجد اسم الملف",
+		"phone": "هاتف",
+		"restore": "يعيد",
+		"speciality": "تخصص"
 	}
 }

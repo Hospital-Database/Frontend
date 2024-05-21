@@ -98,6 +98,11 @@ export default function CollapseDesktop({
 							<IconStethoscope /> {t("doctors")}
 						</NavLink>
 					)}
+					{perms.employee.canSeeEmployees() && (
+						<NavLink href="/dashboard/employees">
+							<IconStethoscope /> {t("employees")}
+						</NavLink>
+					)}
 				</Stack>
 				<div className="md:hidden mt-4">
 					<Divider mb="md" />

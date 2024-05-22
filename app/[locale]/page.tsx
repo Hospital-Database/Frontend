@@ -53,7 +53,7 @@ function PatientLoginForm() {
 				mutate(loginInfo);
 			})}
 		>
-			<ErrorMessage>{error?.message}</ErrorMessage>
+			<ErrorMessage>{error?.detail}</ErrorMessage>
 			<div className="space-y-3">
 				<TextInput
 					label={t("national-id")}

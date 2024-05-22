@@ -58,7 +58,8 @@
 		"username-placeholder": "اسم المستخدم",
 		"username": "اسم المستخدم",
 		"national-id": "الرقم القومي",
-		"national-id-placeholder": "01234567891011"
+		"national-id-placeholder": "01234567891011",
+		"no-patient-with-this-national-id-exists": "لا يوجد مريض يحمل هذا الرقم القومي"
 	},
 	"Dashboard": {
 		"total-doctors": "عدد الأطباء",

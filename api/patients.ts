@@ -24,11 +24,14 @@ export const patientSchema = z.object({
 	}),
 	gender: z.literal("male").or(z.literal("female")).optional(),
 	address: z.object({
-		city: z.string().optional(),
-		governorate: z.string().optional(),
-		street: z.string().optional(),
+		city: z.preprocess((val) => val || undefined, z.string().optional()),
+		governorate: z.preprocess((val) => val || undefined, z.string().optional()),
+		street: z.preprocess((val) => val || undefined, z.string().optional()),
 	}),
-	martial_status: z.string().optional(),
+	martial_status: z.preprocess(
+		(val) => val || undefined,
+		z.string().optional(),
+	),
 	date_of_birth: z.date().optional(),
 	notes: z.preprocess((val) => val || undefined, z.string().min(3).optional()),
 });

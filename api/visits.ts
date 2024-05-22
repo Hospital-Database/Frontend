@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { z } from "zod";
 
 // -------- SCHEMA
+
 const measurementSchema = z.object({
 	height: z.coerce.number().optional(),
 	weight: z.coerce.number().optional(),
@@ -28,17 +29,21 @@ export const visitSchema = z.object({
 });
 
 // -------- CREATE
+
 export async function createVisit(data: z.infer<typeof visitSchema>) {
-	console.log(visitSchema);
 	return await http.post("/visit/visit/", { ...data, start_at: new Date() });
 }
 
 export function useCreateVisit() {
 	const t = useTranslations("Visits");
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: createVisit,
 		onSuccess: () => {
 			notifySuccess({ title: t("visit-is-created") });
+			queryClient.invalidateQueries({
+				queryKey: ["visits"],
+			});
 		},
 		onError: () => {
 			notifyError({ title: t("can-not-create-visit") });
@@ -66,6 +71,7 @@ export function useVisits(options: FetchOptions) {
 }
 
 // -------- UPDATE
+
 export async function updateVisit(data: Visit) {
 	return await http.put(`/visit/visit/${data.id}/`, data);
 }
@@ -86,6 +92,7 @@ export function useUpdateVisit() {
 }
 
 // -------- DELETE
+
 export async function deleteVisit(options: { id: string; ticket: number }) {
 	return http.delete(`/visit/visit/${options.id}`);
 }

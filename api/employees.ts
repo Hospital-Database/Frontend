@@ -12,8 +12,11 @@ export const employeeSchema = z.object({
 	full_name: z.string().min(2),
 	national_id: z.string().regex(/^\d{14}$/, "National ID must be 14 digits"),
 	email: z.preprocess((val) => val || undefined, z.string().optional()),
-	speciality: z.string().min(2),
 	nationality: z.string().min(3),
+	speciality: z.preprocess(
+		(val) => val || undefined,
+		z.string().min(3).optional(),
+	),
 	gender: z.preprocess(
 		(val) => val || undefined,
 		z.literal("female").or(z.literal("male")).optional(),
@@ -102,9 +105,12 @@ export async function getEmployees(options: FetchOptions) {
 export async function getDeletedEmployees(options: FetchOptions) {
 	const params = getTableSearchParams(options);
 	return await http
-		.get<{ count: number; results: Employee[] }>("/accounts/employee/deleted/", {
-			params,
-		})
+		.get<{ count: number; results: Employee[] }>(
+			"/accounts/employee/deleted/",
+			{
+				params,
+			},
+		)
 		.then((res) => res.data);
 }
 

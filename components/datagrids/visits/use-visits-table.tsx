@@ -82,9 +82,8 @@ export default function useVisitsTable({
 		{
 			id: "visits",
 			initialFilters,
-			fetchData: data
-				? () => Promise.resolve({ count: data.length, results: data })
-				: getVisits,
+			data,
+			fetchData: getVisits,
 		},
 		{
 			columns,

@@ -47,13 +47,9 @@ export default function useDoctorsTable({
 		{
 			id: "doctors",
 			deleted,
-			fetchData: data
-				? () => Promise.resolve({ count: data.length, results: data })
-				: deleted
-					? getDeletedDoctors
-					: getDoctors,
+			data,
+			fetchData: deleted ? getDeletedDoctors : getDoctors,
 			initialFilters,
-			manual: !!data,
 		},
 		{
 			columns,

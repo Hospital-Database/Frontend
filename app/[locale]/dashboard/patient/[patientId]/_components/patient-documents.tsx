@@ -81,6 +81,7 @@ export default function PatientDocuments({ patient }: { patient: Patient }) {
 		</Box>
 	);
 }
+
 function AttachmentNotFound({ children }: { children: ReactNode }) {
 	return (
 		<div className="border border-slate-200 dark:border-slate-700 p-6 bg-gray-500/10 rounded  text-xl md:py-12 mt-5 flex justify-center items-center">

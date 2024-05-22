@@ -80,24 +80,26 @@ export default function PatientMeasurements({ patient }: { patient: Patient }) {
 			);
 	}, [visitsQuery.data]);
 
+	const measurements = useMemo(
+		() =>
+			visitsQuery.data?.results
+				.map((vis) => {
+					if (vis.start_at)
+						return {
+							...vis.measurement,
+							date: vis.start_at,
+						};
+				})
+				.filter(Boolean) as ExtractedMeasurement[] | undefined,
+		[visitsQuery.data],
+	);
+
 	return (
 		<Box>
 			<Title component={"h2"} mt="xl" mb="md">
 				{t("measurements")}
 			</Title>
-			<MeasurementsTable
-				data={
-					visitsQuery.data?.results
-						.map((vis) => {
-							if (vis.start_at)
-								return {
-									...vis.measurement,
-									date: vis.start_at,
-								};
-						})
-						.filter(Boolean) as ExtractedMeasurement[]
-				}
-			/>
+			<MeasurementsTable data={measurements} />
 			<Title component={"h2"} mt="xl" mb="md">
 				{t("charts")}
 			</Title>

@@ -63,11 +63,8 @@ export default function usePatientsTable({
 			deleted,
 			initialFilters,
 			globalFilter,
-			fetchData: data
-				? () => Promise.resolve({ count: data.length, results: data })
-				: deleted
-					? getDeletedPatients
-					: getPatients,
+			data,
+			fetchData: deleted ? getDeletedPatients : getPatients,
 		},
 		{
 			columns,

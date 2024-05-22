@@ -86,20 +86,19 @@ export default function EmployeeForm({
 						label={t("full-name")}
 						{...form.getInputProps("full_name")}
 					/>
-					<div className="space-y-2">
-						<TextInput
-							withAsterisk
-							label={t("national-id")}
-							{...form.getInputProps("national_id")}
-						/>
-					</div>
+					<TextInput
+						withAsterisk
+						label={t("national-id")}
+						{...form.getInputProps("national_id")}
+					/>
+					<TextInput
+						withAsterisk
+						label={t("nationality")}
+						{...form.getInputProps("nationality")}
+					/>
 					<TextInput
 						label={t("speciality")}
 						{...form.getInputProps("speciality")}
-					/>
-					<TextInput
-						label={t("nationality")}
-						{...form.getInputProps("nationality")}
 					/>
 					<TextInput
 						label={t("email")}

@@ -77,16 +77,16 @@ const getExportedRow = <TData extends MRT_RowData>(
 export default function useOurTable<TData extends MRT_RowData>(
 	{
 		id: idProp,
-		manual = true,
 		deleted,
 		fetchData,
 		initialFilters,
 		globalFilter: outsideGlobalFilter,
+		data: outsideData,
 	}: {
 		id?: string;
 		deleted?: boolean;
-		manual?: boolean;
 		globalFilter?: string;
+		data?: TData[];
 		initialFilters?: MRT_ColumnFiltersState;
 		fetchData: (fetchOptions: FetchOptions) => Promise<{
 			count: number;
@@ -148,6 +148,7 @@ export default function useOurTable<TData extends MRT_RowData>(
 	//this will depend on your API response shape
 	const fetchedData = data?.results ?? [];
 	const totalRowCount = data?.count ?? 0;
+	const manual = !outsideData;
 
 	const table = useMantineReactTable(
 		merge(
@@ -255,7 +256,7 @@ export default function useOurTable<TData extends MRT_RowData>(
 					</Group>
 				),
 
-				data: fetchedData,
+				data: outsideData ?? fetchedData,
 				enableRowSelection: true,
 				enableBottomToolbar: true,
 				enableFullScreenToggle: true,

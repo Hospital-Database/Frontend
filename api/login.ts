@@ -5,10 +5,17 @@ import {
 	refreshTokenCookie,
 	userTypeTokenCookie,
 } from "@/lib/cookies.client";
-import type { BackendError, Doctor, Patient, User } from "@/lib/types";
+import type {
+	BackendError,
+	Doctor,
+	Employee,
+	Patient,
+	User,
+} from "@/lib/types";
 import { useRouter } from "@/navigation";
 import { Routes } from "@/routes/routes";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import type { LoginData } from "../app/[locale]/(auth)/login/_components/form";
 import { getPatientByNationalId } from "./patients";
 
@@ -19,12 +26,15 @@ export async function signIn(data: LoginData) {
 		user: User;
 		patient?: Patient;
 		doctor?: Doctor;
+		employee?: Employee;
 	}>("/accounts/token/", data);
-	const userType: UserType = res.patient
-		? "patient"
+	const userType: UserType = res.employee
+		? "employee"
 		: res.doctor
 			? "doctor"
-			: "admin";
+			: res.patient
+				? "patient"
+				: "admin";
 	refreshTokenCookie.set(res.refresh);
 	accessTokenCookie.set(res.access);
 	userTypeTokenCookie.set(userType);
@@ -43,13 +53,16 @@ export function useSignIn() {
 
 export function usePatientSignIn() {
 	const router = useRouter();
-	return useMutation<string, Error, { national_id: string }>({
+	const t = useTranslations("Login");
+	return useMutation<Patient, BackendError, { national_id: string }>({
 		mutationFn: async ({ national_id }) => {
 			await signIn({ username: national_id, password: national_id });
-			return national_id;
-		},
-		onSuccess: async (national_id) => {
 			const patient = await getPatientByNationalId(national_id);
+			if (!patient)
+				throw { detail: t("no-patient-with-this-national-id-exists") };
+			return patient;
+		},
+		onSuccess: async (patient) => {
 			router.push(Routes.patient({ patientId: patient.id }));
 		},
 	});

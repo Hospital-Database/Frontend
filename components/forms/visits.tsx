@@ -29,7 +29,7 @@ export const emptyValues = {
 	ticket: 0,
 	status: "pending",
 	notes: "",
-	doctors: [""],
+	doctors: [],
 } satisfies z.infer<typeof visitSchema>;
 
 type VisitFormProps = z.infer<typeof visitSchema> & {

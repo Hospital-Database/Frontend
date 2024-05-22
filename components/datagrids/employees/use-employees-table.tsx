@@ -47,13 +47,9 @@ export default function useEmployeesTable({
 		{
 			id: "employees",
 			deleted,
-			fetchData: data
-				? () => Promise.resolve({ count: data.length, results: data })
-				: deleted
-					? getDeletedEmployees
-					: getEmployees,
+			data,
+			fetchData: deleted ? getDeletedEmployees : getEmployees,
 			initialFilters,
-			manual: !!data,
 		},
 		{
 			columns,
